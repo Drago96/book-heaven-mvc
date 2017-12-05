@@ -33,7 +33,7 @@ namespace BookHeaven.Web
                     options.Password.RequireLowercase = false;
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireUppercase = false;
-                    options.Password.RequiredLength = 6;
+                    options.Password.RequiredLength = DataConstants.UserPasswordMinLength;
                 })
                 .AddEntityFrameworkStores<BookHeavenDbContext>()
                 .AddDefaultTokenProviders();

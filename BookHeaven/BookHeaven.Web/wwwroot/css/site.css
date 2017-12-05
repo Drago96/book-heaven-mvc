@@ -33,3 +33,14 @@
         display: none;
     }
 }
+
+div.homepage-jumbotron {
+    margin-top: 15px;
+}
+
+img.profile-picture-select {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+}

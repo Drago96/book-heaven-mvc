@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 using BookHeaven.Data.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -70,14 +71,25 @@ namespace BookHeaven.Web.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email };
-                var result = await this.userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                using (var profileStream = new MemoryStream())
                 {
-                    await this.signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToLocal(returnUrl);
+                    await model.ProfilePicture.CopyToAsync(profileStream);
+                    var user = new User
+                    {
+                        UserName = model.Email,
+                        Email = model.Email,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        ProfilePicture = profileStream.ToArray()
+                    };
+                    var result = await this.userManager.CreateAsync(user, model.Password);
+                    if (result.Succeeded)
+                    {
+                        await this.signInManager.SignInAsync(user, isPersistent: false);
+                        return RedirectToLocal(returnUrl);
+                    }
+                    AddErrors(result);
                 }
-                AddErrors(result);
             }
 
             return View(model);
