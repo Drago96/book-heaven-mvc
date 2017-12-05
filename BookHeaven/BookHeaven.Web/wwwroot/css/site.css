@@ -44,3 +44,29 @@ img.profile-picture-select {
     margin-right: auto;
     cursor: pointer;
 }
+
+div.login-page-register {
+    margin-top: 15px;
+}
+
+button.facebook-btn {
+    background-color: #3b5998;
+    color: white;
+}
+
+button.facebook-btn:hover {
+    color: white;
+}
+
+button.google-btn {
+    background-color: #d34836;
+    color: white;
+}
+
+button.google-btn:hover {
+    color: white;
+}
+
+div.custom-alert {
+    margin-top: 10px;
+}

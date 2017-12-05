@@ -5,25 +5,28 @@
     var moduleProfilePictureWidth;
     var moduleProfilePictureHeight;
     var moduleProfilePictureMaxLength;
+    var moduleProfilePictureErrorMessage;
 
     module.initializeModule = function (profilePictureFieldName,
         profilePictureUrl,
         profilePictureWidth,
         profilePictureHeight,
-        profilePictureMaxLength) {
+        profilePictureMaxLength,
+        profilePictureErrorMessage) {
 
         moduleProfilePictureFieldName = profilePictureFieldName;
         moduleProfilePictureUrl = profilePictureUrl;
         moduleProfilePictureWidth = profilePictureWidth;
         moduleProfilePictureHeight = profilePictureHeight;
         moduleProfilePictureMaxLength = profilePictureMaxLength;
+        moduleProfilePictureErrorMessage = profilePictureErrorMessage;
 
         addPageFunctionality();
     }
 
     function addPageFunctionality() {
         $(document).ready(function () {
-            addProfilePictureValidation();
+
             changeProfilePicture(document.getElementById("profile-picture-input"));
 
             $('#profile-picture').click(function () {
@@ -34,54 +37,45 @@
                 changeProfilePicture(this);
             });
 
-            function addProfilePictureValidation() {
-                jQuery.validator.addMethod("ProfilePicture",
-                    function (value, element) {
-                        if (element.files && element.files[0]) {
-                            var file = element.files[0];
-                            var mimeType = file['type'];
-                            var mimeSize = file['size'];
-                            if (mimeType.split('/')[0] !== 'image' || mimeSize > moduleProfilePictureMaxLength) {
-                                return false;
-                            }
-                        }
-                        return true;
-                    },
-                    'Invalid file. Please upload an image with size less than 2MB.');
-                $("input[name=" + moduleProfilePictureFieldName + "]").rules('add',
-                    {
-                        ProfilePicture: true
-                    });
-
-                //$("input[name=" + moduleProfilePictureFieldName + "]").validate({
-                //    rules: {
-                //        validUpload: { ProfilePicture: true }
-                //    }
-                //});
-            }
-
             function changeProfilePicture(input) {
                 if (input.files && input.files[0]) {
+
                     var file = input.files[0];
-                    var mimeType = file['type'];
-                    var mimeSize = file['size'];
-                    if (mimeType.split('/')[0] !== 'image' || mimeSize > moduleProfilePictureMaxLength) {
-                        $('#profile-picture').attr('src', moduleProfilePictureUrl);
-                        return;
+                    var pictureValid = isPictureValid(file);
+
+                    if (!pictureValid) {
+                        resetProfileImage();
                     }
 
-                    var reader = new FileReader();
+                    setNewProfilePicture(file);
+                }
+            }
 
-                    reader.onload = function (e) {
-                        var base64Image = e.target.result;
-                        resizeBase64Img(base64Image,
-                            moduleProfilePictureWidth,
-                            moduleProfilePictureHeight).then(function (result) {
-                                $('#profile-picture').attr('src', result[0].src);
-                            });
-                    }
+            function resetProfileImage() {
+                $('#profile-picture').attr('src', moduleProfilePictureUrl);
+                $('#profile-picture-input').val('');
+                $('#profile-picture-validation').text(moduleProfilePictureErrorMessage);
+            }
 
-                    reader.readAsDataURL(file);
+            function setNewProfilePicture(file) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var base64Image = e.target.result;
+                    resizeBase64Img(base64Image,
+                        moduleProfilePictureWidth,
+                        moduleProfilePictureHeight).then(function (result) {
+                            $('#profile-picture').attr('src', result[0].src);
+                            $('#profile-picture-validation').text('');
+                        });
+                }
+                reader.readAsDataURL(file);
+            }
+
+            function isPictureValid(file) {
+                var mimeType = file['type'];
+                var mimeSize = file['size'];
+                if (mimeType.split('/')[0] !== 'image' || mimeSize > moduleProfilePictureMaxLength) {
+                    return false;
                 }
             }
 

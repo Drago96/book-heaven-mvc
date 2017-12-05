@@ -13,7 +13,7 @@
                 <img id="profile-picture" alt="User" class="featurette-image img-circle img-responsive profile-picture-select" src="@WebConstants.DefaultProfilePictureUrl" />
                 <input id="profile-picture-input" accept="image/*" type="file" class="hidden" asp-for="ProfilePicture" />
                 <div class="text-center"><small>Click here to select a profile picture. Max size 2MB.</small></div>
-                <div class="text-center"><span asp-validation-for="ProfilePicture" class="text-danger"></span></div>
+                <div class="text-center"><span id="profile-picture-validation" asp-validation-for="ProfilePicture" class="text-danger"></span></div>
             </div>
             <div class="form-group">
                 <label asp-for="FirstName"></label>
@@ -44,7 +44,6 @@
         </form>
     </div>
 </div>
-
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
 
@@ -53,6 +52,7 @@
             '@WebConstants.DefaultProfilePictureUrl',
             @DataConstants.UserProfilePictureWidth,
             @DataConstants.UserProfilePictureHeight,
-            @DataConstants.UserProfilePictureMaxLength);
+            @DataConstants.UserProfilePictureMaxLength,
+            '@WebConstants.ProfilePictureErrorMessage');
     </script>
 }

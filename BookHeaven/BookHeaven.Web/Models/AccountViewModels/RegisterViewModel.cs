@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 
 namespace BookHeaven.Web.Models.AccountViewModels
 {
@@ -7,7 +8,7 @@ namespace BookHeaven.Web.Models.AccountViewModels
     using static Data.DataConstants;
     using static WebConstants;
 
-    public class RegisterViewModel
+    public class RegisterViewModel : IValidatableObject
     {
         [Required]
         [StringLength(UserFirstNameMaxLength, ErrorMessage = InvalidParameterLengthErrorMessage, MinimumLength = UserFirstNameMinLength)]
@@ -29,10 +30,20 @@ namespace BookHeaven.Web.Models.AccountViewModels
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = UserConfirmPasswordDisplay)]
         [Compare(nameof(Password), ErrorMessage = PasswordsMustMatchErrorMessage)]
+        [Display(Name = UserConfirmPasswordDisplay)]
         public string ConfirmPassword { get; set; }
 
         public IFormFile ProfilePicture { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (this.ProfilePicture!=null &&
+                (this.ProfilePicture.Length > UserProfilePictureMaxLength ||
+                !this.ProfilePicture.ContentType.StartsWith("image")))
+            {
+                yield return new ValidationResult(ProfilePictureErrorMessage,new [] {nameof(this.ProfilePicture)});
+            }
+        }
     }
 }
