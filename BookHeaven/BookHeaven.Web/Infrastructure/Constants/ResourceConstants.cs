@@ -1,6 +1,6 @@
 ﻿namespace BookHeaven.Web.Infrastructure.Constants
 {
-    public static class Resources
+    public static class ResourceConstants
     {
         public const string DefaultProfilePictureUrl = "/images/user-images/defaultUser.png";
         public const string HomePageBookStoreImageUrl = "/images/home-page-images/bookstore.jpg";

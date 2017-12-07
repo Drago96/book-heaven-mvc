@@ -7,12 +7,12 @@ namespace BookHeaven.Web.Infrastructure.Extensions
     {
         public static void AddErrorMessage(this ITempDataDictionary tempData, string message)
         {
-            tempData[DictionaryKeys.ErrorMessage] = message;
+            tempData[DataKeyConstants.ErrorMessage] = message;
         }
 
         public static void AddSuccessMessage(this ITempDataDictionary tempData, string message)
         {
-            tempData[DictionaryKeys.SuccessMessage] = message;
+            tempData[DataKeyConstants.SuccessMessage] = message;
         }
     }
 }

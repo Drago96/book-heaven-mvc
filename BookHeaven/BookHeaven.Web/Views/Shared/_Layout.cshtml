@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="img/ico" href="@Resources.FaviconImageUrl">
+    <link rel="icon" type="img/ico" href="@ResourceConstants.FaviconImageUrl">
     <title>@ViewData["Title"] - Book Heaven</title>
 
     <environment include="Development">
@@ -35,22 +35,22 @@
         </div>
     </nav>
     <div class="container body-content">
-        @if (TempData.ContainsKey(DictionaryKeys.ErrorMessage))
+        @if (TempData.ContainsKey(DataKeyConstants.ErrorMessage))
         {
             <div class="alert alert-danger text-center custom-alert">
-                @TempData[DictionaryKeys.ErrorMessage]
+                @TempData[DataKeyConstants.ErrorMessage]
             </div>
         }
-        @if (TempData.ContainsKey(DictionaryKeys.SuccessMessage))
+        @if (TempData.ContainsKey(DataKeyConstants.SuccessMessage))
         {
             <div class="alert alert-success text-center custom-alert">
-                @TempData[DictionaryKeys.SuccessMessage]
+                @TempData[DataKeyConstants.SuccessMessage]
             </div>
         }
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2017 - Book Heaven</p>
+            <p class="pull-right">&copy; 2017 - Book Heaven</p>
         </footer>
     </div>
 

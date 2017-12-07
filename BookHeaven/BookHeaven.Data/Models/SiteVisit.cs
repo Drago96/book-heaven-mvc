@@ -2,7 +2,7 @@
 
 namespace BookHeaven.Data.Models
 {
-    public class SiteDateVisit
+    public class SiteVisit
     {
         public int Id { get; set; }
 

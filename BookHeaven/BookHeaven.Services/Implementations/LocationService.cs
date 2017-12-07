@@ -1,12 +1,15 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper.QueryableExtensions;
 using BookHeaven.Data;
 using BookHeaven.Data.Models;
 using BookHeaven.Services.Contracts;
 using BookHeaven.Services.Infrastructure;
 using BookHeaven.Services.Models;
+using BookHeaven.Services.Models.Locations;
 using BookHeaven.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -46,6 +49,14 @@ namespace BookHeaven.Services.Implementations
                 await this.db.SaveChangesAsync();
             }
         }
+
+        public async Task<IEnumerable<T>> GetLocationsWithMostVisitsAsync<T>(int countryVisitsToDisplay)
+            => await this.db.Locations
+                .GroupBy(l => l.Country)
+                .OrderByDescending(l => l.Sum(cl => cl.SiteVisits))
+                .Take(countryVisitsToDisplay)
+                .ProjectTo<T>()
+                .ToListAsync();
 
         private async Task AddNewLocationWithVisiAsync(string city, string country)
         {

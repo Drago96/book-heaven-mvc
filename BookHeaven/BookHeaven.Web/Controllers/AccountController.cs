@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using BookHeaven.Services.UtilityServices.Contracts;
 
 namespace BookHeaven.Web.Controllers
 {
@@ -53,7 +54,7 @@ namespace BookHeaven.Web.Controllers
                 return RedirectToLocal(returnUrl);
             }
 
-            TempData.AddErrorMessage(UserErrors.InvalidLoginAttempt);
+            TempData.AddErrorMessage(UserErrorConstants.InvalidLoginAttempt);
 
             return View(model);
         }
@@ -77,7 +78,7 @@ namespace BookHeaven.Web.Controllers
 
             if (userExists)
             {
-                TempData.AddErrorMessage(UserErrors.UserExists);
+                TempData.AddErrorMessage(UserErrorConstants.UserExists);
                 return View(model);
             }
 
@@ -97,7 +98,7 @@ namespace BookHeaven.Web.Controllers
             var result = await this.userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
             {
-                TempData.AddErrorMessage(UserErrors.ErrorCreatingUser);
+                TempData.AddErrorMessage(UserErrorConstants.ErrorCreatingUser);
                 return View(model);
             }
 
@@ -127,7 +128,7 @@ namespace BookHeaven.Web.Controllers
         {
             if (remoteError != null)
             {
-                TempData.AddErrorMessage(string.Format(UserErrors.ErrorFromExternalProvider, remoteError));
+                TempData.AddErrorMessage(string.Format(UserErrorConstants.ErrorFromExternalProvider, remoteError));
                 return RedirectToAction(nameof(Login));
             }
             var info = await this.signInManager.GetExternalLoginInfoAsync();
@@ -140,7 +141,7 @@ namespace BookHeaven.Web.Controllers
             if (!result.Succeeded)
             {
                 ViewData.SetReturnUrl(returnUrl);
-                ViewData[DictionaryKeys.LoginProvider] = info.LoginProvider;
+                ViewData[DataKeyConstants.LoginProvider] = info.LoginProvider;
                 var email = info.Principal.FindFirstValue(ClaimTypes.Email);
 
                 var userPersonalNames = info.Principal.Identity.Name;
@@ -178,7 +179,7 @@ namespace BookHeaven.Web.Controllers
             var info = await this.signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
-                TempData.AddErrorMessage(UserErrors.ExternalLoginInformation);
+                TempData.AddErrorMessage(UserErrorConstants.ExternalLoginInformation);
                 return RedirectToLocal(returnUrl);
             }
 
@@ -194,7 +195,7 @@ namespace BookHeaven.Web.Controllers
 
             if (userExists)
             {
-                TempData.AddErrorMessage(UserErrors.UserExists);
+                TempData.AddErrorMessage(UserErrorConstants.UserExists);
                 ViewData.SetReturnUrl(returnUrl);
                 return View(nameof(ExternalLogin), model);
             }
@@ -202,7 +203,7 @@ namespace BookHeaven.Web.Controllers
             var result = await this.userManager.CreateAsync(user);
             if (!result.Succeeded)
             {
-                TempData.AddErrorMessage(UserErrors.ErrorCreatingUser);
+                TempData.AddErrorMessage(UserErrorConstants.ErrorCreatingUser);
                 ViewData.SetReturnUrl(returnUrl);
                 return View(nameof(ExternalLogin), model);
             }
@@ -210,7 +211,7 @@ namespace BookHeaven.Web.Controllers
             result = await this.userManager.AddLoginAsync(user, info);
             if (!result.Succeeded)
             {
-                TempData.AddErrorMessage(UserErrors.ErrorCreatingUser);
+                TempData.AddErrorMessage(UserErrorConstants.ErrorCreatingUser);
                 ViewData.SetReturnUrl(returnUrl);
                 return View(nameof(ExternalLogin), model);
             }

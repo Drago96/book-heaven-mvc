@@ -43,7 +43,7 @@ namespace BookHeaven.Data.Migrations
                     b.ToTable("Locations");
                 });
 
-            modelBuilder.Entity("BookHeaven.Data.Models.SiteDateVisit", b =>
+            modelBuilder.Entity("BookHeaven.Data.Models.SiteVisit", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();

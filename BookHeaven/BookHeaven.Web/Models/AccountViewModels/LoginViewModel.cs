@@ -2,7 +2,7 @@
 using BookHeaven.Web.Infrastructure.Constants.ErrorMessages;
 using System.ComponentModel.DataAnnotations;
 
-using static BookHeaven.Data.Infrastructure.Constants.UserData;
+using static BookHeaven.Data.Infrastructure.Constants.UserDataConstants;
 
 namespace BookHeaven.Web.Models.AccountViewModels
 {
@@ -13,11 +13,11 @@ namespace BookHeaven.Web.Models.AccountViewModels
         public string Email { get; set; }
 
         [Required]
-        [StringLength(PasswordMaxLength, ErrorMessage = CommonErrors.InvalidParameterLength, MinimumLength = PasswordMinLength)]
+        [StringLength(PasswordMaxLength, ErrorMessage = CommonErrorConstants.InvalidParameterLength, MinimumLength = PasswordMinLength)]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Display(Name = UserDisplay.RememberMe)]
+        [Display(Name = UserDisplayConstants.RememberMe)]
         public bool RememberMe { get; set; }
     }
 }

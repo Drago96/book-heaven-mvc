@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-using static BookHeaven.Data.Infrastructure.Constants.LocationData;
+using static BookHeaven.Data.Infrastructure.Constants.LocationDataConstants;
 
 namespace BookHeaven.Data.Models
 {

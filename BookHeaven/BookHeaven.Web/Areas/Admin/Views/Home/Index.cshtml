@@ -1,5 +1,62 @@
-﻿@{
-    ViewData["Title"] = "Index";
+﻿@model AdminHomeViewModel
+@{
+    ViewData["Title"] = "Admin Panel";
 }
 
-<h2>Index</h2>
+<div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="well">
+                <div class="row">
+                    <div class="col-md-2">
+                        <i class="glyphicon glyphicon-user"></i>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="text-uppercase">Site visits today</div>
+                        <div class="user-well-count">@Model.VisitsToday</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="well">
+                <div class="row">
+                    <div class="col-md-2">
+                        <i class="glyphicon glyphicon-user"></i>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="text-uppercase">Most site visits in a day</div>
+                        <div class="user-well-count">@Model.MostVisits</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="well">
+                <div class="row">
+                    <div class="col-md-2">
+                        <i class="glyphicon glyphicon-user"></i>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="text-uppercase">Total Users</div>
+                        <div class="user-well-count">@Model.TotalUsers</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <canvas class="visits-chart"></canvas>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        var locations = @Html.Raw(Json.Serialize(Model.Locations.Select(l => l.Country)));
+        var visits = @Html.Raw(Json.Serialize(Model.Locations.Select(l => l.Visits)));
+        AdminHomePageModule.Initialize(locations, visits);
+    </script>
+}

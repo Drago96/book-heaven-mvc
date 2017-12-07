@@ -8,7 +8,7 @@ namespace BookHeaven.Data
     {
         public DbSet<Location> Locations { get; set; }
 
-        public DbSet<SiteDateVisit> Visits { get; set; }
+        public DbSet<SiteVisit> Visits { get; set; }
 
         public BookHeavenDbContext(DbContextOptions<BookHeavenDbContext> options)
             : base(options)

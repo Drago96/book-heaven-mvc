@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
-namespace BookHeaven.Services.Contracts
+namespace BookHeaven.Services.UtilityServices.Contracts
 {
     public interface IFileService : IServce
     {

@@ -1,0 +1,12 @@
+﻿canvas.visits-chart {
+    max-height: 800px;
+    max-width: 800px;
+}
+
+div.admin-container {
+    margin-top: 50px;
+}
+
+div.user-well-count {
+    font-size: 2em;
+}

@@ -1,6 +1,6 @@
 ﻿namespace BookHeaven.Web.Infrastructure.Constants.ErrorMessages
 {
-    public static class UserErrors
+    public static class UserErrorConstants
     {
         public const string PasswordsMustMatch = "The password and confirmation password do not match.";
         public const string InvalidEmail = "Input is not a valid email.";

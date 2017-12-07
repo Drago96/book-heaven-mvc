@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
-using static BookHeaven.Data.Infrastructure.Constants.UserData;
+using static BookHeaven.Data.Infrastructure.Constants.UserDataConstants;
 
 namespace BookHeaven.Data.Models
 {

@@ -27,9 +27,9 @@ namespace BookHeaven.Web.Infrastructure.Extensions
         {
             string[] roles = new string[]
             {
-                Roles.Admin,
-                Roles.SuperUser,
-                Roles.Publisher
+                RoleConstants.Admin,
+                RoleConstants.SuperUser,
+                RoleConstants.Publisher
             };
 
             using (IServiceScope scope = app.ApplicationServices.CreateScope())

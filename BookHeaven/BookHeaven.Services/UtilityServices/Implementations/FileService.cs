@@ -1,9 +1,9 @@
-﻿using BookHeaven.Services.Contracts;
-using Microsoft.AspNetCore.Http;
-using System.IO;
+﻿using System.IO;
 using System.Threading.Tasks;
+using BookHeaven.Services.UtilityServices.Contracts;
+using Microsoft.AspNetCore.Http;
 
-namespace BookHeaven.Services.Implementations
+namespace BookHeaven.Services.UtilityServices.Implementations
 {
     public class FileService : IFileService
 

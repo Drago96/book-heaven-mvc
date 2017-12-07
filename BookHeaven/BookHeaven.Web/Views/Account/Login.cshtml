@@ -16,12 +16,12 @@
                     <small>Dont have an account yet?</small>
                     <div>
                         <div>
-                            <small><a asp-action="Register" asp-route-returnurl="@ViewData[DictionaryKeys.ReturnUrl]">Register as a new user</a></small>
+                            <small><a asp-action="Register" asp-route-returnurl="@ViewData[DataKeyConstants.ReturnUrl]">Register as a new user</a></small>
                         </div>
                     </div>
                 </div>
             </div>
-            <form asp-route-returnurl="@ViewData[DictionaryKeys.ReturnUrl]" method="post">
+            <form asp-route-returnurl="@ViewData[DataKeyConstants.ReturnUrl]" method="post">
                 <hr />
                 <div class="form-group">
                     <label asp-for="Email"></label>
@@ -47,7 +47,7 @@
             </form>
         </section>
         <section>
-            <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData[DictionaryKeys.ReturnUrl]" method="post" class="form-horizontal">
+            <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData[DataKeyConstants.ReturnUrl]" method="post" class="form-horizontal">
                 <div>
                     <p>
                         <div class="row">

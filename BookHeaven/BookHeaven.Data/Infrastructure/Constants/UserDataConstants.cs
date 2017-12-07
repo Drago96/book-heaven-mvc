@@ -1,6 +1,6 @@
 ﻿namespace BookHeaven.Data.Infrastructure.Constants
 {
-    public static class UserData
+    public static class UserDataConstants
     {
         public const int FirstNameMinLength = 2;
         public const int FirstNameMaxLength = 50;

@@ -7,7 +7,7 @@ namespace BookHeaven.Web.Infrastructure.Extensions
     {
         public static void SetReturnUrl(this ViewDataDictionary viewData, string returnUrl)
         {
-            viewData[DictionaryKeys.ReturnUrl] = returnUrl;
+            viewData[DataKeyConstants.ReturnUrl] = returnUrl;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace BookHeaven.Web.Infrastructure.Constants.Display
 {
-    public static class UserDisplay
+    public static class UserDisplayConstants
     {
         public const string FirstName = "First Name";
         public const string LastName = "Last Name";

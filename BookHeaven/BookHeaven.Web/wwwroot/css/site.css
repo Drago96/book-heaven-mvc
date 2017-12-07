@@ -84,3 +84,15 @@ div.custom-alert {
 body.admin-body {
     padding-top: 0;
 }
+
+tr.vertical-aligned-row > td {
+    vertical-align: middle !important
+}
+
+li.disabled > a {
+    pointer-events: none;
+}
+
+.no-padding {
+    padding: 0 0 0 0;
+}

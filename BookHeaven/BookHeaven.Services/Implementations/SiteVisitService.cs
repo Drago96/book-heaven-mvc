@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using BookHeaven.Data;
 using BookHeaven.Data.Models;
@@ -7,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookHeaven.Services.Implementations
 {
-    public class SiteDateVisitService : ISiteDateVisitService
+    public class SiteVisitService : ISiteVisitService
     {
         private readonly BookHeavenDbContext db;
 
-        public SiteDateVisitService(BookHeavenDbContext db)
+        public SiteVisitService(BookHeavenDbContext db)
         {
             this.db = db;
         }
@@ -20,23 +21,36 @@ namespace BookHeaven.Services.Implementations
         {
             var currentDate = DateTime.Today;
 
-            SiteDateVisit siteDateVisit = await this.GetCurrentDateVisits(currentDate);
+            SiteVisit siteVisit = await this.GetCurrentDateVisits(currentDate);
 
-            if (siteDateVisit == null)
+            if (siteVisit == null)
             {
                 await this.AddNewSiteDateVisitAsync(currentDate);
             }
             else
             {
-                siteDateVisit.Visits++;
+                siteVisit.Visits++;
                 await this.db.SaveChangesAsync();
             }
 
         }
 
+        public async Task<int> VisitsByDateAsync(DateTime date)
+            => await this.db.Visits
+                .Where(v => v.Date.Date == date.Date)
+                .Select(v => v.Visits)
+                .FirstOrDefaultAsync();
+
+        public async Task<int> MostSiteVisitsInADayAsync()
+            => await this.db
+                .Visits
+                .OrderByDescending(v => v.Visits)
+                .Select(v => v.Visits)
+                .FirstOrDefaultAsync();
+
         private async Task AddNewSiteDateVisitAsync(DateTime currentDate)
         {
-            SiteDateVisit visit = new SiteDateVisit
+            SiteVisit visit = new SiteVisit
             {
                 Date = currentDate.Date,
                 Visits = 1
@@ -46,7 +60,7 @@ namespace BookHeaven.Services.Implementations
             await this.db.SaveChangesAsync();
         }
 
-        public async Task<SiteDateVisit> GetCurrentDateVisits(DateTime date)
+        public async Task<SiteVisit> GetCurrentDateVisits(DateTime date)
             => await this.db.Visits.FirstOrDefaultAsync(v => v.Date.Date == date.Date);
     }
 }

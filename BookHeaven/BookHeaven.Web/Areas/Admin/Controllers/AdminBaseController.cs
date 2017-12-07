@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookHeaven.Web.Areas.Admin.Controllers
 {
-    [Area(Infrastructure.Constants.Areas.Admin)]
-    [Authorize(Roles = Roles.Admin)]
+    [Area(AreaConstants.Admin)]
+    [Authorize(Roles = RoleConstants.Admin)]
     public class AdminBaseController : Controller
     {
     }

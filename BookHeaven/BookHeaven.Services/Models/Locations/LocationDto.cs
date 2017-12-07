@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace BookHeaven.Services.Models
+namespace BookHeaven.Services.Models.Locations
 {
     public class LocationDto
     {
