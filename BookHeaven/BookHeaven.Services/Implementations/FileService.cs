@@ -1,7 +1,7 @@
-﻿using System.IO;
-using System.Threading.Tasks;
-using BookHeaven.Services.Contracts;
+﻿using BookHeaven.Services.Contracts;
 using Microsoft.AspNetCore.Http;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace BookHeaven.Services.Implementations
 {

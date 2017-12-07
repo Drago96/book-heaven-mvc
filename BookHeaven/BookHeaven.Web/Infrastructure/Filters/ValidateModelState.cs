@@ -1,6 +1,6 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System.Linq;
 
 namespace BookHeaven.Web.Infrastructure.Filters
 {
@@ -19,7 +19,6 @@ namespace BookHeaven.Web.Infrastructure.Filters
                 }
 
                 context.Result = controller.View(model);
-
             }
             base.OnActionExecuting(context);
         }

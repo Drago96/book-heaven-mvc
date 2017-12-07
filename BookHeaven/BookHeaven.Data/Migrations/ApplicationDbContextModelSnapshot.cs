@@ -20,6 +20,43 @@ namespace BookHeaven.Data.Migrations
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("BookHeaven.Data.Models.Location", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<int>("SiteVisits");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("City", "Country")
+                        .IsUnique();
+
+                    b.ToTable("Locations");
+                });
+
+            modelBuilder.Entity("BookHeaven.Data.Models.SiteDateVisit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<int>("Visits");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Visits");
+                });
+
             modelBuilder.Entity("BookHeaven.Data.Models.User", b =>
                 {
                     b.Property<string>("Id")

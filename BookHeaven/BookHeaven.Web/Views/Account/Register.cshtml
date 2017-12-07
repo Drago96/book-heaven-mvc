@@ -1,16 +1,15 @@
-﻿@using BookHeaven.Data
-@model RegisterViewModel
+﻿@model RegisterViewModel
 @{
     ViewData["Title"] = "Register";
 }
 
 <div class="row">
     <div class="col-md-4 col-md-offset-4">
-        <form id="register-form" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" enctype="multipart/form-data">
+        <form id="register-form" asp-route-returnUrl="@ViewData[DictionaryKeys.ReturnUrl]" method="post" enctype="multipart/form-data">
             <h2>Register</h2>
             <hr>
             <div class="form-group">
-                <img id="profile-picture" alt="User" class="featurette-image img-circle img-responsive profile-picture-select" src="@WebConstants.DefaultProfilePictureUrl" />
+                <img id="profile-picture" alt="User" class="featurette-image img-circle img-responsive profile-picture-select" src="@Resources.DefaultProfilePictureUrl" />
                 <input id="profile-picture-input" accept="image/*" type="file" class="hidden" asp-for="ProfilePicture" />
                 <div class="text-center"><small>Click here to select a profile picture. Max size 2MB.</small></div>
                 <div class="text-center"><span id="profile-picture-validation" asp-validation-for="ProfilePicture" class="text-danger"></span></div>
@@ -40,7 +39,7 @@
                 <input asp-for="ConfirmPassword" class="form-control" />
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-default">Register</button>
+            <button type="submit" class="btn btn-success btn-block">Register</button>
         </form>
     </div>
 </div>
@@ -49,10 +48,10 @@
 
     <script>
         RegisterUserPageModule.initializeModule('@nameof(Model.ProfilePicture)',
-            '@WebConstants.DefaultProfilePictureUrl',
-            @DataConstants.UserProfilePictureWidth,
-            @DataConstants.UserProfilePictureHeight,
-            @DataConstants.UserProfilePictureMaxLength,
-            '@WebConstants.ProfilePictureErrorMessage');
+            '@Resources.DefaultProfilePictureUrl',
+            @UserData.ProfilePictureWidth,
+            @UserData.ProfilePictureHeight,
+            @UserData.ProfilePictureMaxLength,
+            '@UserErrors.InvalidProfilePicture');
     </script>
 }

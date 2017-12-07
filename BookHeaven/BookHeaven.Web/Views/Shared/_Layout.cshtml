@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="img/ico" href="@Resources.FaviconImageUrl">
     <title>@ViewData["Title"] - Book Heaven</title>
 
     <environment include="Development">
@@ -29,32 +30,29 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Book Heaven</a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>
     </nav>
-<div class="container body-content">
-    @if (TempData.ContainsKey(WebConstants.ErrorMessageKey))
-    {
-        <div class="alert alert-danger text-center custom-alert">
-            @TempData[WebConstants.ErrorMessageKey]
-        </div>
-    }
-    @if (TempData.ContainsKey(WebConstants.SuccessMessageKey))
-    {
-        <div class="alert alert-success text-center custom-alert">
-            @TempData[WebConstants.SuccessMessageKey]
-        </div>
-    }
-    @RenderBody()
-    <hr/>
-    <footer>
-        <p>&copy; 2017 - Book Heaven</p>
-    </footer>
-</div>
+    <div class="container body-content">
+        @if (TempData.ContainsKey(DictionaryKeys.ErrorMessage))
+        {
+            <div class="alert alert-danger text-center custom-alert">
+                @TempData[DictionaryKeys.ErrorMessage]
+            </div>
+        }
+        @if (TempData.ContainsKey(DictionaryKeys.SuccessMessage))
+        {
+            <div class="alert alert-success text-center custom-alert">
+                @TempData[DictionaryKeys.SuccessMessage]
+            </div>
+        }
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; 2017 - Book Heaven</p>
+        </footer>
+    </div>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>

@@ -1,23 +1,23 @@
-﻿namespace BookHeaven.Data.Models
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
+
+using static BookHeaven.Data.Infrastructure.Constants.UserData;
+
+namespace BookHeaven.Data.Models
 {
-    using Microsoft.AspNetCore.Identity;
-    using System.ComponentModel.DataAnnotations;
-
-    using static DataConstants;
-
     public class User : IdentityUser
     {
         [Required]
-        [MinLength(UserFirstNameMinLength)]
-        [MaxLength(UserFirstNameMaxLength)]
+        [MinLength(FirstNameMinLength)]
+        [MaxLength(FirstNameMaxLength)]
         public string FirstName { get; set; }
 
         [Required]
-        [MinLength(UserLastNameMinLength)]
-        [MaxLength(UserFirstNameMaxLength)]
+        [MinLength(LastNameMinLength)]
+        [MaxLength(LastNameMaxLength)]
         public string LastName { get; set; }
 
-        [MaxLength(UserProfilePictureMaxLength)]
+        [MaxLength(ProfilePictureMaxLength)]
         public byte[] ProfilePicture { get; set; }
     }
 }

@@ -1,16 +1,15 @@
-﻿namespace BookHeaven.Web.Infrastructure.Mapping
-{
-    using AutoMapper;
-    using Common.Mapping;
-    using System;
-    using System.Linq;
+﻿using AutoMapper;
+using BookHeaven.Common.Mapping;
+using System;
+using System.Linq;
 
+namespace BookHeaven.Web.Infrastructure.Mapping
+{
     public class AutoMapperProfile : Profile
     {
         private const string ProjectName = "BookHeaven";
 
-
-        public AutoMapperProfile() 
+        public AutoMapperProfile()
         {
             var allTypes = AppDomain
                 .CurrentDomain

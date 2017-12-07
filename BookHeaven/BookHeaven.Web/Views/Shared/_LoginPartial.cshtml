@@ -8,6 +8,14 @@
             <li>
                 <button type="submit" class="btn btn-link navbar-btn navbar-link">Log out</button>
             </li>
+            @if (User.IsInRole(Roles.Admin))
+            {
+                <li>
+                    <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="navbar-link">
+                        Admin Panel
+                    </a>
+                </li>
+            }
         </ul>
     </form>
 }

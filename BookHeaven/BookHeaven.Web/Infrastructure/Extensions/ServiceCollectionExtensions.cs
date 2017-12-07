@@ -1,12 +1,12 @@
-﻿namespace BookHeaven.Web.Infrastructure.Extensions
-{
-    using Microsoft.Extensions.DependencyInjection;
-    using Services;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
+﻿using BookHeaven.Services;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
+namespace BookHeaven.Web.Infrastructure.Extensions
+{
     public static class ServiceCollectionExtensions
     {
         public static void ConfigureCustomServices(this IServiceCollection services)

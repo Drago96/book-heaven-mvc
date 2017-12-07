@@ -1,18 +1,21 @@
-﻿
+﻿using System;
+using AutoMapper;
+using BookHeaven.Data;
+using BookHeaven.Data.Infrastructure.Constants;
+using BookHeaven.Data.Models;
+using BookHeaven.Services.Utilities;
+using BookHeaven.Web.Infrastructure.Extensions;
+using BookHeaven.Web.Infrastructure.Filters;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
 namespace BookHeaven.Web
 {
-    using AutoMapper;
-    using Data;
-    using Data.Models;
-    using Infrastructure.Extensions;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.EntityFrameworkCore;
-
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -33,7 +36,7 @@ namespace BookHeaven.Web
                     options.Password.RequireLowercase = false;
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireUppercase = false;
-                    options.Password.RequiredLength = DataConstants.UserPasswordMinLength;
+                    options.Password.RequiredLength = UserData.PasswordMinLength;
                 })
                 .AddEntityFrameworkStores<BookHeavenDbContext>()
                 .AddDefaultTokenProviders();
@@ -53,12 +56,19 @@ namespace BookHeaven.Web
             services.AddMvc(options =>
             {
                 options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+                options.Filters.Add<LogOnVisit>();
+            });
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromDays(int.Parse(Configuration["Session:DurationInDays"]));
             });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseDatabaseMigration();
+            app
+                .UseDatabaseMigration()
+                .SeedRoles();
 
             if (env.IsDevelopment())
             {
@@ -71,12 +81,18 @@ namespace BookHeaven.Web
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseSession(new SessionOptions());
+
             app.UseStaticFiles();
 
             app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                    name: "areas",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

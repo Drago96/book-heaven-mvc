@@ -1,5 +1,4 @@
 ﻿var RegisterUserPageModule = (function (module) {
-
     var moduleProfilePictureFieldName;
     var moduleProfilePictureUrl;
     var moduleProfilePictureWidth;
@@ -13,7 +12,6 @@
         profilePictureHeight,
         profilePictureMaxLength,
         profilePictureErrorMessage) {
-
         moduleProfilePictureFieldName = profilePictureFieldName;
         moduleProfilePictureUrl = profilePictureUrl;
         moduleProfilePictureWidth = profilePictureWidth;
@@ -26,7 +24,6 @@
 
     function addPageFunctionality() {
         $(document).ready(function () {
-
             changeProfilePicture(document.getElementById("profile-picture-input"));
 
             $('#profile-picture').click(function () {
@@ -39,7 +36,6 @@
 
             function changeProfilePicture(input) {
                 if (input.files && input.files[0]) {
-
                     var file = input.files[0];
                     var pictureValid = isPictureValid(file);
 
@@ -96,5 +92,4 @@
     }
 
     return module;
-
 }({}))

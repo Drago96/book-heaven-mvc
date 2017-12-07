@@ -1,5 +1,4 @@
-﻿@using System.Linq
-@model LoginViewModel
+﻿@model LoginViewModel
 @inject SignInManager<User> SignInManager
 
 @{
@@ -17,12 +16,12 @@
                     <small>Dont have an account yet?</small>
                     <div>
                         <div>
-                            <small><a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user</a></small>
+                            <small><a asp-action="Register" asp-route-returnurl="@ViewData[DictionaryKeys.ReturnUrl]">Register as a new user</a></small>
                         </div>
                     </div>
                 </div>
             </div>
-            <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+            <form asp-route-returnurl="@ViewData[DictionaryKeys.ReturnUrl]" method="post">
                 <hr />
                 <div class="form-group">
                     <label asp-for="Email"></label>
@@ -48,17 +47,17 @@
             </form>
         </section>
         <section>
-            <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+            <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData[DictionaryKeys.ReturnUrl]" method="post" class="form-horizontal">
                 <div>
                     <p>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-no-padding-right">
                                 <button type="submit" class="btn btn-block facebook-btn" name="provider" value="Facebook" title="Log in using your Facebook account">Facebook Log In</button>
                             </div>
-                            <div class="col-md-6">
-                                <button type="submit" class="btn btn-block google-btn" name="provider" value="Google" title="Log in using your Google+ account">Google+ Log In</button>
+                            <div class="col-md-6 col-no-padding-left">
+                                <button type="submit" class="btn btn-block google-btn" name="provider" value="Google" title="Log in using your Google+ account">Google Log In</button>
                             </div>
-                        </div>                       
+                        </div>
                     </p>
                 </div>
             </form>

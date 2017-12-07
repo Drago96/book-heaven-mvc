@@ -1,19 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
+﻿using BookHeaven.Web.Infrastructure.Constants;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace BookHeaven.Web.Infrastructure.Extensions
 {
-    using static WebConstants;
-
     public static class TempDataExtensions
     {
-        public static void AddErrorMessage(this ITempDataDictionary tempData,string message)
+        public static void AddErrorMessage(this ITempDataDictionary tempData, string message)
         {
-            tempData[ErrorMessageKey] = message;
+            tempData[DictionaryKeys.ErrorMessage] = message;
         }
 
         public static void AddSuccessMessage(this ITempDataDictionary tempData, string message)
         {
-            tempData[SuccessMessageKey] = message;
+            tempData[DictionaryKeys.SuccessMessage] = message;
         }
     }
 }

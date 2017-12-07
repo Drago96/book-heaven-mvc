@@ -1,48 +1,48 @@
-﻿using System.Collections.Generic;
+﻿using BookHeaven.Web.Infrastructure.Constants.Display;
+using BookHeaven.Web.Infrastructure.Constants.ErrorMessages;
 using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+using static BookHeaven.Data.Infrastructure.Constants.UserData;
 
 namespace BookHeaven.Web.Models.AccountViewModels
 {
-    using System.ComponentModel.DataAnnotations;
-
-    using static Data.DataConstants;
-    using static WebConstants;
-
     public class RegisterViewModel : IValidatableObject
     {
         [Required]
-        [StringLength(UserFirstNameMaxLength, ErrorMessage = InvalidParameterLengthErrorMessage, MinimumLength = UserFirstNameMinLength)]
-        [Display(Name = UserFirstNameDisplay)]
+        [StringLength(FirstNameMaxLength, ErrorMessage = CommonErrors.InvalidParameterLength, MinimumLength = FirstNameMinLength)]
+        [Display(Name = UserDisplay.FirstName)]
         public string FirstName { get; set; }
 
         [Required]
-        [StringLength(UserLastNameMaxLength, ErrorMessage = InvalidParameterLengthErrorMessage, MinimumLength = UserLastNameMinLength)]
-        [Display(Name = UserLastNameDisplay)]
+        [StringLength(LastNameMaxLength, ErrorMessage = CommonErrors.InvalidParameterLength, MinimumLength = LastNameMinLength)]
+        [Display(Name = UserDisplay.LastName)]
         public string LastName { get; set; }
 
         [Required]
-        [EmailAddress(ErrorMessage = EmailErrorMessage)]
+        [EmailAddress(ErrorMessage = UserErrors.InvalidEmail)]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(UserPasswordMaxLength, ErrorMessage = InvalidParameterLengthErrorMessage, MinimumLength = UserPasswordMinLength)]
+        [StringLength(PasswordMaxLength, ErrorMessage = CommonErrors.InvalidParameterLength, MinimumLength = PasswordMinLength)]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Compare(nameof(Password), ErrorMessage = PasswordsMustMatchErrorMessage)]
-        [Display(Name = UserConfirmPasswordDisplay)]
+        [Compare(nameof(Password), ErrorMessage = UserErrors.PasswordsMustMatch)]
+        [Display(Name = UserDisplay.ConfirmPassword)]
         public string ConfirmPassword { get; set; }
 
         public IFormFile ProfilePicture { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (this.ProfilePicture!=null &&
-                (this.ProfilePicture.Length > UserProfilePictureMaxLength ||
+            if (this.ProfilePicture != null &&
+                (this.ProfilePicture.Length > ProfilePictureMaxLength ||
                 !this.ProfilePicture.ContentType.StartsWith("image")))
             {
-                yield return new ValidationResult(ProfilePictureErrorMessage,new [] {nameof(this.ProfilePicture)});
+                yield return new ValidationResult(UserErrors.InvalidProfilePicture, new[] { nameof(this.ProfilePicture) });
             }
         }
     }

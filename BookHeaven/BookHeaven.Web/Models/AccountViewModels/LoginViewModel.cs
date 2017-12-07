@@ -1,11 +1,11 @@
-﻿using BookHeaven.Data;
+﻿using BookHeaven.Web.Infrastructure.Constants.Display;
+using BookHeaven.Web.Infrastructure.Constants.ErrorMessages;
+using System.ComponentModel.DataAnnotations;
+
+using static BookHeaven.Data.Infrastructure.Constants.UserData;
 
 namespace BookHeaven.Web.Models.AccountViewModels
 {
-    using System.ComponentModel.DataAnnotations;
-    using static DataConstants;
-    using static WebConstants;
-
     public class LoginViewModel
     {
         [Required]
@@ -13,11 +13,11 @@ namespace BookHeaven.Web.Models.AccountViewModels
         public string Email { get; set; }
 
         [Required]
-        [StringLength(UserPasswordMaxLength, ErrorMessage = InvalidParameterLengthErrorMessage, MinimumLength = UserPasswordMinLength)]
+        [StringLength(PasswordMaxLength, ErrorMessage = CommonErrors.InvalidParameterLength, MinimumLength = PasswordMinLength)]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Display(Name = RememberMeDisplay)]
+        [Display(Name = UserDisplay.RememberMe)]
         public bool RememberMe { get; set; }
     }
 }

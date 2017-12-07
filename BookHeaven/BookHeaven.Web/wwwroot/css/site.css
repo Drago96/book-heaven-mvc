@@ -54,19 +54,33 @@ button.facebook-btn {
     color: white;
 }
 
-button.facebook-btn:hover {
-    color: white;
-}
+    button.facebook-btn:hover {
+        color: white;
+    }
 
 button.google-btn {
     background-color: #d34836;
     color: white;
 }
 
-button.google-btn:hover {
-    color: white;
-}
+    button.google-btn:hover {
+        color: white;
+    }
 
 div.custom-alert {
     margin-top: 10px;
+}
+
+@media screen and (min-width: 992px) {
+    .col-no-padding-right {
+        padding-right: 0;
+    }
+
+    .col-no-padding-left {
+        padding-left: 0;
+    }
+}
+
+body.admin-body {
+    padding-top: 0;
 }

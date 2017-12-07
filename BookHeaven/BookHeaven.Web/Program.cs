@@ -1,8 +1,8 @@
-﻿namespace BookHeaven.Web
-{
-    using Microsoft.AspNetCore;
-    using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
 
+namespace BookHeaven.Web
+{
     public class Program
     {
         public static void Main(string[] args)

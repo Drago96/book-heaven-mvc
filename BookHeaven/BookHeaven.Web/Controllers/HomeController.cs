@@ -1,9 +1,9 @@
-﻿namespace BookHeaven.Web.Controllers
-{
-    using Microsoft.AspNetCore.Mvc;
-    using Models;
-    using System.Diagnostics;
+﻿using BookHeaven.Web.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
+namespace BookHeaven.Web.Controllers
+{
     public class HomeController : Controller
     {
         public IActionResult Index()
@@ -15,6 +15,5 @@
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
     }
 }
