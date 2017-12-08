@@ -47,7 +47,7 @@ namespace BookHeaven.Web.Areas.Admin.Controllers
             });
         }
 
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Details(string id)
         {
             var user = await this.users.GetByIdAsync<UserDetailsServiceModel>(id);
 
@@ -58,18 +58,8 @@ namespace BookHeaven.Web.Areas.Admin.Controllers
 
             var model = this.mapper.Map<UserDetailsServiceModel, UserDetailsViewModel>(user);
 
-            model.ProfilePicture = new FormFile(new MemoryStream(user.ProfilePicture),0,user.ProfilePicture.Length,"","");
             model.AllRoles = await this.roleManager.Roles.Select(r => r.Name).ToListAsync();
-
-            ICollection<string> userRoles = new List<string>();
-            foreach (var role in model.AllRoles)
-            {
-                if (User.IsInRole(role))
-                {
-                    userRoles.Add(role);
-                }
-            }
-            model.Roles = userRoles;
+            model.Roles = await this.users.GetRolesByIdAsync(id);
 
             return View(model);
         }

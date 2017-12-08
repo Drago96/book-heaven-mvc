@@ -1,31 +1,42 @@
-﻿var RegisterUserPageModule = (function (module) {
+﻿Array.prototype.contains = function (obj) {
+    var i = this.length;
+    while (i--) {
+        if (this[i] === obj) {
+            return true;
+        }
+    }
+    return false;
+}
+
+var RegisterUserPageModule = (function (module) {
     var moduleProfilePictureFieldName;
     var moduleProfilePictureUrl;
     var moduleProfilePictureWidth;
     var moduleProfilePictureHeight;
     var moduleProfilePictureMaxLength;
     var moduleProfilePictureErrorMessage;
+    var moduleSupportedImageTypes
 
     module.initializeModule = function (profilePictureFieldName,
         profilePictureUrl,
         profilePictureWidth,
         profilePictureHeight,
         profilePictureMaxLength,
-        profilePictureErrorMessage) {
+        profilePictureErrorMessage,
+        supportedImageTypes) {
         moduleProfilePictureFieldName = profilePictureFieldName;
         moduleProfilePictureUrl = profilePictureUrl;
         moduleProfilePictureWidth = profilePictureWidth;
         moduleProfilePictureHeight = profilePictureHeight;
         moduleProfilePictureMaxLength = profilePictureMaxLength;
         moduleProfilePictureErrorMessage = profilePictureErrorMessage;
+        moduleSupportedImageTypes = supportedImageTypes
 
         addPageFunctionality();
     }
 
     function addPageFunctionality() {
         $(document).ready(function () {
-            changeProfilePicture(document.getElementById("profile-picture-input"));
-
             $('#profile-picture').click(function () {
                 $('#profile-picture-input').trigger('click');
             });
@@ -41,9 +52,10 @@
 
                     if (!pictureValid) {
                         resetProfileImage();
+                    } else {
+                        setNewProfilePicture(file);    
                     }
-
-                    setNewProfilePicture(file);
+                    
                 }
             }
 
@@ -70,9 +82,10 @@
             function isPictureValid(file) {
                 var mimeType = file['type'];
                 var mimeSize = file['size'];
-                if (mimeType.split('/')[0] !== 'image' || mimeSize > moduleProfilePictureMaxLength) {
+                if (!moduleSupportedImageTypes.contains(mimeType) || mimeSize > moduleProfilePictureMaxLength) {
                     return false;
                 }
+                return true;
             }
 
             function resizeBase64Img(base64, width, height) {

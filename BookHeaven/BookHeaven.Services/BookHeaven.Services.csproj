@@ -5,8 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0001" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BookHeaven.Common\BookHeaven.Common.csproj" />
     <ProjectReference Include="..\BookHeaven.Data\BookHeaven.Data.csproj" />
   </ItemGroup>
+  
 
 </Project>

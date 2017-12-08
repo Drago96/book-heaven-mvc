@@ -1,4 +1,5 @@
-﻿@model RegisterViewModel
+﻿@using BookHeaven.Common.Infrastructure.Constants
+@model RegisterViewModel
 @{
     ViewData["Title"] = "Register";
 }
@@ -10,7 +11,7 @@
             <hr>
             <div class="form-group">
                 <img id="profile-picture" alt="User" class="featurette-image img-circle img-responsive profile-picture-select" src="@ResourceConstants.DefaultProfilePictureUrl" />
-                <input id="profile-picture-input" accept="image/*" type="file" class="hidden" asp-for="ProfilePicture" />
+                <input id="profile-picture-input" accept="@string.Join(',',ImageConstants.SupportedImageContentTypes)" type="file" class="hidden" asp-for="ProfilePicture" />
                 <div class="text-center"><small>Click here to select a profile picture. Max size 2MB.</small></div>
                 <div class="text-center"><span id="profile-picture-validation" asp-validation-for="ProfilePicture" class="text-danger"></span></div>
             </div>
@@ -52,6 +53,7 @@
             @UserDataConstants.ProfilePictureWidth,
             @UserDataConstants.ProfilePictureHeight,
             @UserDataConstants.ProfilePictureMaxLength,
-            '@UserErrorConstants.InvalidProfilePicture');
+            '@UserErrorConstants.InvalidProfilePicture',
+            @Html.Raw(Json.Serialize(ImageConstants.SupportedImageContentTypes)));
     </script>
 }

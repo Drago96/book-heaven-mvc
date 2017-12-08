@@ -49,6 +49,13 @@ namespace BookHeaven.Services.Implementations
         public async Task<T> GetByIdAsync<T>(string id)
             => await this.db.Users.Where(u => u.Id == id).ProjectTo<T>().FirstOrDefaultAsync();
 
+        public async Task<IEnumerable<string>> GetRolesByIdAsync(string id)
+        {
+            var userRolesIds = await this.db.UserRoles.Where(ur => ur.UserId == id).Select(r => r.RoleId).ToListAsync();
+            var roles = await this.db.Roles.Where(r => userRolesIds.Contains(r.Id)).Select(r => r.Name).ToListAsync();
+            return roles;
+        }
+
 
         private IQueryable<User> FindUsersBySearchTerm(string search)
             => this.db

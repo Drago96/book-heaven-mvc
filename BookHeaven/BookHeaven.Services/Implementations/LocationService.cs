@@ -31,8 +31,12 @@ namespace BookHeaven.Services.Implementations
 
         public async Task<LocationFromApiDto> GetCurrentLocationAsync(string ipAddress)
         {
-            string resultJson = await this.httpClient.GetStringAsync(ServiceConstants.GeoLocationApi + ipAddress);
-            LocationFromApiDto result = this.json.DeserializeObject<LocationFromApiDto>(resultJson);
+            string resultJson = await this.httpClient.GetResponseAsync(ServiceConstants.GeoLocationApi + ipAddress);
+            LocationFromApiDto result = null;
+            if (resultJson != null)
+            {
+                result = this.json.DeserializeObject<LocationFromApiDto>(resultJson);
+            }
             return result;
         }
 

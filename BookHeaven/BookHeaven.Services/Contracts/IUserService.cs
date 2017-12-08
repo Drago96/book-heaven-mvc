@@ -18,5 +18,7 @@ namespace BookHeaven.Services.Contracts
         Task<bool> ExistsAsync(string id);
 
         Task<T> GetByIdAsync<T>(string id);
+
+        Task<IEnumerable<string>> GetRolesByIdAsync(string id);
     }
 }

@@ -3,7 +3,7 @@ using BookHeaven.Web.Infrastructure.Constants.ErrorMessages;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
+using BookHeaven.Common.Extensions;
 using static BookHeaven.Data.Infrastructure.Constants.UserDataConstants;
 
 namespace BookHeaven.Web.Models.AccountViewModels
@@ -40,7 +40,7 @@ namespace BookHeaven.Web.Models.AccountViewModels
         {
             if (this.ProfilePicture != null &&
                 (this.ProfilePicture.Length > ProfilePictureMaxLength ||
-                !this.ProfilePicture.ContentType.StartsWith("image")))
+                !this.ProfilePicture.ContentType.IsValidImage()))
             {
                 yield return new ValidationResult(UserErrorConstants.InvalidProfilePicture, new[] { nameof(this.ProfilePicture) });
             }

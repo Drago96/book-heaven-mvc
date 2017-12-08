@@ -60,10 +60,20 @@ else
                     <div><small>@user.Email</small></div>
                 </td>
                 <td width="45%">
-                    <div class="col-md-4">
-                        <a class="btn btn-default" asp-action="Edit" asp-route-id="@user.Id">Modify User</a>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <a class="btn btn-default btn-block" asp-action="Details" asp-route-id="@user.Id">Details</a>  
+                        </div>
+                        <div class="col-md-3">
+                            <a class="btn btn-warning btn-block" asp-action="Details" asp-route-id="@user.Id">Edit</a>
+                        </div>
+                        <div class="col-md-3">
+                            <a class="btn btn-danger btn-block" asp-action="Details" asp-route-id="@user.Id">Delete</a>
+                        </div>
+                        <div class="col-md-3">
+                            <a class="btn btn-info btn-block" asp-action="Details" asp-route-id="@user.Id">Block</a>
+                        </div>
                     </div>
-                    
                 </td>
             </tr>
         }

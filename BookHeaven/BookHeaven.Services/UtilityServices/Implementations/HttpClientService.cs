@@ -12,10 +12,20 @@ namespace BookHeaven.Services.Utilities
             this.client = new HttpClient();
         }
 
-        public async Task<string> GetStringAsync(string requestUrl)
+        public async Task<string> GetResponseAsync(string requestUrl)
         {
-            string result = await this.client.GetStringAsync(requestUrl);
-            return result;
+            try
+            {
+                string result = await this.client.GetStringAsync(requestUrl);
+                return result;
+            }
+            catch
+            {
+                
+            }
+
+            return null;
+
         }
     }
 }

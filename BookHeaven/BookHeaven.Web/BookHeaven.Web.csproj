@@ -31,7 +31,8 @@
     <ProjectReference Include="..\BookHeaven.Data\BookHeaven.Data.csproj" />
     <ProjectReference Include="..\BookHeaven.Services\BookHeaven.Services.csproj" />
   </ItemGroup>
-
+	
+	
   <ItemGroup>
     <Folder Include="wwwroot\images\user-images\" />
   </ItemGroup>

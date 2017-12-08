@@ -1,4 +1,5 @@
-﻿using BookHeaven.Data.Models;
+﻿using System.Linq;
+using BookHeaven.Data.Models;
 using BookHeaven.Services.Contracts;
 using BookHeaven.Web.Infrastructure.Constants;
 using BookHeaven.Web.Infrastructure.Constants.ErrorMessages;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using BookHeaven.Data.Infrastructure.Constants;
 using BookHeaven.Services.UtilityServices.Contracts;
 
 namespace BookHeaven.Web.Controllers
@@ -92,7 +94,10 @@ namespace BookHeaven.Web.Controllers
 
             if (model.ProfilePicture != null)
             {
-                user.ProfilePicture = await this.fileService.GetByteArrayFromFormFileAsync(model.ProfilePicture);
+                var profilePicture = await this.fileService.GetByteArrayFromFormFileAsync(model.ProfilePicture);
+                var pictureType = model.ProfilePicture.ContentType.Split('/').Last();
+                user.ProfilePicture = this.fileService.ResizeImageAsync(profilePicture,
+                    UserDataConstants.ProfilePictureWidth, UserDataConstants.ProfilePictureHeight, pictureType);
             }
 
             var result = await this.userManager.CreateAsync(user, model.Password);
