@@ -25,3 +25,31 @@
 
     return module;
 }({}))
+
+var AdminUsersListModule = (function (module) {
+
+    module.Initialize = function () {
+        $('.ui.search')
+            .search({
+                apiSettings: {
+                    url: '/api/users?searchTerm={query}',
+                    onResponse(response) {
+                        return {
+                            results: response
+                        }
+                    }
+                },
+                fields: {
+                    title: 'name',
+                    description: 'email',
+                },
+                minCharacters: 3,
+                onSelect: function (result, response) {
+                    $('#search-field').val(result.name)
+                    $('#search-form').submit();
+                }
+            });
+    }
+
+    return module;
+}({}))

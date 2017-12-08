@@ -103,6 +103,7 @@ namespace BookHeaven.Web.Controllers
             }
 
             await this.signInManager.SignInAsync(user, isPersistent: false);
+            TempData.AddSuccessMessage($"Welcome, {model.FirstName} {model.LastName}!");
             return RedirectToLocal(returnUrl);
         }
 

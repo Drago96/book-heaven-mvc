@@ -5,6 +5,8 @@ namespace BookHeaven.Services.Models.Users
 {
     public class UserAdminListingServiceModel : IMapFrom<User>
     {
+        public string Id { get; set; }
+
         public string FirstName { get; set; }
 
         public string LastName { get; set; }

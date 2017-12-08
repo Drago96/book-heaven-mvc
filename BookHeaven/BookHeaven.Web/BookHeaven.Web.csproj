@@ -36,4 +36,14 @@
     <Folder Include="wwwroot\images\user-images\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\lib\semantic-ui-search\.versions" />
+    <None Include="wwwroot\lib\semantic-ui-search\index.js" />
+    <None Include="wwwroot\lib\semantic-ui-search\package.js" />
+    <None Include="wwwroot\lib\semantic-ui-search\README.md" />
+    <None Include="wwwroot\lib\semantic-ui-search\RELEASE-NOTES.md" />
+    <None Include="wwwroot\lib\semantic-ui-search\search.js" />
+    <None Include="wwwroot\lib\semantic-ui-search\search.min.js" />
+  </ItemGroup>
+
 </Project>

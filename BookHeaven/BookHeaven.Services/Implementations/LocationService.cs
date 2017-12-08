@@ -29,10 +29,10 @@ namespace BookHeaven.Services.Implementations
             this.db = db;
         }
 
-        public async Task<LocationDto> GetCurrentLocationAsync(string ipAddress)
+        public async Task<LocationFromApiDto> GetCurrentLocationAsync(string ipAddress)
         {
             string resultJson = await this.httpClient.GetStringAsync(ServiceConstants.GeoLocationApi + ipAddress);
-            LocationDto result = this.json.DeserializeObject<LocationDto>(resultJson);
+            LocationFromApiDto result = this.json.DeserializeObject<LocationFromApiDto>(resultJson);
             return result;
         }
 

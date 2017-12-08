@@ -48,7 +48,7 @@ namespace BookHeaven.Web.Infrastructure.Filters
 
         }
 
-        private async Task<LocationDto> GetLocation(ActionExecutingContext context)
+        private async Task<LocationFromApiDto> GetLocation(ActionExecutingContext context)
         {
             var ipAddress = context.HttpContext.Connection.RemoteIpAddress.ToString();
             var currentLocation = await this.locations.GetCurrentLocationAsync(ipAddress);

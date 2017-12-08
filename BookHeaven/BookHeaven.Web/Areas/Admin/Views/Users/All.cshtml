@@ -7,17 +7,33 @@
 <h2>@ViewData["Title"]</h2>
 <hr />
 
-<form method="get" asp-route-page="1">
+<form id="search-form" method="get" asp-route-page="1">
     <div class="form-group">
-        <div class="col-md-6 col-no-padding-left">
-            <input asp-for="SearchTerm" placeholder="Search..." class="form-control"/>
+        <div class="col-md-5 col-no-padding-left ui search">
+                <div class="ui icon input">
+                    <input id="search-field" class="prompt form-control" asp-for="SearchTerm" placeholder="Search Users">
+                </div>
+                <div class="results"></div>
         </div>
         <button type="submit" class="btn btn-default">Search</button>
+        <a asp-action="All" asp-route-searchTerm="" class="btn btn-default">Clear Filter</a>
     </div>
 </form>
 
-<table class="table table-bordered table-hover table-striped">
-    <thead>
+@if (!string.IsNullOrEmpty(Model.SearchTerm))
+{
+    <h3 class="text-info search-info">Displaying results for search : @Model.SearchTerm</h3>
+}
+
+@if (!Model.Items.Any())
+{
+    <h3>There are no users to display!</h3>
+}
+
+else
+{
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
         <tr>
             <th>
 
@@ -26,11 +42,11 @@
                 Username
             </th>
             <th>
-                Actions
+                
             </th>
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         @for (int i = 0; i < Model.Items.Count(); i++)
         {
             var user = Model.Items.ElementAt(i);
@@ -44,25 +60,36 @@
                     <div><small>@user.Email</small></div>
                 </td>
                 <td width="45%">
-                    3
+                    <div class="col-md-4">
+                        <a class="btn btn-default" asp-action="Edit" asp-route-id="@user.Id">Modify User</a>
+                    </div>
+                    
                 </td>
             </tr>
         }
-    </tbody>
+        </tbody>
 
-</table>
-<ul class="pagination">
-    <li class="@(Model.CurrentPage == Model.PreviousPage ? "disabled" : "")">
-        <a asp-action="All" asp-route-searchTerm="@Model.SearchTerm" asp-route-page="@Model.PreviousPage">&laquo;</a>
-    </li>
-
-    @for (int i = 1; i <= Model.TotalPages; i++)
-    {
-        <li class="@(Model.CurrentPage == i ? "active" : "")">
-            <a asp-action="All" asp-route-searchTerm="@Model.SearchTerm" asp-route-page="@i">@i</a>
+    </table>
+    <ul class="pagination">
+        <li class="@(Model.CurrentPage == Model.PreviousPage ? "disabled" : "")">
+            <a asp-action="All" asp-route-searchTerm="@Model.SearchTerm" asp-route-page="@Model.PreviousPage">&laquo;</a>
         </li>
-    }
-    <li class="@(Model.CurrentPage == Model.NextPage ? "disabled" : "")">
-        <a asp-action="All" asp-route-searchTerm="@Model.SearchTerm" asp-route-page="@Model.NextPage">&raquo;</a>
-    </li>
-</ul>
+
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <li class="@(Model.CurrentPage == i ? "active" : "")">
+                <a asp-action="All" asp-route-searchTerm="@Model.SearchTerm" asp-route-page="@i">@i</a>
+            </li>
+        }
+        <li class="@(Model.CurrentPage == Model.NextPage ? "disabled" : "")">
+            <a asp-action="All" asp-route-searchTerm="@Model.SearchTerm" asp-route-page="@Model.NextPage">&raquo;</a>
+        </li>
+    </ul>   
+}
+
+@section Scripts
+{
+    <script>
+        AdminUsersListModule.Initialize()
+    </script>
+}
