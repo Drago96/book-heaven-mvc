@@ -107,3 +107,39 @@ li.disabled > a {
 .no-padding {
     padding: 0 0 0 0;
 }
+
+div.links-well {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 0;
+}
+
+img.book-picture {
+    height: 400px;
+    width: 300px;
+}
+
+div.form-margin-row {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+textarea.description-textarea {
+    height: 75px;
+    overflow: hidden;
+}
+
+button.book-picture-button {
+    width: 300px;
+    margin-top: 15px;
+}
+
+ul.publisher-links-nav {
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
+}
+
+ul.publisher-links-nav li {
+    width: 100%;
+}

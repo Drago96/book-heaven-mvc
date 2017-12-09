@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BookHeaven.Services.Contracts
 {
-    public interface IUserService : IServce
+    public interface IUserService : IService
     {
         Task<IEnumerable<T>> AllPaginatedAsync<T>(string search , int page);
 

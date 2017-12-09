@@ -1,0 +1,12 @@
+﻿@if (TempData.ContainsKey(DataKeyConstants.ErrorMessage))
+{
+    <div class="alert alert-danger text-center custom-alert">
+        @TempData[DataKeyConstants.ErrorMessage]
+    </div>
+}
+@if (TempData.ContainsKey(DataKeyConstants.SuccessMessage))
+{
+    <div class="alert alert-success text-center custom-alert">
+        @TempData[DataKeyConstants.SuccessMessage]
+    </div>
+}

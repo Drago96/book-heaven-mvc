@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace BookHeaven.Services.UtilityServices.Contracts
 {
-    public interface IFileService : IServce
+    public interface IFileService : IService
     {
         Task<byte[]> GetByteArrayFromFormFileAsync(IFormFile file);
 

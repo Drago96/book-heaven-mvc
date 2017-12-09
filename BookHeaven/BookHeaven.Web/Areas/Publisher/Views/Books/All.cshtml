@@ -1,0 +1,74 @@
+﻿@model PaginatedViewModel<BookPublisherListingServiceModel>
+@{
+    ViewData["Title"] = "My Published Books";
+}
+
+<div class="row">
+    <div class="col-md-10 col-md-offset-2">
+        <h1>My Published Books</h1>
+        <hr/>
+    </div>
+    <div class="col-md-2 well links-well">
+        <ul class="nav navbar-nav navbar-collapse publisher-links-nav">
+            <li>
+               
+                <a asp-action="Create" class="item btn-block">Publish New Book</a>
+              
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-10">
+        <form id="search-form" method="get" asp-route-page="1">
+            <div class="form-group">
+                <div class="col-md-5 col-no-padding-left ui search">
+                    <div class="ui icon input">
+                        <input id="search-field" class="prompt form-control" asp-for="SearchTerm" placeholder="Search Books">
+                    </div>
+                    <div class="results"></div>
+                </div>
+                <button type="submit" class="btn btn-default">Search</button>
+                <a asp-action="All" asp-route-searchTerm="" class="btn btn-default">Clear Filter</a>
+            </div>
+        </form>
+        @if (!string.IsNullOrEmpty(Model.SearchTerm))
+        {
+            <h3 class="text-info search-info">Displaying results for search : @Model.SearchTerm</h3>
+        }
+        @if (!Model.Items.Any())
+        {
+            if (string.IsNullOrEmpty(Model.SearchTerm))
+            {
+                <h2>You haven't published any books yet!</h2>
+            }
+            else
+            {
+                <h2>No books found matching your search.</h2>
+            }
+
+        }
+        @foreach (var item in Model.Items)
+        {
+            <div class="list-group-item">
+                <div class="row">
+                    <div class="col-md-8"> @item.Title - @item.PublishedDate.ToShortDateString() </div>
+                    <div class="col-md-4">
+                        <a class="btn btn-info">Details</a>
+                        <a class="btn btn-warning">Edit</a>
+                        <a class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @await Html.PartialAsync("_PaginationPartial", new PageSelectorViewModel
+        {
+            SearchTerm = Model.SearchTerm,
+            Action = "All",
+            CurrentPage = Model.CurrentPage,
+            NextPage = Model.NextPage,
+            PreviousPage = Model.PreviousPage,
+            TotalPages = Model.TotalPages
+        })
+    </div>
+</div>
+

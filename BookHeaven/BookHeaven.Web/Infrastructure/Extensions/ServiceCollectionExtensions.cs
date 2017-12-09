@@ -11,7 +11,7 @@ namespace BookHeaven.Web.Infrastructure.Extensions
     {
         public static void ConfigureCustomServices(this IServiceCollection services)
         {
-            Type serviceInterFaceType = typeof(IServce);
+            Type serviceInterFaceType = typeof(IService);
             Assembly servicesAssembly = Assembly.GetAssembly(serviceInterFaceType);
             IEnumerable<Type> servicesInterfaces = servicesAssembly
                 .GetTypes()

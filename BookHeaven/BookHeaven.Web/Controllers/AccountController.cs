@@ -14,6 +14,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using BookHeaven.Data.Infrastructure.Constants;
 using BookHeaven.Services.UtilityServices.Contracts;
+using BookHeaven.Web.Infrastructure.Constants.SuccessMessages;
 
 namespace BookHeaven.Web.Controllers
 {
@@ -108,7 +109,7 @@ namespace BookHeaven.Web.Controllers
             }
 
             await this.signInManager.SignInAsync(user, isPersistent: false);
-            TempData.AddSuccessMessage($"Welcome, {model.FirstName} {model.LastName}!");
+            TempData.AddSuccessMessage(string.Format(UserSuccessMessages.RegisterMessage,model.FirstName,model.LastName));
             return RedirectToLocal(returnUrl);
         }
 

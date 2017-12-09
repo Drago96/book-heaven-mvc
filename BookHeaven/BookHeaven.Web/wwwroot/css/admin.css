@@ -27,7 +27,7 @@ div.user-well-count {
     }
 
 
-div.list-group-item {
+div.list-group-item-margined {
     margin-bottom: 10px;
     margin-top: 10px;
     background-color:azure
@@ -35,4 +35,8 @@ div.list-group-item {
 
 div.list-group-label {
     margin-top: 20px;
+}
+
+div.category-label {
+    font-size: 1.5em;
 }

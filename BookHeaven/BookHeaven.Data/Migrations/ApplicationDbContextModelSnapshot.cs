@@ -20,6 +20,63 @@ namespace BookHeaven.Data.Migrations
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("BookHeaven.Data.Models.Book", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<byte[]>("BookPicture")
+                        .HasMaxLength(10485760);
+
+                    b.Property<string>("Description")
+                        .IsRequired();
+
+                    b.Property<decimal>("Price");
+
+                    b.Property<DateTime>("PublishedDate");
+
+                    b.Property<string>("PublisherId");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(30);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PublisherId");
+
+                    b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("BookHeaven.Data.Models.BookCategory", b =>
+                {
+                    b.Property<int>("BookId");
+
+                    b.Property<int>("CategoryId");
+
+                    b.HasKey("BookId", "CategoryId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("BookCategory");
+                });
+
+            modelBuilder.Entity("BookHeaven.Data.Models.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasFilter("[Name] IS NOT NULL");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("BookHeaven.Data.Models.Location", b =>
                 {
                     b.Property<int>("Id")
@@ -225,6 +282,26 @@ namespace BookHeaven.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("BookHeaven.Data.Models.Book", b =>
+                {
+                    b.HasOne("BookHeaven.Data.Models.User", "Publisher")
+                        .WithMany("PublishedBooks")
+                        .HasForeignKey("PublisherId");
+                });
+
+            modelBuilder.Entity("BookHeaven.Data.Models.BookCategory", b =>
+                {
+                    b.HasOne("BookHeaven.Data.Models.Book", "Book")
+                        .WithMany("Categories")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BookHeaven.Data.Models.Category", "Category")
+                        .WithMany("Books")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

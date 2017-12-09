@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
 using static BookHeaven.Data.Infrastructure.Constants.UserDataConstants;
@@ -19,5 +20,7 @@ namespace BookHeaven.Data.Models
 
         [MaxLength(ProfilePictureMaxLength)]
         public byte[] ProfilePicture { get; set; }
+
+        public ICollection<Book> PublishedBooks { get; set; } = new List<Book>();
     }
 }

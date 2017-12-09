@@ -2,7 +2,7 @@
 
 namespace BookHeaven.Services.Utilities
 {
-    public interface IHttpClientService : IServce
+    public interface IHttpClientService : IService
     {
         Task<string> GetResponseAsync(string requestUrl);
     }

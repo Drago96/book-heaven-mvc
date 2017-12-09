@@ -1,0 +1,17 @@
+﻿@model PageSelectorViewModel
+
+<ul class="pagination">
+    <li class="@(Model.CurrentPage <= Model.PreviousPage ? "disabled" : "")">
+        <a asp-action="@Model.Action" asp-route-searchTerm="@Model.SearchTerm" asp-route-page="@Model.PreviousPage">&laquo;</a>
+    </li>
+
+    @for(int i = 1; i <= Model.TotalPages; i++)
+    {
+        <li class="@(Model.CurrentPage == i ? "active" : "")">
+            <a asp-action="@Model.Action" asp-route-searchTerm="@Model.SearchTerm" asp-route-page="@i">@i</a>
+        </li>
+    }
+    <li class="@(Model.CurrentPage >= Model.NextPage ? "disabled" : "")">
+        <a asp-action="@Model.Action" asp-route-searchTerm="@Model.SearchTerm" asp-route-page="@Model.NextPage">&raquo;</a>
+    </li>
+</ul>   

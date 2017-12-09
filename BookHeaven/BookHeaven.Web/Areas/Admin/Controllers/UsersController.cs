@@ -46,6 +46,7 @@ namespace BookHeaven.Web.Areas.Admin.Controllers
                 PageSize = UserServiceConstants.UserListingPageSize
             });
         }
+        
 
         public async Task<IActionResult> Details(string id)
         {

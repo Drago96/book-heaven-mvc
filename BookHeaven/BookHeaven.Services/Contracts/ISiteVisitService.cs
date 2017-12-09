@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BookHeaven.Services.Contracts
 {
-    public interface ISiteVisitService : IServce
+    public interface ISiteVisitService : IService
     {
         Task AddVisitAsync();
 

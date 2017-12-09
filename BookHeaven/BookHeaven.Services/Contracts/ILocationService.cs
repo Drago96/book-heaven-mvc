@@ -5,7 +5,7 @@ using BookHeaven.Services.Models.Locations;
 
 namespace BookHeaven.Services.Contracts
 {
-    public interface ILocationService : IServce
+    public interface ILocationService : IService
     {
         Task<LocationFromApiDto> GetCurrentLocationAsync(string ipAddress);
 

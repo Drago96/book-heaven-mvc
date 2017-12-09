@@ -1,4 +1,5 @@
 ﻿
+@using BookHeaven.Web.Models.Shared
 @model PaginatedViewModel<UserAdminListingServiceModel>
 @{
     ViewData["Title"] = "All Users";
@@ -55,11 +56,11 @@ else
                 <td width="5%">
                     @(i + 1)
                 </td>
-                <td width="50%">
+                <td width="60%">
                     <div>@user.FirstName @user.LastName</div>
                     <div><small>@user.Email</small></div>
                 </td>
-                <td width="45%">
+                <td width="35%">
                     <div class="row">
                         <div class="col-md-3">
                             <a class="btn btn-default btn-block" asp-action="Details" asp-route-id="@user.Id">Details</a>  
@@ -80,21 +81,16 @@ else
         </tbody>
 
     </table>
-    <ul class="pagination">
-        <li class="@(Model.CurrentPage == Model.PreviousPage ? "disabled" : "")">
-            <a asp-action="All" asp-route-searchTerm="@Model.SearchTerm" asp-route-page="@Model.PreviousPage">&laquo;</a>
-        </li>
 
-        @for (int i = 1; i <= Model.TotalPages; i++)
-        {
-            <li class="@(Model.CurrentPage == i ? "active" : "")">
-                <a asp-action="All" asp-route-searchTerm="@Model.SearchTerm" asp-route-page="@i">@i</a>
-            </li>
-        }
-        <li class="@(Model.CurrentPage == Model.NextPage ? "disabled" : "")">
-            <a asp-action="All" asp-route-searchTerm="@Model.SearchTerm" asp-route-page="@Model.NextPage">&raquo;</a>
-        </li>
-    </ul>   
+    @await Html.PartialAsync("_PaginationPartial", new PageSelectorViewModel
+    {
+        Action = "All",
+        CurrentPage = Model.CurrentPage,
+        NextPage = Model.NextPage,
+        PreviousPage = Model.PreviousPage,
+        SearchTerm = Model.SearchTerm,
+        TotalPages = Model.TotalPages
+    }) 
 }
 
 @section Scripts

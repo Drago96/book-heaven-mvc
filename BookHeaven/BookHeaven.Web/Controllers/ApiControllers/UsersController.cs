@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using BookHeaven.Services.Contracts;
 using BookHeaven.Services.Infrastructure.Constants;
 using BookHeaven.Services.Models.Users;
+using BookHeaven.Web.Infrastructure.Constants;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookHeaven.Web.Controllers.ApiControllers
@@ -20,6 +22,7 @@ namespace BookHeaven.Web.Controllers.ApiControllers
         }
 
         [HttpGet]
+        [Authorize(Roles = RoleConstants.Admin)]
         public async Task<IActionResult> Get([FromQuery] string searchTerm = "")
             => Ok(await this.users
                 .AllByTakeAsync<UserSearchDto>(searchTerm, UserServiceConstants.UsersSearchCount));

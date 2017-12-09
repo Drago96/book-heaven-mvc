@@ -1,6 +1,6 @@
 ﻿namespace BookHeaven.Services.Utilities
 {
-    public interface IJsonService : IServce
+    public interface IJsonService : IService
     {
         T DeserializeObject<T>(string value);
     }

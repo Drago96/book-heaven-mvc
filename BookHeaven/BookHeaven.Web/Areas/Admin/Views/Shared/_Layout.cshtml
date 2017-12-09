@@ -53,6 +53,12 @@
                                 <li><a asp-controller="Users" asp-action="All">All</a></li>
                             </ul>
                         </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Categories</a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-controller="Categories" asp-action="All">All</a></li>
+                            </ul>
+                        </li>
                         <li>
                             <form method="post" asp-area="" asp-controller="Account" asp-action="Logout">
                                 <button type="submit" class="btn btn-link navbar-btn navbar-link">Logout</button>
@@ -64,18 +70,7 @@
         </div>
         <div class="col-sm-9 col-lg-10">
             <div class="body-content admin-container">
-                @if (TempData.ContainsKey(DataKeyConstants.ErrorMessage))
-                {
-                    <div class="alert alert-danger text-center custom-alert">
-                        @TempData[DataKeyConstants.ErrorMessage]
-                    </div>
-                }
-                @if (TempData.ContainsKey(DataKeyConstants.SuccessMessage))
-                {
-                    <div class="alert alert-success text-center custom-alert">
-                        @TempData[DataKeyConstants.SuccessMessage]
-                    </div>
-                }
+                @await Html.PartialAsync("_StatusMessagesPartial")
                 @RenderBody()
                 <hr/>
                 <footer>

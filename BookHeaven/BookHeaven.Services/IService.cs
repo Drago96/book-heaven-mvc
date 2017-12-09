@@ -1,6 +1,6 @@
 ﻿namespace BookHeaven.Services
 {
-    public interface IServce
+    public interface IService
     {
         
     }
