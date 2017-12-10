@@ -1,4 +1,4 @@
-﻿@model CategoryAllPageViewModel
+﻿@model IEnumerable<CategoryAdminListingServiceModel>
 @{
     ViewData["Title"] = "All Categories";
 }
@@ -6,55 +6,50 @@
 <h2>@ViewData["Title"]</h2>
 <hr />
 
-<form method="post" asp-action="Create">
-    <div class="row">
-        <div class="col-md-2">
-            <div class="category-label">Create Category</div>
-        </div>
-        <section>
-            <div class="col-md-9">
+<div class="row">
+    <div class="col-md-4">
+        <button class="btn btn-info btn-block" id="create-category-button">Create Category</button>
+    </div>
+</div>
+
+<hr />
+<div class="row  form-margin-row">
+    <div class="col-md-4">
+        <input type="text" id="categories-filter" placeholder="Filter categories..." class="form-control"/>
+    </div>
+</div>
+
+<div class="row">
+
+    @foreach (var category in Model)
+    {
+
+        <div class="col-md-4 category-item">
+            <div class="well">
                 <div class="row">
-                    <div class="col-md-5">
-                        <input class="form-control" asp-for="CategoryCreateModel.Name" />
-                        <span class="text-danger" asp-validation-for="CategoryCreateModel.Name"></span>
+                    <div class="col-md-10">
+                        <div class="category-label">@category.Name</div>
+                        <div class="text-uppercase"> Total Books : @category.Books</div>
                     </div>
                     <div class="col-md-2">
-                        <button class="btn btn-success btn-block" type="submit">Create</button>
+                        <i class="glyphicon glyphicon-edit edit-icon link-icon" category-id="@category.Id" category-name="@category.Name" ></i>
+                        <form method="post" class="custom-inline-form" asp-action="Delete" asp-route-id="@category.Id">
+                            <i class="glyphicon glyphicon-remove delete-icon link-icon"></i>
+                        </form>
                     </div>
                 </div>
             </div>
-        </section>
-    </div>
-</form>
+        </div>
 
-<hr />
+    }
 
-<ul>
-    <div class="row">
-        @foreach (var category in Model.AllCategories)
-        {
-            <li>
-                <div class="col-md-4">
-                    <div class="well">
-                        <div class="row">
-                            <div class="col-md-10">
-                                <div class="category-label">@category.Name</div>
-                                <div class="text-uppercase"> Total Books : @category.Books</div>
-                            </div>
-                            <div class="col-md-2">
-                                <i class="glyphicon glyphicon-edit" style="font-size: 1.6em"></i>
-                                <i class="glyphicon glyphicon-remove" style="font-size: 1.6em"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        }
-    </div>
-</ul>
+</div>
 
-@section Scripts
-    {
+@section Scripts    {
     @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script>
+        DeleteItemDialogs.InitializeDialogs('.delete-icon', 'category');
+        AllCategoriesModule.Initialize();
+    </script>
 }
 

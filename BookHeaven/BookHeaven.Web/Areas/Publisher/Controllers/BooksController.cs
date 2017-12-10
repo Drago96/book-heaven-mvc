@@ -105,5 +105,22 @@ namespace BookHeaven.Web.Areas.Publisher.Controllers
                     Text = c.Name,
                     Value = c.Id.ToString()
                 });
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var exists = await this.books.ExistsAsync(id);
+
+            if (!exists)
+            {
+                return BadRequest();
+            }
+
+            await this.books.DeleteAsync(id);
+
+            TempData.AddSuccessMessage(BookSuccessConstants.BookDeletedSuccessfully);
+
+            return RedirectToAction(nameof(All));
+        }
     }
 }

@@ -21,6 +21,7 @@ namespace BookHeaven.Services.Implementations
             this.db = db;
         }
 
+
         public async Task<IEnumerable<T>> GetAllAsync<T>()
             => await this.db
             .Categories
@@ -43,6 +44,25 @@ namespace BookHeaven.Services.Implementations
             this.db.Add(category);
             await this.db.SaveChangesAsync();
 
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var category = await this.db.Categories.FindAsync(id);
+
+            this.db.Remove(category);
+
+            await this.db.SaveChangesAsync();
+        }
+
+        public Task<bool> AlreadyExistsAsync(int id, string name)
+            => this.db.Categories.AnyAsync(c => c.Id != id && c.Name == name);
+
+        public async Task EditAsync(int id, string name)
+        {
+            var category = await this.db.Categories.FindAsync(id);
+            category.Name = name;
+            await this.db.SaveChangesAsync();
         }
     }
 }

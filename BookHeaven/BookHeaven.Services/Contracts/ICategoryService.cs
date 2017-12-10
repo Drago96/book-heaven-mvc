@@ -14,5 +14,11 @@ namespace BookHeaven.Services.Contracts
         Task<bool> ExistsAsync(string categoryName);
 
         Task CreateAsync(string name);
+
+        Task DeleteAsync(int id);
+
+        Task<bool> AlreadyExistsAsync(int id, string name);
+
+        Task EditAsync(int id, string name);
     }
 }

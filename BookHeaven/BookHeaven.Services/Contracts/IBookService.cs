@@ -12,5 +12,10 @@ namespace BookHeaven.Services.Contracts
         Task<IEnumerable<T>> AllPaginatedAsync<T>(string searchTerm, int page);
 
         Task<int> GetCountBySearchTermAsync(string searchTerm);
+
+        Task<bool> ExistsAsync(int id);
+
+
+        Task DeleteAsync(int id);
     }
 }

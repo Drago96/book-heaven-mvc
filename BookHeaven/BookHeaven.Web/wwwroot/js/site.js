@@ -8,6 +8,42 @@
     return false;
 }
 
+$(".fade").fadeTo(2000, 500).slideUp(500, function () {
+    $(".fade").slideUp(500);
+});
+
+var DeleteItemDialogs = (function (module) {
+
+    module.InitializeDialogs = function (selector, itemName) {
+        $(selector).each(function() {
+            var self = this
+            $(this).confirm({
+                title: 'Delete this ' + itemName,
+                content: 'Are you sure want to delete this ' + itemName + '?',
+                buttons: {
+                    yes: {
+                        action: function () {
+                            $(self).parents('form:first').submit()
+                        }
+                    },
+                    no: {
+                        action: function () {
+
+                        }
+                    }
+                },
+                closeIcon: true,
+                type:'red'
+
+            });
+            })
+            
+    }
+
+    return module;
+
+}({}))
+
 var RegisterUserPageModule = (function (module) {
     var moduleProfilePictureFieldName;
     var moduleProfilePictureUrl;
@@ -53,9 +89,9 @@ var RegisterUserPageModule = (function (module) {
                     if (!pictureValid) {
                         resetProfileImage();
                     } else {
-                        setNewProfilePicture(file);    
+                        setNewProfilePicture(file);
                     }
-                    
+
                 }
             }
 

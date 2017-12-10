@@ -24,15 +24,18 @@ namespace BookHeaven.Web.Controllers
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
         private readonly IFileService fileService;
+        private readonly IUserService users;
 
         public AccountController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            IFileService fileService)
+            IFileService fileService,
+            IUserService users)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.fileService = fileService;
+            this.users = users;
         }
 
         [AllowAnonymous]
@@ -90,7 +93,7 @@ namespace BookHeaven.Web.Controllers
                 UserName = model.Email,
                 Email = model.Email,
                 FirstName = model.FirstName,
-                LastName = model.LastName,
+                LastName = model.LastName
             };
 
             if (model.ProfilePicture != null)

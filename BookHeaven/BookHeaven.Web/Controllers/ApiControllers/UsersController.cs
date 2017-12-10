@@ -24,7 +24,15 @@ namespace BookHeaven.Web.Controllers.ApiControllers
         [HttpGet]
         [Authorize(Roles = RoleConstants.Admin)]
         public async Task<IActionResult> Get([FromQuery] string searchTerm = "")
-            => Ok(await this.users
+        {
+            if (searchTerm == null)
+            {
+                searchTerm = "";
+            }
+            return Ok(await this.users
                 .AllByTakeAsync<UserSearchDto>(searchTerm, UserServiceConstants.UsersSearchCount));
+
+        }
+
     }
 }

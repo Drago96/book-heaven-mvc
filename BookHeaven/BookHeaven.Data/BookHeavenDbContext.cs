@@ -30,7 +30,8 @@ namespace BookHeaven.Data
                 .Entity<User>()
                 .HasMany(p => p.PublishedBooks)
                 .WithOne(b => b.Publisher)
-                .HasForeignKey(b => b.PublisherId);
+                .HasForeignKey(b => b.PublisherId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .Entity<Category>()

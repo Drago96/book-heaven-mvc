@@ -8,7 +8,7 @@ namespace BookHeaven.Web.Areas.Admin.Models.Categories
 {
     public class CategoryAllPageViewModel
     {
-        public CategoryCreateViewModel CategoryCreateModel { get; set; }
+        public CategoryBasicInfoViewModel CategoryBasicInfoModel { get; set; }
 
         public IEnumerable<CategoryAdminListingServiceModel> AllCategories { get; set; }
     }

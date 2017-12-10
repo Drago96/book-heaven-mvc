@@ -9,6 +9,9 @@ using BookHeaven.Services.Contracts;
 using BookHeaven.Services.Infrastructure.Constants;
 using BookHeaven.Services.Models.Users;
 using BookHeaven.Web.Areas.Admin.Models.Users;
+using BookHeaven.Web.Infrastructure.Constants.SuccessMessages;
+using BookHeaven.Web.Infrastructure.Extensions;
+using BookHeaven.Web.Infrastructure.Filters;
 using BookHeaven.Web.Models;
 using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Identity;
@@ -22,12 +25,14 @@ namespace BookHeaven.Web.Areas.Admin.Controllers
         private readonly IUserService users;
         private readonly IMapper mapper;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly UserManager<User> userManager;
 
-        public UsersController(IUserService users, IMapper mapper, RoleManager<IdentityRole> roleManager)
+        public UsersController(IUserService users, IMapper mapper, RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
         {
             this.users = users;
             this.mapper = mapper;
             this.roleManager = roleManager;
+            this.userManager = userManager;
         }
 
         public async Task<IActionResult> All(string searchTerm = "", int page = 1)
@@ -59,10 +64,46 @@ namespace BookHeaven.Web.Areas.Admin.Controllers
 
             var model = this.mapper.Map<UserDetailsServiceModel, UserDetailsViewModel>(user);
 
-            model.AllRoles = await this.roleManager.Roles.Select(r => r.Name).ToListAsync();
             model.Roles = await this.users.GetRolesByIdAsync(id);
 
             return View(model);
+        }
+
+        public async Task<IActionResult> Edit(string id)
+        {
+            var user = await this.users.GetByIdAsync<UserDetailsServiceModel>(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var model = this.mapper.Map<UserDetailsServiceModel, UserEditViewModel>(user);
+
+            model.Roles = await this.users.GetRolesByIdAsync(id);
+            model.AllRoles = await this.roleManager.Roles.Select(r => r.Name).ToListAsync();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateModelState]
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var exists = await this.users.ExistsAsync(id);
+
+            if (!exists)
+            {
+                return BadRequest();
+            }
+
+            var user = await this.userManager.FindByIdAsync(id);
+            await this.userManager.DeleteAsync(user);
+
+            TempData.AddSuccessMessage(UserSuccessMessages.DeleteMessage);
+            return RedirectToAction(nameof(All));
         }
     }
 }

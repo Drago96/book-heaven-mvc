@@ -25,8 +25,6 @@ namespace BookHeaven.Web.Areas.Admin.Models.Users
 
         public IEnumerable<string> Roles { get; set; }
 
-        public IEnumerable<string> AllRoles { get; set; }
-
         public void ConfigureMapping(Profile profile)
         {
             profile

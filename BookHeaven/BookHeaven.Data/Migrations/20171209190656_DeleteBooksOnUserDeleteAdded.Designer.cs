@@ -11,9 +11,10 @@ using System;
 namespace BookHeaven.Data.Migrations
 {
     [DbContext(typeof(BookHeavenDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171209190656_DeleteBooksOnUserDeleteAdded")]
+    partial class DeleteBooksOnUserDeleteAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

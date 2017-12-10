@@ -51,6 +51,7 @@ namespace BookHeaven.Web
                 googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
             });
 
+            services.AddRouting(options => options.LowercaseUrls = true);
             services.ConfigureCustomServices();
             services.AddAutoMapper();
             services.AddMvc(options =>
@@ -89,6 +90,7 @@ namespace BookHeaven.Web
 
             app.UseMvc(routes =>
             {
+               
                 routes.MapRoute(
                     name: "areas",
                     template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"

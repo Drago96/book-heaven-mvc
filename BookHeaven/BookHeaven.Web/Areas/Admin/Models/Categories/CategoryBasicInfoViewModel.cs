@@ -10,7 +10,7 @@ using static BookHeaven.Data.Infrastructure.Constants.CategoryDataConstants;
 
 namespace BookHeaven.Web.Areas.Admin.Models.Categories
 {
-    public class CategoryCreateViewModel
+    public class CategoryBasicInfoViewModel
     {
         [Required]
         [StringLength(CategoryNameMaxLength,ErrorMessage = CommonErrorConstants.InvalidParameterLength,MinimumLength = CategoryNameMinLength)]

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using BookHeaven.Common.Mapping;
+using BookHeaven.Data.Models;
 
 namespace BookHeaven.Services.Models.Categories
 {
-    public class CategoryInfoServiceModel
+    public class CategoryInfoServiceModel : IMapFrom<Category>
     {
         public int Id { get; set; }
 

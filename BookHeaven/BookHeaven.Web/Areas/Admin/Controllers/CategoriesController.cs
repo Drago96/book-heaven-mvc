@@ -24,31 +24,22 @@ namespace BookHeaven.Web.Areas.Admin.Controllers
         }
 
         public async Task<IActionResult> All()
-            => View(new CategoryAllPageViewModel
-            {
-                AllCategories = await this.categories.GetAllAsync<CategoryAdminListingServiceModel>()
-            });
+            => View(await this.categories.GetAllAsync<CategoryAdminListingServiceModel>());
+
 
         [HttpPost]
-        public async Task<IActionResult> Create(CategoryAllPageViewModel model)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (!ModelState.IsValid)
+            var exists = await this.categories.ExistsAsync(id);
+
+            if (!exists)
             {
-                model.AllCategories = await this.categories.GetAllAsync<CategoryAdminListingServiceModel>();
-                return View(nameof(All), model);
+                return BadRequest();
             }
 
-            var exists = await this.categories.ExistsAsync(model.CategoryCreateModel.Name);
-            if (exists)
-            {
-                TempData.AddErrorMessage(string.Format(CommonErrorConstants.AlreadyExists,nameof(Category)));
-                model.AllCategories = await this.categories.GetAllAsync<CategoryAdminListingServiceModel>();
-                return View(nameof(All), model);
-            }
+            await this.categories.DeleteAsync(id);
 
-            await this.categories.CreateAsync(model.CategoryCreateModel.Name);
-            TempData.AddSuccessMessage(string.Format(CategorySuccessConstants.CategoryCreateMessage,model.CategoryCreateModel.Name));
-
+            TempData.AddSuccessMessage(CategorySuccessConstants.CategoryDeletedMessage);
             return RedirectToAction(nameof(All));
         }
     }

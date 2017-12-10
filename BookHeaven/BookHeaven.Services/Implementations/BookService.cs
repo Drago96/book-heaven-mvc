@@ -71,6 +71,16 @@ namespace BookHeaven.Services.Implementations
         public async Task<int> GetCountBySearchTermAsync(string searchTerm = "")
             => await this.FindBookBySearchTerm(searchTerm).CountAsync();
 
+        public async Task<bool> ExistsAsync(int id)
+            => await this.db.Books.FindAsync(id) != null;
+
+        public async Task DeleteAsync(int id)
+        {
+            var book = await this.db.Books.FindAsync(id);
+            this.db.Remove(book);
+            await this.db.SaveChangesAsync();
+        }
+
         private IQueryable<Book> FindBookBySearchTerm(string searchTerm)
             => this.db.Books.Where(b => b.Title.ContainsInsensitive(searchTerm));
     }
