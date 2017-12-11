@@ -23,7 +23,7 @@ namespace BookHeaven.Data
         {
             builder
                 .Entity<Location>()
-                .HasIndex(l => new {l.City, l.Country})
+                .HasIndex(l => new { l.City, l.Country })
                 .IsUnique();
 
             builder
@@ -40,7 +40,7 @@ namespace BookHeaven.Data
 
             builder
                 .Entity<BookCategory>()
-                .HasKey(bc => new {bc.BookId, bc.CategoryId});
+                .HasKey(bc => new { bc.BookId, bc.CategoryId });
 
             builder
                 .Entity<Book>()

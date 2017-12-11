@@ -12,10 +12,39 @@ $(".fade").fadeTo(2000, 500).slideUp(500, function () {
     $(".fade").slideUp(500);
 });
 
-var DeleteItemDialogs = (function (module) {
+var NavbarSearchModule = (function(module) {
+    module.Initialize = function() {
+        var options = [];
 
+        $('ul.dropdown-menu > li > a').on('click',
+            function(event) {
+
+                var $target = $(event.currentTarget),
+                    val = $target.attr('data-value'),
+                    $inp = $target.find('input'),
+                    idx;
+
+                if ((idx = options.indexOf(val)) > -1) {
+                    options.splice(idx, 1);
+                    setTimeout(function() { $inp.prop('checked', false) }, 0);
+                } else {
+                    options.push(val);
+                    setTimeout(function() { $inp.prop('checked', true) }, 0);
+                }
+
+                $(event.target).blur();
+
+                console.log(options);
+                return false;
+            });
+    }
+
+    return module;
+}({}));
+
+var DeleteItemDialogs = (function (module) {
     module.InitializeDialogs = function (selector, itemName) {
-        $(selector).each(function() {
+        $(selector).each(function () {
             var self = this
             $(this).confirm({
                 title: 'Delete this ' + itemName,
@@ -28,20 +57,16 @@ var DeleteItemDialogs = (function (module) {
                     },
                     no: {
                         action: function () {
-
                         }
                     }
                 },
                 closeIcon: true,
-                type:'red'
-
+                type: 'red'
             });
-            })
-            
+        })
     }
 
     return module;
-
 }({}))
 
 var RegisterUserPageModule = (function (module) {
@@ -51,7 +76,7 @@ var RegisterUserPageModule = (function (module) {
     var moduleProfilePictureHeight;
     var moduleProfilePictureMaxLength;
     var moduleProfilePictureErrorMessage;
-    var moduleSupportedImageTypes
+    var moduleSupportedImageTypes;
 
     module.initializeModule = function (profilePictureFieldName,
         profilePictureUrl,
@@ -91,7 +116,6 @@ var RegisterUserPageModule = (function (module) {
                     } else {
                         setNewProfilePicture(file);
                     }
-
                 }
             }
 

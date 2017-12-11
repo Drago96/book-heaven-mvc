@@ -1,25 +1,27 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
-using AutoMapper.QueryableExtensions;
+﻿using AutoMapper.QueryableExtensions;
 using BookHeaven.Common.Extensions;
 using BookHeaven.Data;
 using BookHeaven.Data.Models;
 using BookHeaven.Services.Contracts;
 using BookHeaven.Services.Infrastructure.Constants;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BookHeaven.Services.Implementations
 {
     public class UserService : IUserService
     {
         private readonly BookHeavenDbContext db;
+        private readonly UserManager<User> userManager;
 
-        public UserService(BookHeavenDbContext db)
+        public UserService(BookHeavenDbContext db, UserManager<User> userManager)
         {
             this.db = db;
+            this.userManager = userManager;
         }
 
         public async Task<IEnumerable<T>> AllPaginatedAsync<T>(string search = "", int page = 1)
@@ -35,18 +37,17 @@ namespace BookHeaven.Services.Implementations
                 .ProjectTo<T>()
                 .ToListAsync();
 
-
-        public async Task<int> GetCountAsync()
+        public async Task<int> CountAsync()
             => await this.db.Users.CountAsync();
 
-        public async Task<int> GetCountBySearchTermAsync(string search)
+        public async Task<int> CountBySearchTermAsync(string search)
             => await this.FindUsersBySearchTerm(search)
             .CountAsync();
 
         public async Task<bool> ExistsAsync(string id)
             => await this.db.Users.AnyAsync(u => u.Id == id);
 
-        public async Task<T> GetByIdAsync<T>(string id)
+        public async Task<T> ByIdAsync<T>(string id)
             => await this.db.Users.Where(u => u.Id == id).ProjectTo<T>().FirstOrDefaultAsync();
 
         public async Task<IEnumerable<string>> GetRolesByIdAsync(string id)
@@ -56,6 +57,36 @@ namespace BookHeaven.Services.Implementations
             return roles;
         }
 
+        public async Task EditAsync(string id, string firstName, string lastName, string email, string username, IEnumerable<string> roles, byte[] profilePicture)
+        {
+            var user = await this.db.Users.FindAsync(id);
+
+            user.FirstName = firstName;
+            user.LastName = lastName;
+            user.Email = email;
+            user.UserName = username;
+            user.ProfilePicture = profilePicture ?? user.ProfilePicture;
+            
+
+            var allRoles = await this.db.Roles.Select(r => r.Name).ToListAsync();
+
+            foreach (var role in allRoles)
+            {
+                if (roles.Contains(role))
+                {
+                    await this.userManager.AddToRoleAsync(user, role);
+                }
+                else
+                {
+                    await this.userManager.RemoveFromRoleAsync(user, role);
+                }
+            }
+
+            await this.userManager.UpdateAsync(user);
+        }
+
+        public async Task<bool> AlreadyExistsAsync(string id, string username)
+            => await this.db.Users.AnyAsync(u => u.Id != id && u.UserName.Equals(username, StringComparison.OrdinalIgnoreCase));
 
         private IQueryable<User> FindUsersBySearchTerm(string search)
             => this.db

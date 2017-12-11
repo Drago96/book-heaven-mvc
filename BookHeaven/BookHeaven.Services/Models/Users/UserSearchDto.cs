@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using BookHeaven.Common.Mapping;
 using BookHeaven.Data.Models;
 

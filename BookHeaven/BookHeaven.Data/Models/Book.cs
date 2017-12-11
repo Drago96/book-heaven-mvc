@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
-using BookHeaven.Data.Infrastructure.Constants;
 
 using static BookHeaven.Data.Infrastructure.Constants.BookDataConstants;
 
@@ -21,12 +19,16 @@ namespace BookHeaven.Data.Models
         [MinLength(BookDescriptionMinLength)]
         public string Description { get; set; }
 
-        [Range(0,double.MaxValue)]
+        [Range(0, double.MaxValue)]
         public decimal Price { get; set; }
 
         [MaxLength(BookPictureMaxLength)]
         public byte[] BookPicture { get; set; }
 
+        [MaxLength(BookPictureMaxLength)]
+        public byte[] BookListingPicture { get; set; }
+
+        [Required]
         public string PublisherId { get; set; }
 
         public DateTime PublishedDate { get; set; }

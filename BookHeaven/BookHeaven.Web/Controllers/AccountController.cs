@@ -1,20 +1,20 @@
-﻿using System.Linq;
+﻿using BookHeaven.Data.Infrastructure.Constants;
 using BookHeaven.Data.Models;
 using BookHeaven.Services.Contracts;
+using BookHeaven.Services.UtilityServices.Contracts;
 using BookHeaven.Web.Infrastructure.Constants;
 using BookHeaven.Web.Infrastructure.Constants.ErrorMessages;
+using BookHeaven.Web.Infrastructure.Constants.SuccessMessages;
 using BookHeaven.Web.Infrastructure.Extensions;
 using BookHeaven.Web.Infrastructure.Filters;
-using BookHeaven.Web.Models.AccountViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using BookHeaven.Data.Infrastructure.Constants;
-using BookHeaven.Services.UtilityServices.Contracts;
-using BookHeaven.Web.Infrastructure.Constants.SuccessMessages;
+using BookHeaven.Web.Models.Account;
 
 namespace BookHeaven.Web.Controllers
 {
@@ -41,6 +41,12 @@ namespace BookHeaven.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl = null)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                TempData.AddErrorMessage(UserErrorConstants.LogOutFirst);
+                return RedirectToAction("Index", "Home");
+            }
+
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             ViewData.SetReturnUrl(returnUrl);
@@ -52,6 +58,11 @@ namespace BookHeaven.Web.Controllers
         [ValidateModelState]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return BadRequest();
+            }
+
             ViewData.SetReturnUrl(returnUrl);
 
             var result = await this.signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
@@ -69,6 +80,11 @@ namespace BookHeaven.Web.Controllers
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                TempData.AddErrorMessage(UserErrorConstants.LogOutFirst);
+                return RedirectToAction("Index", "Home");
+            }
             ViewData.SetReturnUrl(returnUrl);
             return View();
         }
@@ -78,6 +94,11 @@ namespace BookHeaven.Web.Controllers
         [ValidateModelState]
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return BadRequest();
+            }
+
             ViewData.SetReturnUrl(returnUrl);
 
             var userExists = await this.userManager.FindByNameAsync(model.Email) != null;
@@ -100,7 +121,7 @@ namespace BookHeaven.Web.Controllers
             {
                 var profilePicture = await this.fileService.GetByteArrayFromFormFileAsync(model.ProfilePicture);
                 var pictureType = model.ProfilePicture.ContentType.Split('/').Last();
-                user.ProfilePicture = this.fileService.ResizeImageAsync(profilePicture,
+                user.ProfilePicture = this.fileService.ResizeImage(profilePicture,
                     UserDataConstants.ProfilePictureWidth, UserDataConstants.ProfilePictureHeight, pictureType);
             }
 
@@ -112,7 +133,7 @@ namespace BookHeaven.Web.Controllers
             }
 
             await this.signInManager.SignInAsync(user, isPersistent: false);
-            TempData.AddSuccessMessage(string.Format(UserSuccessMessages.RegisterMessage,model.FirstName,model.LastName));
+            TempData.AddSuccessMessage(string.Format(UserSuccessMessages.RegisterMessage, model.FirstName, model.LastName));
             return RedirectToLocal(returnUrl);
         }
 
@@ -127,6 +148,12 @@ namespace BookHeaven.Web.Controllers
         [AllowAnonymous]
         public IActionResult ExternalLogin(string provider, string returnUrl = "/")
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                TempData.AddErrorMessage(UserErrorConstants.LogOutFirst);
+                return RedirectToAction("Index", "Home");
+            }
+
             var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account", new { returnUrl });
             var properties = this.signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return Challenge(properties, provider);
@@ -136,6 +163,12 @@ namespace BookHeaven.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ExternalLoginCallback(string returnUrl = "/", string remoteError = null)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                TempData.AddErrorMessage(UserErrorConstants.LogOutFirst);
+                return RedirectToAction("Index", "Home");
+            }
+
             if (remoteError != null)
             {
                 TempData.AddErrorMessage(string.Format(UserErrorConstants.ErrorFromExternalProvider, remoteError));
@@ -180,6 +213,11 @@ namespace BookHeaven.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ExternalLoginConfirmation(ExternalLoginViewModel model, string returnUrl = "/")
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return BadRequest();
+            }
+
             if (!ModelState.IsValid)
             {
                 ViewData.SetReturnUrl(returnUrl);
@@ -227,6 +265,7 @@ namespace BookHeaven.Web.Controllers
             }
 
             await this.signInManager.SignInAsync(user, isPersistent: false);
+            TempData.AddSuccessMessage(string.Format(UserSuccessMessages.RegisterMessage, model.FirstName, model.LastName));
             return RedirectToLocal(returnUrl);
         }
 

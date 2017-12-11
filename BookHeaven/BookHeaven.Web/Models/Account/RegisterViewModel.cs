@@ -1,22 +1,22 @@
-﻿using BookHeaven.Web.Infrastructure.Constants.Display;
-using BookHeaven.Web.Infrastructure.Constants.ErrorMessages;
-using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using BookHeaven.Common.Extensions;
-using static BookHeaven.Data.Infrastructure.Constants.UserDataConstants;
+using BookHeaven.Data.Infrastructure.Constants;
+using BookHeaven.Web.Infrastructure.Constants.Display;
+using BookHeaven.Web.Infrastructure.Constants.ErrorMessages;
+using Microsoft.AspNetCore.Http;
 
-namespace BookHeaven.Web.Models.AccountViewModels
+namespace BookHeaven.Web.Models.Account
 {
     public class RegisterViewModel : IValidatableObject
     {
         [Required]
-        [StringLength(FirstNameMaxLength, ErrorMessage = CommonErrorConstants.InvalidParameterLength, MinimumLength = FirstNameMinLength)]
+        [StringLength(UserDataConstants.FirstNameMaxLength, ErrorMessage = CommonErrorConstants.InvalidParameterLength, MinimumLength = UserDataConstants.FirstNameMinLength)]
         [Display(Name = UserDisplayConstants.FirstName)]
         public string FirstName { get; set; }
 
         [Required]
-        [StringLength(LastNameMaxLength, ErrorMessage = CommonErrorConstants.InvalidParameterLength, MinimumLength = LastNameMinLength)]
+        [StringLength(UserDataConstants.LastNameMaxLength, ErrorMessage = CommonErrorConstants.InvalidParameterLength, MinimumLength = UserDataConstants.LastNameMinLength)]
         [Display(Name = UserDisplayConstants.LastName)]
         public string LastName { get; set; }
 
@@ -25,7 +25,7 @@ namespace BookHeaven.Web.Models.AccountViewModels
         public string Email { get; set; }
 
         [Required]
-        [StringLength(PasswordMaxLength, ErrorMessage = CommonErrorConstants.InvalidParameterLength, MinimumLength = PasswordMinLength)]
+        [StringLength(UserDataConstants.PasswordMaxLength, ErrorMessage = CommonErrorConstants.InvalidParameterLength, MinimumLength = UserDataConstants.PasswordMinLength)]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
@@ -39,7 +39,7 @@ namespace BookHeaven.Web.Models.AccountViewModels
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (this.ProfilePicture != null &&
-                (this.ProfilePicture.Length > ProfilePictureMaxLength ||
+                (this.ProfilePicture.Length > UserDataConstants.ProfilePictureMaxLength ||
                 !this.ProfilePicture.ContentType.IsValidImage()))
             {
                 yield return new ValidationResult(UserErrorConstants.InvalidProfilePicture, new[] { nameof(this.ProfilePicture) });

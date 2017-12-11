@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using BookHeaven.Services.Models.Locations;
+﻿using BookHeaven.Services.Models.Locations;
+using System.Collections.Generic;
 
 namespace BookHeaven.Web.Areas.Admin.Models.Home
 {
@@ -11,6 +11,6 @@ namespace BookHeaven.Web.Areas.Admin.Models.Home
 
         public int MostVisits { get; set; }
 
-        public IEnumerable<LocationVisitsServiceModel> Locations { get; set; }
+        public IEnumerable<LocationVisitsServiceModel> Locations { get; set; } = new List<LocationVisitsServiceModel>();
     }
 }

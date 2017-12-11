@@ -1,14 +1,12 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using BookHeaven.Common.Extensions;
+﻿using BookHeaven.Common.Extensions;
 using BookHeaven.Web.Infrastructure.Constants.ErrorMessages;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Remotion.Linq.Clauses;
-
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using static BookHeaven.Data.Infrastructure.Constants.BookDataConstants;
 
-namespace BookHeaven.Web.Areas.Publisher.Models.Books 
+namespace BookHeaven.Web.Areas.Publisher.Models.Books
 {
     public class BookCreateViewModel : IValidatableObject
     {
@@ -17,13 +15,13 @@ namespace BookHeaven.Web.Areas.Publisher.Models.Books
         public string Title { get; set; }
 
         [Required]
-        [MinLength(BookDescriptionMinLength,ErrorMessage = CommonErrorConstants.InvalidMinLength)]
+        [MinLength(BookDescriptionMinLength, ErrorMessage = CommonErrorConstants.InvalidMinLength)]
         public string Description { get; set; }
 
         [Range(0, double.MaxValue)]
         public decimal Price { get; set; }
 
-        public IFormFile BookPicture { get; set; }
+        public IFormFile BookFilePicture { get; set; }
 
         public IEnumerable<int> Categories { get; set; } = new List<int>();
 
@@ -31,11 +29,11 @@ namespace BookHeaven.Web.Areas.Publisher.Models.Books
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (this.BookPicture != null &&
-                (this.BookPicture.Length > BookPictureMaxLength ||
-                 !this.BookPicture.ContentType.IsValidImage()))
+            if (this.BookFilePicture != null &&
+                (this.BookFilePicture.Length > BookPictureMaxLength ||
+                 !this.BookFilePicture.ContentType.IsValidImage()))
             {
-                yield return new ValidationResult(BookErrorConstants.InvalidProfilePicture, new[] { nameof(this.BookPicture) });
+                yield return new ValidationResult(BookErrorConstants.InvalidProfilePicture, new[] { nameof(this.BookFilePicture) });
             }
         }
     }

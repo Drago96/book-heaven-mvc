@@ -11,8 +11,8 @@
         <form method="post" enctype="multipart/form-data">
             <div class="col-md-4">
                 <img id="book-picture" alt="Book" class="book-picture" src="@ResourceConstants.DefaultBookPictureUrl" />
-                <input id="book-picture-input" accept="@string.Join(',',ImageConstants.SupportedImageContentTypes)" type="file" class="hidden" asp-for="BookPicture" />
-                <div class="text-center"><span id="book-picture-validation" asp-validation-for="BookPicture" class="text-danger"></span></div>
+                <input id="book-picture-input" accept="@string.Join(',',ImageConstants.SupportedImageContentTypes)" type="file" class="hidden" asp-for="BookFilePicture" />
+                <div class="text-center"><span id="book-picture-validation" asp-validation-for="BookFilePicture" class="text-danger"></span></div>
                 <button type="button" id="picture-select" class="btn btn-info btn-block book-picture-button">Select a picture</button>
             </div>
             <div class="col-md-8">
@@ -24,11 +24,10 @@
                         <input asp-for="Title" class="form-control" />
                         <span class="text-danger" asp-validation-for="Title"></span>
                     </div>
-
                 </div>
                 <div class="row form-margin-row">
                     <div class="col-md-3">
-                        <label asp-for="Price"></label>
+                        <label asp-for="Price"></label> (in Euro)
                     </div>
                     <div class="col-md-9">
                         <input type="number" min="0" asp-for="Price" class="form-control" />
@@ -57,7 +56,6 @@
                     <div class="col-md-9 col-md-offset-3">
                         <button class="btn btn-success btn-block" type="submit">Publish</button>
                     </div>
-                    
                 </div>
             </div>
         </form>
@@ -65,18 +63,16 @@
 </div>
 
 @section Scripts
-{
+    {
     @await Html.PartialAsync("_ValidationScriptsPartial")
     <script>
         $('#category-select').multiSelect();
-        PublishBookModule.initializeModule('@nameof(Model.BookPicture)',
+        PublishBookModule.initializeModule('@nameof(Model.BookFilePicture)',
             '@ResourceConstants.DefaultBookPictureUrl',
             @BookDataConstants.BookPictureWidth,
             @BookDataConstants.BookPictureHeight,
             @BookDataConstants.BookPictureMaxLength,
             '@BookErrorConstants.InvalidProfilePicture',
             @Html.Raw(Json.Serialize(ImageConstants.SupportedImageContentTypes)));
-
     </script>
 }
-

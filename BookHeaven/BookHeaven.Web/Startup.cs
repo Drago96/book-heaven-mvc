@@ -1,9 +1,7 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using BookHeaven.Data;
 using BookHeaven.Data.Infrastructure.Constants;
 using BookHeaven.Data.Models;
-using BookHeaven.Services.Utilities;
 using BookHeaven.Web.Infrastructure.Extensions;
 using BookHeaven.Web.Infrastructure.Filters;
 using Microsoft.AspNetCore.Builder;
@@ -13,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace BookHeaven.Web
 {
@@ -45,10 +44,14 @@ namespace BookHeaven.Web
             {
                 facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+                //facebookOptions.AppId = "613941212330262";
+                //facebookOptions.AppSecret = "5d1c8a99a19c9c6694942c22c54a6bda";
             }).AddGoogle(googleOptions =>
             {
                 googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
                 googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                //googleOptions.ClientId = "260337154105-ej22e2sgs8tt0d6fcbvd34qn1akdnmus.apps.googleusercontent.com";
+                //googleOptions.ClientSecret = "ILRxlC_MHM5ivpzRZfm68yoI";
             });
 
             services.AddRouting(options => options.LowercaseUrls = true);
@@ -90,7 +93,6 @@ namespace BookHeaven.Web
 
             app.UseMvc(routes =>
             {
-               
                 routes.MapRoute(
                     name: "areas",
                     template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"

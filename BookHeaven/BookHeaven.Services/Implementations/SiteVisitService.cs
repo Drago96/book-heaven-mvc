@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using BookHeaven.Data;
+﻿using BookHeaven.Data;
 using BookHeaven.Data.Models;
 using BookHeaven.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BookHeaven.Services.Implementations
 {
@@ -32,7 +32,6 @@ namespace BookHeaven.Services.Implementations
                 siteVisit.Visits++;
                 await this.db.SaveChangesAsync();
             }
-
         }
 
         public async Task<int> VisitsByDateAsync(DateTime date)

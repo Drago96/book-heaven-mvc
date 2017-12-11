@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using BookHeaven.Common.Mapping;
+﻿using BookHeaven.Common.Mapping;
 using BookHeaven.Data.Models;
 
 namespace BookHeaven.Services.Models.Categories

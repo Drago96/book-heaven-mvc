@@ -1,8 +1,8 @@
 ﻿namespace BookHeaven.Web.Models.Shared
 {
-    public class PageSelectorViewModel
+    public class PageSelectorPartialModel
     {
-        public string Action { get; set; } 
+        public string Action { get; set; }
 
         public string SearchTerm { get; set; }
 

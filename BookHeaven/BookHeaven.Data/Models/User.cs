@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
 using static BookHeaven.Data.Infrastructure.Constants.UserDataConstants;
 
 namespace BookHeaven.Data.Models

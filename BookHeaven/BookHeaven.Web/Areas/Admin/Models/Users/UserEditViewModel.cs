@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using BookHeaven.Common.Extensions;
 using BookHeaven.Common.Mapping;
 using BookHeaven.Data.Models;
@@ -11,7 +6,9 @@ using BookHeaven.Services.Models.Users;
 using BookHeaven.Web.Infrastructure.Constants.Display;
 using BookHeaven.Web.Infrastructure.Constants.ErrorMessages;
 using Microsoft.AspNetCore.Http;
-
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using static BookHeaven.Data.Infrastructure.Constants.UserDataConstants;
 using ValidationContext = System.ComponentModel.DataAnnotations.ValidationContext;
 
@@ -35,19 +32,18 @@ namespace BookHeaven.Web.Areas.Admin.Models.Users
 
         public string ProfilePicture { get; set; }
 
-        public IEnumerable<string> Roles { get; set; }
+        public IEnumerable<string> Roles { get; set; } = new List<string>();
 
-        [Display()]
         public IFormFile NewProfilePicture { get; set; }
 
-        public IEnumerable<string> AllRoles { get; set; }
+        public IEnumerable<string> AllRoles { get; set; } = new List<string>();
 
         public void ConfigureMapping(Profile profile)
         {
             profile
                 .CreateMap<UserDetailsServiceModel, UserEditViewModel>()
                 .ForMember(u => u.ProfilePicture,
-                    cfg => cfg.MapFrom(u => Convert.ToBase64String(u.ProfilePicture)));
+                    cfg => cfg.MapFrom(u => u.ProfilePicture.ConvertToBase64String()));
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

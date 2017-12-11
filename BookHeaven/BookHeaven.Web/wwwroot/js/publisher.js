@@ -55,7 +55,6 @@ var PublishBookModule = (function (module) {
                     } else {
                         setNewBookPicture(file);
                     }
-
                 }
             }
 

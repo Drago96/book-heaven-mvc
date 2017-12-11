@@ -1,18 +1,8 @@
-﻿using System;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Net.Mime;
-using System.Reflection;
-using System.Threading.Tasks;
-using BookHeaven.Services.UtilityServices.Contracts;
-
+﻿using BookHeaven.Services.UtilityServices.Contracts;
 using Microsoft.AspNetCore.Http;
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats;
-using SixLabors.ImageSharp.Formats.Jpeg;
-using SixLabors.ImageSharp.Helpers;
-
+using System.IO;
+using System.Threading.Tasks;
 
 namespace BookHeaven.Services.UtilityServices.Implementations
 {
@@ -28,8 +18,7 @@ namespace BookHeaven.Services.UtilityServices.Implementations
             }
         }
 
-
-        public byte[] ResizeImageAsync(byte[] image, int width, int height, string pictureType)
+        public byte[] ResizeImage(byte[] image, int width, int height, string pictureType)
         {
             var currentImage = Image.Load(image);
             currentImage.Mutate(x => x.Resize(width, height));
@@ -40,9 +29,8 @@ namespace BookHeaven.Services.UtilityServices.Implementations
             return memoryStream.ToArray();
         }
 
-        private void SaveImageToStream(Image<Rgba32> image,MemoryStream memoryStream,string pictureType)
+        private void SaveImageToStream(Image<Rgba32> image, MemoryStream memoryStream, string pictureType)
         {
-
             if (pictureType == "jpeg")
             {
                 image.SaveAsJpeg(memoryStream);
@@ -58,9 +46,7 @@ namespace BookHeaven.Services.UtilityServices.Implementations
                 image.SaveAsBmp(memoryStream);
             }
 
-
             image.SaveAsPng(memoryStream);
-
         }
     }
 }

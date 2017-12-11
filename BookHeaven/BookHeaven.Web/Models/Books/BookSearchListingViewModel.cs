@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using BookHeaven.Services.Models.Books;
+
+namespace BookHeaven.Web.Models.Books
+{
+    public class BookSearchListingViewModel
+    {
+        public PaginatedViewModel<BookSearchListingServiceModel> Books { get; set; }
+
+        public IEnumerable<string> Categories { get; set; }
+    }
+}

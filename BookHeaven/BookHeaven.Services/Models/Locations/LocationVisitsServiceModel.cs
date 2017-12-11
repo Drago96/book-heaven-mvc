@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using BookHeaven.Common.Mapping;
 using BookHeaven.Data.Models;
+using System.Linq;
 
 namespace BookHeaven.Services.Models.Locations
 {
-    public class LocationVisitsServiceModel : IMapFrom<IGrouping<string,Location>>, IHaveCustomMapping
+    public class LocationVisitsServiceModel : IMapFrom<IGrouping<string, Location>>, IHaveCustomMapping
     {
         public string Country { get; set; }
 
@@ -18,7 +17,6 @@ namespace BookHeaven.Services.Models.Locations
                 .CreateMap<IGrouping<string, Location>, LocationVisitsServiceModel>()
                 .ForMember(l => l.Country, cfg => cfg.MapFrom(g => g.Key))
                 .ForMember(l => l.Visits, cfg => cfg.MapFrom(g => g.Sum(l => l.SiteVisits)));
-
         }
     }
 }

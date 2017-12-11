@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BookHeaven.Data.Infrastructure.Constants
+﻿namespace BookHeaven.Data.Infrastructure.Constants
 {
     public static class CategoryDataConstants
     {

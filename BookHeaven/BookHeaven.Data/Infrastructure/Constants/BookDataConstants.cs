@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BookHeaven.Data.Infrastructure.Constants
+﻿namespace BookHeaven.Data.Infrastructure.Constants
 {
     public class BookDataConstants
     {
@@ -16,5 +12,7 @@ namespace BookHeaven.Data.Infrastructure.Constants
         public const int BookPictureWidth = 300;
         public const int BookPictureHeight = 400;
 
+        public const int BookPictureListingWidth = 200;
+        public const int BookPictureListingHeight = 300;
     }
 }

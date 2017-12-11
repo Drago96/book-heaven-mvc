@@ -1,0 +1,21 @@
+﻿@model BookSearchListingViewModel
+@{
+    ViewData["Title"] = "Search";
+}
+
+<h2>Results for search : @Model.Books.SearchTerm</h2>
+<h3>Categories : @(Model.Categories.Any() ? string.Join(" / ", Model.Categories) : "All")</h3>
+<hr/>
+
+@if (Model.Books.TotalItems == 0)
+{
+    <h4>No books found matching your search!</h4>
+}
+else
+{
+    foreach (var book in Model.Books.Items)
+     {
+         <h2>@book.Title</h2>
+     }
+}
+

@@ -21,11 +21,9 @@ namespace BookHeaven.Services.Utilities
             }
             catch
             {
-                
             }
 
             return null;
-
         }
     }
 }

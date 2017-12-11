@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Threading.Tasks;
-using BookHeaven.Services.Contracts;
+﻿using BookHeaven.Services.Contracts;
 using BookHeaven.Services.Infrastructure.Constants;
 using BookHeaven.Services.Models.Users;
 using BookHeaven.Web.Infrastructure.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace BookHeaven.Web.Controllers.ApiControllers
 {
@@ -31,8 +27,6 @@ namespace BookHeaven.Web.Controllers.ApiControllers
             }
             return Ok(await this.users
                 .AllByTakeAsync<UserSearchDto>(searchTerm, UserServiceConstants.UsersSearchCount));
-
         }
-
     }
 }

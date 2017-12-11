@@ -6,14 +6,13 @@
 <div class="row">
     <div class="col-md-10 col-md-offset-2">
         <h1>My Published Books</h1>
-        <hr/>
+        <hr />
     </div>
     <div class="col-md-2 well links-well">
         <ul class="nav navbar-nav navbar-collapse publisher-links-nav">
             <li>
-               
+
                 <a asp-action="Create" class="item btn-block">Publish New Book</a>
-              
             </li>
         </ul>
     </div>
@@ -52,32 +51,31 @@
                 <div class="row">
                     <div class="col-md-8"> @item.Title - @item.PublishedDate.ToShortDateString() </div>
                     <div class="col-md-4">
-                        <a class="btn btn-info">Details</a>
-                        <a class="btn btn-warning">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
                         <form method="post" class="custom-inline-form" asp-action="Delete" asp-route-id="@item.Id">
                             <button type="submit" class="btn btn-danger delete-button">Delete</button>
-                        </form> 
+                        </form>
                     </div>
                 </div>
             </div>
         }
 
-        @await Html.PartialAsync("_PaginationPartial", new PageSelectorViewModel
-        {
-            SearchTerm = Model.SearchTerm,
-            Action = "All",
-            CurrentPage = Model.CurrentPage,
-            NextPage = Model.NextPage,
-            PreviousPage = Model.PreviousPage,
-            TotalPages = Model.TotalPages
-        })
+        @await Html.PartialAsync("_PaginationPartial", new PageSelectorPartialModel
+   {
+       SearchTerm = Model.SearchTerm,
+       Action = "All",
+       CurrentPage = Model.CurrentPage,
+       NextPage = Model.NextPage,
+       PreviousPage = Model.PreviousPage,
+       TotalPages = Model.TotalPages
+   })
     </div>
 </div>
 
-
 @section Scripts
-{
+    {
     <script>
-      DeleteItemDialogs.InitializeDialogs('.delete-button','book')
+        DeleteItemDialogs.InitializeDialogs('.delete-button', 'book')
     </script>
 }

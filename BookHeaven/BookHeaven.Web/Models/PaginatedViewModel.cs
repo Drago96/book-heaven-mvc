@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BookHeaven.Web.Models
 {
-    public class PaginatedViewModel<T> where T: class 
+    public class PaginatedViewModel<T> where T : class
     {
         public IEnumerable<T> Items { get; set; }
 

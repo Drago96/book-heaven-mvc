@@ -10,7 +10,6 @@
 }
 
 var AllCategoriesModule = (function (module) {
-
     module.Initialize = function () {
         addCategoriesFilter();
         modifyEditButtons();
@@ -27,22 +26,21 @@ var AllCategoriesModule = (function (module) {
                 } else {
                     $(this).show();
                 }
-
             });
         });
     }
 
-    function modifyCreateButton()   {
+    function modifyCreateButton() {
         $('#create-category-button').confirm({
             title: 'Create category',
             content: '' +
-                '<form method="post" action="" class="category-create-form">' +
-                '<div class="form-group">' +
-                '<label>Name</label>' +
-                '<input name="name" type="text" value="" class="name form-control" required />' +
-                '<span class="text-danger" style="display:none" id="category-error"></span>' +
-                '</div>' +
-                '</form>',
+            '<form method="post" action="" class="category-create-form">' +
+            '<div class="form-group">' +
+            '<label>Name</label>' +
+            '<input name="name" type="text" value="" class="name form-control" required />' +
+            '<span class="text-danger" style="display:none" id="category-error"></span>' +
+            '</div>' +
+            '</form>',
             buttons: {
                 formSubmit: {
                     text: 'Create',
@@ -53,7 +51,6 @@ var AllCategoriesModule = (function (module) {
                     }
                 },
                 cancel: function () {
-
                 },
             },
             onContentReady: function () {
@@ -94,17 +91,14 @@ var AllCategoriesModule = (function (module) {
                         responseText = response.responseText
                     }
 
-
                     $('#category-error').text(responseText);
                     $('#category-error').show();
                 }
             });
         }
-        
     }
 
     function modifyEditButtons() {
-
         $('.edit-icon').each(function () {
             var categoryName = $(this).attr('category-name')
             var categoryId = $(this).attr('category-id')
@@ -128,7 +122,6 @@ var AllCategoriesModule = (function (module) {
                         }
                     },
                     cancel: function () {
-
                     },
                 },
                 onContentReady: function () {
@@ -151,14 +144,14 @@ var AllCategoriesModule = (function (module) {
                     dialog.close()
                     $.alert({
                         title: 'Category edited successfully!',
-                        content:'',
+                        content: '',
                         buttons: {
-                            ok : {
+                            ok: {
                                 action: function () {
                                     this.close()
                                     window.location.replace("/admin/categories/all")
                                 }
-                            } 
+                            }
                         }
                     });
                 },
@@ -170,7 +163,6 @@ var AllCategoriesModule = (function (module) {
                         responseText = response.responseText
                     }
 
-
                     $('#category-error').text(responseText);
                     $('#category-error').show();
                 }
@@ -178,12 +170,10 @@ var AllCategoriesModule = (function (module) {
         }
     }
 
-
     return module;
 }({}));
 
 var AdminHomePageModule = (function (module) {
-
     module.Initialize = function (locations, visits) {
         new Chart(document.querySelector('canvas.visits-chart'), {
             type: 'doughnut',
@@ -211,7 +201,6 @@ var AdminHomePageModule = (function (module) {
 }({}))
 
 var AdminUsersListModule = (function (module) {
-
     module.Initialize = function () {
         $('.ui.search')
             .search({

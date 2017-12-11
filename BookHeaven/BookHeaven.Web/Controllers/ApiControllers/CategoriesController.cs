@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BookHeaven.Services.Contracts;
-using BookHeaven.Services.Models.Categories;
+﻿using BookHeaven.Services.Contracts;
 using BookHeaven.Web.Areas.Admin.Models.Categories;
 using BookHeaven.Web.Infrastructure.Constants;
 using BookHeaven.Web.Infrastructure.Constants.ErrorMessages;
 using BookHeaven.Web.Infrastructure.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace BookHeaven.Web.Controllers.ApiControllers
 {
@@ -20,13 +16,12 @@ namespace BookHeaven.Web.Controllers.ApiControllers
         public CategoriesController(ICategoryService categories)
         {
             this.categories = categories;
-            
         }
 
         [HttpPut("{id}")]
         [Authorize(Roles = RoleConstants.Admin)]
         [ValidateApiModelState]
-        public async Task<IActionResult> Edit([FromRoute]int id,[FromBody]CategoryBasicInfoViewModel model)
+        public async Task<IActionResult> Edit([FromRoute]int id, [FromBody]CategoryBasicInfoViewModel model)
         {
             var exists = await this.categories.ExistsAsync(id);
 

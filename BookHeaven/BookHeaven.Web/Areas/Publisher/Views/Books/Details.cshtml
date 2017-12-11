@@ -1,0 +1,86 @@
+﻿@using Microsoft.AspNetCore.Routing
+@model BookPublisherDetailsServiceModel
+@{
+    ViewData["Title"] = "Book Details";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+
+@{
+    var bookPicture = string.IsNullOrEmpty(Model.BookPicture) ? ResourceConstants.DefaultBookPictureUrl : "data:image / png; base64," + Model.BookPicture;
+}
+<div class="panel panel-default">
+    <div class="panel-heading resume-heading">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-4">
+                    <figure>
+                        <img id="book-picture" alt="Book" class="book-picture" src="@bookPicture" />
+                    </figure>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-2 list-group-label">
+                            <strong>Name:</strong>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="list-group-item list-group-item-margined">@Model.Title</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 list-group-label">
+                            <strong>Price:</strong>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="list-group-item list-group-item-margined">@Model.Price.ToString("f2")€</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 list-group-label">
+                            <strong>Publish Date:</strong>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="list-group-item list-group-item-margined">@Model.PublishedDate.ToShortDateString()</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 list-group-label">
+                            <strong>Categories:</strong>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="list-group-item list-group-item-margined">@(Model.Categories.Any() ? string.Join("/",Model.Categories) : "No Categories")</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2  list-group-label">
+                            <strong>Description:</strong>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="list-group-item list-group-item-margined description-details">@Model.Description</div>
+                        </div>
+                    </div>
+                    <div class="row form-margin-row">
+                        <div class="col-md-offset-6 col-md-3">
+                            <a asp-action="Edit" asp-route-id="@Context.GetRouteValue("id")" class="btn btn-warning btn-block">Edit</a>
+                        </div>
+                        <div class="col-md-3">
+                            <form method="post" class="custom-inline-form" asp-action="Delete" asp-route-id="@Context.GetRouteValue("id")">
+                                <button type="submit" class="btn btn-danger btn-block delete-button">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+    {
+    <script>
+        DeleteItemDialogs.InitializeDialogs('.delete-button', 'book')
+    </script>
+}

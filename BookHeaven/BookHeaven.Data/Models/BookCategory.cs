@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BookHeaven.Data.Models
+﻿namespace BookHeaven.Data.Models
 {
     public class BookCategory
     {

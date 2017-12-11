@@ -41,9 +41,10 @@
     -o-transition: opacity 0.15s linear;
     transition: opacity 0.15s linear;
 }
-.fade.in {
-    opacity: 1;
-}
+
+    .fade.in {
+        opacity: 1;
+    }
 
 div.homepage-jumbotron {
     margin-top: 15px;
@@ -64,7 +65,7 @@ img.profile-picture-select {
 }
 
 img.no-cursor {
-    cursor:default
+    cursor: default
 }
 
 div.login-page-register {
@@ -136,7 +137,7 @@ div.form-margin-row {
 }
 
 textarea.description-textarea {
-    height: 75px;
+    min-height: 75px;
     overflow: hidden;
 }
 
@@ -151,9 +152,9 @@ ul.publisher-links-nav {
     width: 100%;
 }
 
-ul.publisher-links-nav li {
-    width: 100%;
-}
+    ul.publisher-links-nav li {
+        width: 100%;
+    }
 
 form.custom-inline-form {
     display: inline;
@@ -166,10 +167,68 @@ i.link-icon {
 
 span.checkbox-label {
     font-weight: normal;
-
 }
 
 div.checkbox-row {
     margin-left: 5px;
 }
 
+canvas.visits-chart {
+    max-height: 800px;
+    max-width: 800px;
+}
+
+div.admin-container {
+    margin-top: 50px;
+}
+
+div.user-well-count {
+    font-size: 2em;
+}
+
+/* uses font awesome for social icons */
+@import url(http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css);
+
+.page-header {
+    text-align: center;
+}
+
+.resume .list-group-item:first-child, .resume .list-group-item:last-child {
+    border-radius: 0;
+}
+
+.resume-heading .social-btns i.fa {
+    margin-left: -5px;
+}
+
+div.list-group-item-margined {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    background-color: azure
+}
+
+div.list-group-label {
+    margin-top: 20px;
+}
+
+div.category-label {
+    font-size: 1.5em;
+}
+
+div.book-list-group-label {
+    margin-top: 10px;
+}
+
+div.text-large {
+    font-size: 1.5em;
+}
+
+div.description-details {
+    min-height: 150px;
+    word-break: break-all
+}
+
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+}

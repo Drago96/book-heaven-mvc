@@ -1,0 +1,38 @@
+﻿@model BookSearchComponentModel
+
+<form asp-area="" asp-controller="Books" asp-action="Search" class="navbar-form">
+    <div class="form-group-sm">
+        <div class="row">
+            <div class="col-md-6 no-padding">
+                <input asp-for="SearchTerm" placeholder="Search..." class="form-control" />
+            </div>
+            <div class="col-md-2 no-padding">
+                <button type="submit" class="btn btn-info btn-block btn-sm">Search</button>
+            </div>
+            <div class="col-md-4 no-padding">
+                <div class="button-group">
+                    <button type="button" class="btn btn-default btn-sm btn-block dropdown-toggle" data-toggle="dropdown">Filter Categories <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        @foreach (var category in Model.AllCategories)
+                        {
+                            <li>
+                                <a href="#" class="small" data-value="@category.Id" tabIndex="-1">
+                                    <input value="@category.Id" name="@nameof(Model.Categories)" type="checkbox"/>@category.Name
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+
+<script on-content-loaded="true">
+    NavbarSearchModule.Initialize();
+</script>
+
+
+

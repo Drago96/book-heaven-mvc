@@ -25,6 +25,9 @@ namespace BookHeaven.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<byte[]>("BookListingPicture")
+                        .HasMaxLength(10485760);
+
                     b.Property<byte[]>("BookPicture")
                         .HasMaxLength(10485760);
 
@@ -35,7 +38,8 @@ namespace BookHeaven.Data.Migrations
 
                     b.Property<DateTime>("PublishedDate");
 
-                    b.Property<string>("PublisherId");
+                    b.Property<string>("PublisherId")
+                        .IsRequired();
 
                     b.Property<string>("Title")
                         .IsRequired()

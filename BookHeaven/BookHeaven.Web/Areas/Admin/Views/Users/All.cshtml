@@ -1,5 +1,4 @@
-﻿
-@using BookHeaven.Web.Models.Shared
+﻿@using BookHeaven.Web.Models.Shared
 @model PaginatedViewModel<UserAdminListingServiceModel>
 @{
     ViewData["Title"] = "All Users";
@@ -37,13 +36,11 @@ else
         <thead>
         <tr>
             <th>
-
             </th>
             <th>
                 Username
             </th>
             <th>
-                
             </th>
         </tr>
         </thead>
@@ -63,7 +60,7 @@ else
                 <td width="35%">
                     <div class="row">
                         <div class="col-md-4">
-                            <a class="btn btn-info btn-block" asp-action="Details" asp-route-id="@user.Id">Details</a>  
+                            <a class="btn btn-info btn-block" asp-action="Details" asp-route-id="@user.Id">Details</a>
                         </div>
                         <div class="col-md-4">
                             <a class="btn btn-warning btn-block" asp-action="Edit" asp-route-id="@user.Id">Edit</a>
@@ -72,17 +69,15 @@ else
                                 <form method="post" class="custom-inline-form" asp-action="Delete" asp-route-id="@user.Id">
                                         <button type="submit" class="btn btn-danger btn-block delete-button">Delete</button>
                                 </form>
-                            
                         </div>
                     </div>
                 </td>
             </tr>
         }
         </tbody>
-
     </table>
 
-    @await Html.PartialAsync("_PaginationPartial", new PageSelectorViewModel
+    @await Html.PartialAsync("_PaginationPartial", new PageSelectorPartialModel
     {
         Action = "All",
         CurrentPage = Model.CurrentPage,
@@ -90,7 +85,7 @@ else
         PreviousPage = Model.PreviousPage,
         SearchTerm = Model.SearchTerm,
         TotalPages = Model.TotalPages
-    }) 
+    })
 }
 
 @section Scripts

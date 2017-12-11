@@ -1,24 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BookHeaven.Services.Contracts
 {
     public interface ICategoryService : IService
     {
-        Task<IEnumerable<T>> GetAllAsync<T>();
+        Task<IEnumerable<T>> AllAsync<T>();
 
         Task<bool> ExistsAsync(int categoryId);
 
         Task<bool> ExistsAsync(string categoryName);
 
+        Task<bool> AlreadyExistsAsync(int id, string name);
+
         Task CreateAsync(string name);
+
+        Task EditAsync(int id, string name);
 
         Task DeleteAsync(int id);
 
-        Task<bool> AlreadyExistsAsync(int id, string name);
-
-        Task EditAsync(int id, string name);
+        Task<IEnumerable<string>> NamesAsync(IEnumerable<int> ids);
     }
 }

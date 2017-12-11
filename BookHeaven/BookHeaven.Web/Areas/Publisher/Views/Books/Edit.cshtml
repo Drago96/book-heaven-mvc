@@ -1,0 +1,90 @@
+﻿@model BookEditViewModel
+@{
+    ViewData["Title"] = "Edit Book";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<hr />
+
+@{
+    var bookPicture = string.IsNullOrEmpty(Model.BookPicture) ? ResourceConstants.DefaultBookPictureUrl : "data:image / png; base64," + Model.BookPicture;
+}
+
+<div class="well">
+    <div class="row">
+        <form method="post" enctype="multipart/form-data">
+            <div class="col-md-4">
+                <img id="book-picture" alt="Book" class="book-picture" src="@bookPicture" />
+                <input id="book-picture-input" accept="@string.Join(',',ImageConstants.SupportedImageContentTypes)" type="file" class="hidden" asp-for="BookFilePicture" />
+                <div class="text-center"><span id="book-picture-validation" asp-validation-for="BookFilePicture" class="text-danger"></span></div>
+                <button type="button" id="picture-select" class="btn btn-info btn-block book-picture-button">Select a picture</button>
+            </div>
+            <div class="col-md-8">
+                <div class="row form-margin-row">
+                    <div class="col-md-3">
+                        <label asp-for="Title"></label>
+                    </div>
+                    <div class="col-md-9">
+                        <input asp-for="Title" class="form-control" />
+                        <span class="text-danger" asp-validation-for="Title"></span>
+                    </div>
+                </div>
+                <div class="row form-margin-row">
+                    <div class="col-md-3">
+                        <label asp-for="Price"></label> (in Euro)
+                    </div>
+                    <div class="col-md-9">
+                        <input type="number" min="0" asp-for="Price" class="form-control" />
+                        <span class="text-danger" asp-validation-for="Price"></span>
+                    </div>
+                </div>
+                <div class="row form-margin-row">
+                    <div class="col-md-3">
+                        <label asp-for="Description"></label>
+                    </div>
+                    <div class="col-md-9">
+                        <textarea class="form-control description-textarea" asp-for="Description"></textarea>
+                        <span class="text-danger" asp-validation-for="Description"></span>
+                    </div>
+                </div>
+                <div class="row form-margin-row">
+                    <div class="col-md-3">
+                        <label asp-for="Categories"></label>
+                    </div>
+                    <div class="col-md-9">
+                        <select id="category-select" class="form-control" multiple="multiple" asp-for="Categories" asp-items="@Model.AllCategories"></select>
+                        <span class="text-danger" asp-validation-for="Categories"></span>
+                    </div>
+                </div>
+                <div class="row form-margin-row">
+                    <div class="col-md-9 col-md-offset-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button class="btn btn-warning btn-block" type="submit">Edit</button>
+                            </div>
+                            <div class="col-md-6">
+                                <a class="btn btn-default btn-block" asp-action="All">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+    {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script>
+        $('#category-select').multiSelect();
+        PublishBookModule.initializeModule('@nameof(Model.BookFilePicture)',
+            '@ResourceConstants.DefaultBookPictureUrl',
+            @BookDataConstants.BookPictureWidth,
+            @BookDataConstants.BookPictureHeight,
+            @BookDataConstants.BookPictureMaxLength,
+            '@BookErrorConstants.InvalidProfilePicture',
+            @Html.Raw(Json.Serialize(ImageConstants.SupportedImageContentTypes)));
+    </script>
+}

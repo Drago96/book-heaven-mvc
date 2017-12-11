@@ -1,16 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using BookHeaven.Services.Models.Locations;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using BookHeaven.Services.Models;
-using BookHeaven.Services.Models.Locations;
 
 namespace BookHeaven.Services.Contracts
 {
     public interface ILocationService : IService
     {
-        Task<LocationFromApiDto> GetCurrentLocationAsync(string ipAddress);
+        Task<LocationFromApiDto> CurrentLocationAsync(string ipAddress);
+
+        Task<IEnumerable<T>> LocationsWithMostVisitsAsync<T>(int countryVisitsToDisplay);
 
         Task AddLocationVisitAsync(string city, string country);
 
-        Task<IEnumerable<T>> GetLocationsWithMostVisitsAsync<T>(int countryVisitsToDisplay);
     }
 }
