@@ -20,7 +20,7 @@ namespace BookHeaven.Web.Controllers
             this.categories = categories;
         }
 
-        public async Task<IActionResult> Search(BookSearchComponentModel model, int page=1)
+        public async Task<IActionResult> Search(BookSearchComponentModel model, int page = 1)
         {
             foreach (var categoryId in model.Categories)
             {
@@ -32,7 +32,7 @@ namespace BookHeaven.Web.Controllers
 
             var searchTerm = model.SearchTerm ?? "";
 
-            var searchResult = await this.books.FilterByTermAndCategoriesAsync<BookSearchListingServiceModel>( model.Categories,page, searchTerm);
+            var searchResult = await this.books.FilterByTermAndCategoriesAsync<BookSearchListingServiceModel>(model.Categories, page, searchTerm);
 
             var listingModel = new BookSearchListingViewModel
             {
@@ -44,11 +44,25 @@ namespace BookHeaven.Web.Controllers
                     PageSize = BookServiceConstants.BookUserListingPageSize,
                     SearchTerm = searchTerm,
                     TotalItems =
-                        await this.books.CountBySearchTermAndCategoriesAsync(model.Categories, model.SearchTerm)
+                        await this.books.CountBySearchTermAndCategoriesAsync(model.Categories, searchTerm)
                 }
             };
 
             return View(listingModel);
-}
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var exists = await this.books.ExistsAsync(id);
+
+            if (!exists)
+            {
+                return NotFound();
+            }
+
+            var model = await this.books.ByIdAsync<BookDetailsServiceModel>(id);
+
+            return View(model);
+        }
     }
 }

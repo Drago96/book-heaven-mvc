@@ -1,0 +1,26 @@
+﻿@model BookSearchListingServiceModel
+
+    @{
+        var bookPicture = string.IsNullOrEmpty(Model.BookListingPicture) ? ResourceConstants.DefaultBookListingPictureUrl : "data:image / png; base64," + Model.BookListingPicture;
+   
+    }
+
+<div class="col-md-4">
+    <div class="well well-lg">
+        <div class="row">
+            <div class="col-md-5">
+
+                <img src="@bookPicture" class="book-listing-image" />
+            </div>
+            <div class="col-md-7">
+                <div class="book-title-div">@Model.Title</div>
+                <div class="book-details-div">Price : @Model.Price.ToString("f2") €</div>
+                <div  class="book-details-div">Published : @Model.PublishedDate.ToShortDateString()</div>
+                <div class="book-details-div">
+                    <a asp-area="" asp-controller="Books" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-info btn-block book-details-btn">Details</a>
+                </div>
+            </div>
+        </div>
+                    
+    </div>
+</div>

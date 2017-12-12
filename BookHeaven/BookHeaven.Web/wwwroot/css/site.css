@@ -98,10 +98,10 @@ div.custom-alert {
     .col-no-padding-right {
         padding-right: 0;
     }
+}
 
-    .col-no-padding-left {
-        padding-left: 0;
-    }
+.col-no-padding-left {
+    padding-left: 0;
 }
 
 body.admin-body {
@@ -231,4 +231,23 @@ div.description-details {
 .nopadding {
     padding: 0 !important;
     margin: 0 !important;
+}
+
+img.book-listing-image {
+    max-height: 150px;
+    max-width: 200px;
+}
+
+div.book-title-div {
+    font-size: 1.3em;
+    word-break: break-all;
+    margin-bottom: 5px;
+}
+
+div.book-details-div {
+    margin-bottom: 5px;
+}
+
+a.book-details-btn {
+    margin-top: 20px;
 }

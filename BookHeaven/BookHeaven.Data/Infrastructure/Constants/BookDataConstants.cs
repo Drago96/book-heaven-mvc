@@ -12,7 +12,7 @@
         public const int BookPictureWidth = 300;
         public const int BookPictureHeight = 400;
 
-        public const int BookPictureListingWidth = 200;
-        public const int BookPictureListingHeight = 300;
+        public const int BookPictureListingWidth = 150;
+        public const int BookPictureListingHeight = 200;
     }
 }

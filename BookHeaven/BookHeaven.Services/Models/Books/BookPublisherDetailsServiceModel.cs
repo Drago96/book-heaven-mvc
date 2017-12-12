@@ -8,20 +8,8 @@ using BookHeaven.Common.Extensions;
 
 namespace BookHeaven.Services.Models.Books
 {
-    public class BookPublisherDetailsServiceModel : IMapFrom<Book>, IHaveCustomMapping
+    public class BookPublisherDetailsServiceModel : BookDetailsServiceModel, IHaveCustomMapping
     {
-        public string Title { get; set; }
-
-        public string Description { get; set; }
-
-        public decimal Price { get; set; }
-
-        public string BookPicture { get; set; }
-
-        public DateTime PublishedDate { get; set; }
-
-        public IEnumerable<string> Categories { get; set; } = new List<string>();
-
         public void ConfigureMapping(Profile profile)
         {
             profile
