@@ -4,7 +4,7 @@
 }
 
 <h2>Results for search : @Model.Books.SearchTerm</h2>
-<h3>Categories : @(Model.Categories.Any() ? string.Join(" / ", Model.Categories) : "All")</h3>
+<h3>Categories : @(Model.Categories.Any() ? string.Join(" / ", Model.Categories.Select(c => c.Name)) : "All")</h3>
 <hr />
 
 @if (Model.Books.TotalItems == 0)
@@ -24,16 +24,16 @@ else
 
 <ul class="pagination">
     <li class="@(Model.Books.CurrentPage <= Model.Books.PreviousPage ? "disabled" : "")">
-        <a asp-action="Search" asp-route-categories="@Model.Categories" asp-route-searchTerm="@Model.Books.SearchTerm" asp-route-page="@Model.Books.PreviousPage">&laquo;</a>
+        <a  href="@Url.Action("Search", new {categories = Model.Categories.Select(c => c.Id), searchTerm = Model.Books.SearchTerm, page = Model.Books.PreviousPage})">&laquo;</a>
     </li>
 
     @for (int i = 1; i <= Model.Books.TotalPages; i++)
     {
         <li class="@(Model.Books.CurrentPage == i ? "active" : "")">
-            <a asp-action="Search" asp-route-categories="@Model.Categories" asp-route-searchTerm="@Model.Books.SearchTerm" asp-route-page="@i">@i</a>
+            <a href="@Url.Action("Search", new {categories = Model.Categories.Select(c => c.Id), searchTerm = Model.Books.SearchTerm, page = i})">@i</a>
         </li>
     }
     <li class="@(Model.Books.CurrentPage >= Model.Books.NextPage ? "disabled" : "")">
-        <a asp-action="Search" asp-route-categories="@Model.Categories" asp-route-searchTerm="@Model.Books.SearchTerm" asp-route-page="@Model.Books.NextPage">&raquo;</a>
+        <a  href="@Url.Action("Search", new {categories = Model.Categories.Select(c => c.Id), searchTerm = Model.Books.SearchTerm, page = Model.Books.NextPage})">&raquo;</a>
     </li>
 </ul>   

@@ -6,6 +6,7 @@ using BookHeaven.Services.Contracts;
 using BookHeaven.Services.Models.Categories;
 using BookHeaven.Web.Models.Shared;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BookHeaven.Web.Infrastructure.ViewComponents
 {
@@ -24,7 +25,11 @@ namespace BookHeaven.Web.Infrastructure.ViewComponents
 
             return View(new BookSearchComponentModel
             {
-                AllCategories = allCategories
+                AllCategories = allCategories.Select(c => new SelectListItem
+                {
+                    Text = c.Name,
+                    Value = c.Id.ToString()
+                })
             });
 
         }

@@ -61,10 +61,10 @@ namespace BookHeaven.Services.Implementations
             await this.db.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<string>> NamesAsync(IEnumerable<int> ids)
+        public async Task<IEnumerable<T>> ByIdsAsync<T>(IEnumerable<int> ids)
             => await this.db.Categories
                 .Where(c => ids.Contains(c.Id))
-                .Select(c => c.Name)
+                .ProjectTo<T>()
                 .ToListAsync();
     }
 }

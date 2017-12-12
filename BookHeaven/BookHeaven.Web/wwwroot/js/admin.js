@@ -207,8 +207,14 @@ var AdminUsersListModule = (function (module) {
                 apiSettings: {
                     url: '/api/users?searchTerm={query}',
                     onResponse(response) {
+                        var result = []
+                        for (var key in response) {
+                            if (key != undefined && key != 'contains') {
+                                result.push(response[key])
+                            }
+                        }
                         return {
-                            results: response
+                            results: result
                         }
                     }
                 },
@@ -220,7 +226,7 @@ var AdminUsersListModule = (function (module) {
                 onSelect: function (result) {
                     $('#search-field').val(result.name)
                     $('#search-form').submit();
-                }
+                },
             });
     }
 

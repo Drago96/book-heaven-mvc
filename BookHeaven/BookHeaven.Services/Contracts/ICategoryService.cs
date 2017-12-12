@@ -19,6 +19,6 @@ namespace BookHeaven.Services.Contracts
 
         Task DeleteAsync(int id);
 
-        Task<IEnumerable<string>> NamesAsync(IEnumerable<int> ids);
+        Task<IEnumerable<T>> ByIdsAsync<T>(IEnumerable<int> ids);
     }
 }

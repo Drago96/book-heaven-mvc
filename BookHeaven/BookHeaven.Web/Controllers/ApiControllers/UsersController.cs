@@ -18,7 +18,7 @@ namespace BookHeaven.Web.Controllers.ApiControllers
         }
 
         [HttpGet]
-        [Authorize(Roles = RoleConstants.Admin)]
+        //[Authorize(Roles = RoleConstants.Admin)]
         public async Task<IActionResult> Get([FromQuery] string searchTerm = "")
         {
             if (searchTerm == null)

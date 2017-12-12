@@ -2,6 +2,7 @@
 using BookHeaven.Services.Contracts;
 using BookHeaven.Services.Infrastructure.Constants;
 using BookHeaven.Services.Models.Books;
+using BookHeaven.Services.Models.Categories;
 using BookHeaven.Web.Models;
 using BookHeaven.Web.Models.Books;
 using BookHeaven.Web.Models.Shared;
@@ -36,7 +37,7 @@ namespace BookHeaven.Web.Controllers
 
             var listingModel = new BookSearchListingViewModel
             {
-                Categories = await this.categories.NamesAsync(model.Categories),
+                Categories = await this.categories.ByIdsAsync<CategoryInfoServiceModel>(model.Categories),
                 Books = new PaginatedViewModel<BookSearchListingServiceModel>
                 {
                     CurrentPage = page,

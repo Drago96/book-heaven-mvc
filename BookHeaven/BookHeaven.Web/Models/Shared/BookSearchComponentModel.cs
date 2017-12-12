@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BookHeaven.Services.Models.Categories;
 using BookHeaven.Web.Areas.Admin.Models.Categories;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BookHeaven.Web.Models.Shared
 {
@@ -11,7 +12,7 @@ namespace BookHeaven.Web.Models.Shared
     {
         public string SearchTerm { get; set; }
 
-        public IEnumerable<CategoryInfoServiceModel> AllCategories { get; set; } = new List<CategoryInfoServiceModel>();
+        public IEnumerable<SelectListItem> AllCategories { get; set; } = new List<SelectListItem>();
 
         public IEnumerable<int> Categories { get; set; } = new List<int>();
     }

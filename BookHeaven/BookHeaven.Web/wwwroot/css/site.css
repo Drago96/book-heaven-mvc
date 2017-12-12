@@ -98,11 +98,12 @@ div.custom-alert {
     .col-no-padding-right {
         padding-right: 0;
     }
+
+    .col-no-padding-left {
+        padding-left: 0;
+    }
 }
 
-.col-no-padding-left {
-    padding-left: 0;
-}
 
 body.admin-body {
     padding-top: 0;
@@ -250,4 +251,10 @@ div.book-details-div {
 
 a.book-details-btn {
     margin-top: 20px;
+}
+
+.input-block-level {
+    display: block;
+    width: 100%;
+    min-height: 28px; 
 }
