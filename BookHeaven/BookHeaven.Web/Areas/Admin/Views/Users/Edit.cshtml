@@ -1,4 +1,5 @@
-﻿@model UserEditViewModel
+﻿@using BookHeaven.Common.Extensions
+@model UserEditViewModel
 @{
     ViewData["Title"] = "Edit User";
 }
@@ -10,15 +11,11 @@
     </header>
 </div>
 
-@{
-    var profilePicture = Model.ProfilePicture != null ? "data:image/jpg;base64," + Model.ProfilePicture : ResourceConstants.DefaultProfilePictureUrl;
-}
-
 <div class="row">
     <div class="col-md-4 col-md-offset-4">
         <form id="edit-form" method="post" enctype="multipart/form-data">
             <div class="form-group">
-                <img id="profile-picture" alt="User" class="featurette-image img-circle img-responsive profile-picture-select" src="@profilePicture" />
+                <img id="profile-picture" alt="User" class="featurette-image img-circle img-responsive profile-picture-select" src="@Model.ProfilePicture.GetBase64PictureOrDefault(ResourceConstants.DefaultProfilePictureUrl)" />
                 <input type="hidden" asp-for="ProfilePicture" />
                 <input id="profile-picture-input" accept="@string.Join(',',ImageConstants.SupportedImageContentTypes)" type="file" class="hidden" asp-for="NewProfilePicture" />
                 <div class="text-center"><small>Click here to select a profile picture. Max size 2MB.</small></div>

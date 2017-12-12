@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNetCore.Routing
+﻿@using BookHeaven.Common.Extensions
+@using Microsoft.AspNetCore.Routing
 @model BookPublisherDetailsServiceModel
 @{
     ViewData["Title"] = "Book Details";
@@ -7,16 +8,13 @@
 <h2>@ViewData["Title"]</h2>
 <hr />
 
-@{
-    var bookPicture = string.IsNullOrEmpty(Model.BookPicture) ? ResourceConstants.DefaultBookPictureUrl : "data:image / png; base64," + Model.BookPicture;
-}
 <div class="panel panel-default">
     <div class="panel-heading resume-heading">
         <div class="row">
             <div class="col-md-12">
                 <div class="col-md-4">
                     <figure>
-                        <img id="book-picture" alt="Book" class="book-picture" src="@bookPicture" />
+                        <img id="book-picture" alt="Book" class="book-picture" src="@Model.BookPicture.GetBase64PictureOrDefault(ResourceConstants.DefaultBookPictureUrl)" />
                     </figure>
                 </div>
                 <div class="col-md-8">

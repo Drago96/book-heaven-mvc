@@ -1,7 +1,72 @@
-﻿@model BookDetailsServiceModel
+﻿@using BookHeaven.Common.Extensions
+@using Microsoft.AspNetCore.Routing
+@model BookDetailsServiceModel
 @{
     ViewData["Title"] = "Details";
 }
 
 <h2>@ViewData["Title"]</h2>
 <hr/>
+
+<div class="panel panel-default">
+    <div class="panel-heading resume-heading">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-4">
+                    <figure>
+                        <img id="book-picture" alt="Book" class="book-picture" src="@Model.BookPicture.GetBase64PictureOrDefault(ResourceConstants.DefaultBookPictureUrl)" />
+                    </figure>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-2 list-group-label">
+                            <strong>Name:</strong>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="list-group-item list-group-item-margined">@Model.Title</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 list-group-label">
+                            <strong>Price:</strong>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="list-group-item list-group-item-margined">@Model.Price.ToString("f2")€</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 list-group-label">
+                            <strong>Publish Date:</strong>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="list-group-item list-group-item-margined">@Model.PublishedDate.ToShortDateString()</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 list-group-label">
+                            <strong>Categories:</strong>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="list-group-item list-group-item-margined">@(Model.Categories.Any() ? string.Join("/", Model.Categories) : "No Categories")</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2  list-group-label">
+                            <strong>Description:</strong>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="list-group-item list-group-item-margined description-details">@Model.Description</div>
+                        </div>
+                    </div>
+                    <form class="form-inline" asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-id="@Context.GetRouteValue("id")" method="post">
+                        <div class="row  form-margin-row">
+                        <button type="submit" class="btn btn-info btn-block" asp->Add Item to Cart</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,14 +1,12 @@
 ﻿@using System.Net
 @using System.Text
+@using BookHeaven.Common.Extensions
 @using Microsoft.AspNetCore.Routing
 @model UserDetailsViewModel
 @{
     ViewData["Title"] = "Manage User";
 }
 
-@{
-    var profilePictureSource = Model.ProfilePicture == null ? ResourceConstants.DefaultProfilePictureUrl : "data:image / png; base64," + Model.ProfilePicture;
-}
 
 <div class="resume">
     <header class="page-header">
@@ -25,7 +23,7 @@
                     <div class="col-md-12">
                         <div class="col-md-4">
                             <figure>
-                                <img class="img-circle img-responsive profile-picture-select no-cursor" alt="" src="@profilePictureSource">
+                                <img class="img-circle img-responsive profile-picture-select no-cursor" alt="" src="@Model.ProfilePicture.GetBase64PictureOrDefault(ResourceConstants.DefaultProfilePictureUrl)">
                             </figure>
                         </div>
                         <div class="col-md-8">

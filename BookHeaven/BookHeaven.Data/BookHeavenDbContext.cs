@@ -14,6 +14,8 @@ namespace BookHeaven.Data
 
         public DbSet<Category> Categories { get; set; }
 
+        public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
+
         public BookHeavenDbContext(DbContextOptions<BookHeavenDbContext> options)
             : base(options)
         {
@@ -53,6 +55,19 @@ namespace BookHeaven.Data
                 .HasMany(b => b.Books)
                 .WithOne(c => c.Category)
                 .HasForeignKey(c => c.CategoryId);
+
+            builder
+                .Entity<ShoppingCartItem>()
+                .HasOne(sci => sci.Book)
+                .WithMany(b => b.ShoppingCarts)
+                .HasForeignKey(sci => sci.BookId);
+
+            builder
+                .Entity<ShoppingCartItem>()
+                .HasOne(sci => sci.User)
+                .WithMany(b => b.ShoppingCartItems)
+                .HasForeignKey(sci => sci.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);
         }

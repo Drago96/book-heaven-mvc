@@ -44,27 +44,24 @@ namespace BookHeaven.Web
             {
                 facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
-                //facebookOptions.AppId = "613941212330262";
-                //facebookOptions.AppSecret = "5d1c8a99a19c9c6694942c22c54a6bda";
             }).AddGoogle(googleOptions =>
             {
                 googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
                 googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
-                //googleOptions.ClientId = "260337154105-ej22e2sgs8tt0d6fcbvd34qn1akdnmus.apps.googleusercontent.com";
-                //googleOptions.ClientSecret = "ILRxlC_MHM5ivpzRZfm68yoI";
             });
 
             services.AddRouting(options => options.LowercaseUrls = true);
             services.ConfigureCustomServices();
             services.AddAutoMapper();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromDays(int.Parse(Configuration["Session:DurationInDays"]));
+            });
+            services.AddMemoryCache();
             services.AddMvc(options =>
             {
                 options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
                 options.Filters.Add<LogOnVisit>();
-            });
-            services.AddSession(options =>
-            {
-                options.IdleTimeout = TimeSpan.FromDays(int.Parse(Configuration["Session:DurationInDays"]));
             });
         }
 
@@ -85,6 +82,7 @@ namespace BookHeaven.Web
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            
             app.UseSession(new SessionOptions());
 
             app.UseStaticFiles();

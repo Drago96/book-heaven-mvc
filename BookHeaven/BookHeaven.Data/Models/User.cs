@@ -21,5 +21,7 @@ namespace BookHeaven.Data.Models
         public byte[] ProfilePicture { get; set; }
 
         public ICollection<Book> PublishedBooks { get; set; } = new List<Book>();
+
+        public ICollection<ShoppingCartItem> ShoppingCartItems { get; set; } = new List<ShoppingCartItem>();
     }
 }

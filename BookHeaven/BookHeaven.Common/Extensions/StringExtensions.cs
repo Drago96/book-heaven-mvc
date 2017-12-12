@@ -16,6 +16,8 @@ namespace BookHeaven.Common.Extensions
         public static byte[] ConvertToByteArray(this string input)
             => input != null ? Convert.FromBase64String(input) : null;
 
+        public static string GetBase64PictureOrDefault(this string picture, string defaultPath)
+            => picture == null ? defaultPath : "data:image / png; base64," + picture;
 
     }
 }
