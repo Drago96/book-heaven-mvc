@@ -258,3 +258,19 @@ a.book-details-btn {
     width: 100%;
     min-height: 28px; 
 }
+
+table.book-cart-table thead th {
+    text-align: center
+}
+
+table.book-cart-table tbody td {
+    text-align: center
+}
+
+table.book-cart-table tbody tr {
+    vertical-align: middle
+}
+
+table.book-cart-table tbody td div {
+    margin-top: 65px;
+}

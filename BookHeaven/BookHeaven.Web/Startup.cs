@@ -49,9 +49,10 @@ namespace BookHeaven.Web
                 googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
                 googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
             });
-
+            
             services.AddRouting(options => options.LowercaseUrls = true);
             services.ConfigureCustomServices();
+            services.AddScoped<ClearCategoryCache>();
             services.AddAutoMapper();
             services.AddSession(options =>
             {

@@ -8,5 +8,9 @@ namespace BookHeaven.Services.Contracts
     public interface IShoppingCartService : IService
     {
         Task AddAsync(int id, string userId);
+
+        Task<bool> CartIsFullAsync(string userId);
+
+        Task<IEnumerable<T>> GetItemsAsync<T>(string userId);
     }
 }

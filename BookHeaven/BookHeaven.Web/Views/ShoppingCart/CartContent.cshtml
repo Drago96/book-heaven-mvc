@@ -1,0 +1,82 @@
+﻿@using BookHeaven.Common.Extensions
+@model ShoppingCartViewModel
+@{
+    ViewData["Title"] = "Cart Content";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+
+<table class="table table-bordered table-striped table-hover book-cart-table">
+    <thead>
+        <tr>
+            <th>
+
+            </th>
+            <th>
+                Title
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Total
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td width="20%">
+                    <img class="book-listing-image" src="@item.BookPicture.GetBase64PictureOrDefault(ResourceConstants.DefaultBookListingPictureUrl)" />
+                </td>
+                <td width="20%">
+                    <div>
+                        @item.BookTitle
+                    </div>
+                </td>
+                <td width="20%">
+                    <div>
+                        @item.Quantity
+                    </div>
+
+                </td>
+                <td width="20%">
+                    <div>
+                        @item.BookPrice.ToEuro()
+                    </div>
+
+                </td>
+                <td width="20%">
+                    <div>
+                        @((item.Quantity * item.BookPrice).ToEuro())
+                    </div>
+
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-md-2 col-md-offset-10">
+        <div class="row text-center">
+            Total items: @Model.CartItemsCount
+        </div>
+        <div class="row text-center">
+            Total price: @Model.CartTotalSum.ToEuro()
+        </div>
+        <div class="row">
+            <form asp-action="CheckOutCart" method="post">
+                <div class="text-center">
+                    <button type="submit" class="btn btn-info">Check Out</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

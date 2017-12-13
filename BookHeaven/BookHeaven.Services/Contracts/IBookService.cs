@@ -5,11 +5,13 @@ namespace BookHeaven.Services.Contracts
 {
     public interface IBookService : IService
     {
-        Task<IEnumerable<T>> AllPaginatedAsync<T>(string searchTerm, int page);
+        Task<IEnumerable<T>> AllPaginatedAsync<T>(string searchTerm, int page, int take);
+
+        Task<IEnumerable<T>> AllByPublisherPaginatedAsync<T>(string userId, string searchTerm, int page, int take);
 
         Task<IEnumerable<T>> FilterAndTakeAsync<T>(string searchTerm, int booksToTake);
 
-        Task<IEnumerable<T>> FilterByTermAndCategoriesAsync<T>(IEnumerable<int> categories,int page,string searchTerm);
+        Task<IEnumerable<T>> FilterByTermAndCategoriesAsync<T>(IEnumerable<int> categories,int page,string searchTerm, int take);
 
         Task<T> ByIdAsync<T>(int id);
 
@@ -25,5 +27,6 @@ namespace BookHeaven.Services.Contracts
 
         Task<bool> ExistsAsync(int id);
 
+        Task<bool> IsPublisherAsync(int id, string userId);
     }
 }

@@ -4,6 +4,7 @@ using BookHeaven.Web.Infrastructure.Constants.SuccessMessages;
 using BookHeaven.Web.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using BookHeaven.Web.Infrastructure.Filters;
 
 namespace BookHeaven.Web.Areas.Admin.Controllers
 {
@@ -20,6 +21,7 @@ namespace BookHeaven.Web.Areas.Admin.Controllers
             => View(await this.categories.AllAsync<CategoryAdminListingServiceModel>());
 
         [HttpPost]
+        [ServiceFilter(typeof(ClearCategoryCache))]
         public async Task<IActionResult> Delete(int id)
         {
             var exists = await this.categories.ExistsAsync(id);

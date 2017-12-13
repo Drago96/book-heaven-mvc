@@ -45,7 +45,7 @@ namespace BookHeaven.Web.Areas.Admin.Controllers
 
             return View(new PaginatedViewModel<UserAdminListingServiceModel>
             {
-                Items = await this.users.AllPaginatedAsync<UserAdminListingServiceModel>(searchTerm, page),
+                Items = await this.users.AllPaginatedAsync<UserAdminListingServiceModel>(searchTerm, page, UserServiceConstants.UserListingPageSize),
                 TotalItems = await this.users.CountBySearchTermAsync(searchTerm),
                 CurrentPage = page,
                 SearchTerm = searchTerm,

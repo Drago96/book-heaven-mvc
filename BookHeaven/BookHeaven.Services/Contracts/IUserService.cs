@@ -5,7 +5,7 @@ namespace BookHeaven.Services.Contracts
 {
     public interface IUserService : IService
     {
-        Task<IEnumerable<T>> AllPaginatedAsync<T>(string search, int page);
+        Task<IEnumerable<T>> AllPaginatedAsync<T>(string search, int page, int take);
 
         Task<IEnumerable<T>> AllByTakeAsync<T>(string search, int usersToTake);
 

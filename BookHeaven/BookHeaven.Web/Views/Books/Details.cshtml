@@ -31,7 +31,7 @@
                             <strong>Price:</strong>
                         </div>
                         <div class="col-md-10">
-                            <div class="list-group-item list-group-item-margined">@Model.Price.ToString("f2")€</div>
+                            <div class="list-group-item list-group-item-margined">@Model.Price.ToEuro()</div>
                         </div>
                     </div>
                     <div class="row">

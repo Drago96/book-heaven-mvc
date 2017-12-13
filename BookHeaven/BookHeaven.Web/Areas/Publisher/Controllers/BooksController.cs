@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using BookHeaven.Common.Extensions;
 
@@ -44,9 +45,11 @@ namespace BookHeaven.Web.Areas.Publisher.Controllers
                 searchTerm = "";
             }
 
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             return View(new PaginatedViewModel<BookPublisherListingServiceModel>
             {
-                Items = await this.books.AllPaginatedAsync<BookPublisherListingServiceModel>(searchTerm, page),
+                Items = await this.books.AllByPublisherPaginatedAsync<BookPublisherListingServiceModel>(userId,searchTerm, page, BookServiceConstants.BookPublisherListingPageSize),
                 TotalItems = await this.books.CountBySearchTermAsync(searchTerm),
                 CurrentPage = page,
                 SearchTerm = searchTerm,
@@ -109,6 +112,14 @@ namespace BookHeaven.Web.Areas.Publisher.Controllers
                 return NotFound();
             }
 
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var isPublisher = await this.books.IsPublisherAsync(id, userId);
+
+            if (!isPublisher)
+            {
+                return BadRequest();
+            }
+
             var model = await this.books.ByIdAsync<BookPublisherDetailsServiceModel>(id);
 
             return View(model);
@@ -121,6 +132,14 @@ namespace BookHeaven.Web.Areas.Publisher.Controllers
             if (!exists)
             {
                 return NotFound();
+            }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var isPublisher = await this.books.IsPublisherAsync(id, userId);
+
+            if (!isPublisher)
+            {
+                return BadRequest();
             }
 
             var book = await this.books.ByIdAsync<BookEditServiceModel>(id);
@@ -142,6 +161,14 @@ namespace BookHeaven.Web.Areas.Publisher.Controllers
             var exists = await this.books.ExistsAsync(id);
 
             if (!exists)
+            {
+                return BadRequest();
+            }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var isPublisher = await this.books.IsPublisherAsync(id, userId);
+
+            if (!isPublisher)
             {
                 return BadRequest();
             }
@@ -184,6 +211,14 @@ namespace BookHeaven.Web.Areas.Publisher.Controllers
                 return BadRequest();
             }
 
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var isPublisher = await this.books.IsPublisherAsync(id, userId);
+
+            if (!isPublisher)
+            {
+                return BadRequest();
+            }
+
             await this.books.DeleteAsync(id);
 
             TempData.AddSuccessMessage(BookSuccessConstants.BookDeletedSuccessfully);
@@ -198,5 +233,6 @@ namespace BookHeaven.Web.Areas.Publisher.Controllers
                     Text = c.Name,
                     Value = c.Id.ToString()
                 });
+
     }
 }

@@ -31,7 +31,7 @@ namespace BookHeaven.Web.Infrastructure.ViewComponents
             {
                 allCategories = await this.categories.AllAsync<CategoryInfoServiceModel>();
                 this.cache.Set(CacheConstants.CategoriesCacheKey, allCategories,
-                    DateTimeOffset.UtcNow.AddMinutes(CacheConstants.CategoriesCacheInMinutes));
+                    DateTimeOffset.UtcNow.AddDays(CacheConstants.CategoriesCacheInDays));
             }
 
             return View(new BookSearchComponentModel

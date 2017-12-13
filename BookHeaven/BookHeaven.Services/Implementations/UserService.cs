@@ -24,10 +24,10 @@ namespace BookHeaven.Services.Implementations
             this.userManager = userManager;
         }
 
-        public async Task<IEnumerable<T>> AllPaginatedAsync<T>(string search = "", int page = 1)
+        public async Task<IEnumerable<T>> AllPaginatedAsync<T>(string search = "", int page = 1, int take = 10)
             => await this.FindUsersBySearchTerm(search)
-                .Skip((page - 1) * UserServiceConstants.UserListingPageSize)
-                .Take(UserServiceConstants.UserListingPageSize)
+                .Skip((page - 1) *take)
+                .Take(take)
                 .ProjectTo<T>()
                 .ToListAsync();
 
