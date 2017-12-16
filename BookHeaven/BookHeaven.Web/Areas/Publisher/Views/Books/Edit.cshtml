@@ -13,7 +13,7 @@
     <div class="row">
         <form method="post" enctype="multipart/form-data">
             <div class="col-md-4">
-                <img id="book-picture" alt="Book" class="book-picture" src="@Model.BookPicture.GetBase64PictureOrDefault(ResourceConstants.DefaultBookPictureUrl)" />
+                <img id="book-picture" alt="Book" class="book-picture" src="@Model.BookPicture.GetPictureUrlOrDefault(ResourceConstants.DefaultBookPictureUrl)" />
                 <input id="book-picture-input" accept="@string.Join(',',ImageConstants.SupportedImageContentTypes)" type="file" class="hidden" asp-for="BookFilePicture" />
                 <div class="text-center"><span id="book-picture-validation" asp-validation-for="BookFilePicture" class="text-danger"></span></div>
                 <button type="button" id="picture-select" class="btn btn-info btn-block book-picture-button">Select a picture</button>

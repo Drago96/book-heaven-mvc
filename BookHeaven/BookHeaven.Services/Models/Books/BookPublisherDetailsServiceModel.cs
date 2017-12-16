@@ -14,9 +14,7 @@ namespace BookHeaven.Services.Models.Books
         {
             profile
                 .CreateMap<Book, BookPublisherDetailsServiceModel>()
-                .ForMember(b => b.Categories, cfg => cfg.MapFrom(b => b.Categories.Select(c => c.Category.Name)))
-                .ForMember(u => u.BookPicture,
-                    cfg => cfg.MapFrom(u => u.BookPicture.ConvertToBase64String()));
+                .ForMember(b => b.Categories, cfg => cfg.MapFrom(b => b.Categories.Select(c => c.Category.Name)));
         }
     }
 }

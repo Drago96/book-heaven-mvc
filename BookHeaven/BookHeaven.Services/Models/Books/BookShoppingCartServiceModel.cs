@@ -8,7 +8,7 @@ using BookHeaven.Data.Models;
 
 namespace BookHeaven.Services.Models.Books
 {
-    public class BookShoppingCartServiceModel : IMapFrom<Book>, IHaveCustomMapping
+    public class BookShoppingCartServiceModel : IMapFrom<Book>
     {
         public int Id { get; set; }
 
@@ -18,12 +18,5 @@ namespace BookHeaven.Services.Models.Books
 
         public string BookListingPicture { get; set; }
 
-        public void ConfigureMapping(Profile profile)
-        {
-            profile
-                .CreateMap<Book, BookShoppingCartServiceModel>()
-                .ForMember(b => b.BookListingPicture,
-                    cfg => cfg.MapFrom(b => b.BookListingPicture.ConvertToBase64String()));
-        }
     }
 }

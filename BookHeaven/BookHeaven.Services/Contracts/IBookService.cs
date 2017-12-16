@@ -21,9 +21,9 @@ namespace BookHeaven.Services.Contracts
 
         Task<int> CountBySearchTermAndCategoriesAsync(IEnumerable<int> categoryIds, string searchTerm);
 
-        Task<bool> CreateAsync(string title, decimal price, string description, IEnumerable<int> categoryIds, byte[] picture,byte[] listingPicture, string publisherId);
+        Task<bool> CreateAsync(string title, decimal price, string description, IEnumerable<int> categoryIds, string picture,string listingPicture, string publisherId);
 
-        Task EditAsync(int id, string title, decimal price, string description, IEnumerable<int> categories, byte[] bookPicture, byte[] listingPicture);
+        Task EditAsync(int id, string title, decimal price, string description, IEnumerable<int> categories, string bookPicture, string listingPicture);
 
         Task DeleteAsync(int id);
 

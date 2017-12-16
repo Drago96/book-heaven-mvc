@@ -25,11 +25,9 @@ namespace BookHeaven.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<byte[]>("BookListingPicture")
-                        .HasMaxLength(10485760);
+                    b.Property<string>("BookListingPicture");
 
-                    b.Property<byte[]>("BookPicture")
-                        .HasMaxLength(10485760);
+                    b.Property<string>("BookPicture");
 
                     b.Property<string>("Description")
                         .IsRequired();
@@ -200,10 +198,9 @@ namespace BookHeaven.Data.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
-                    b.Property<byte[]>("ProfilePicture")
-                        .HasMaxLength(2097152);
+                    b.Property<string>("ProfilePicture");
 
-                    b.Property<byte[]>("ProfilePictureNav");
+                    b.Property<string>("ProfilePictureNav");
 
                     b.Property<string>("SecurityStamp");
 

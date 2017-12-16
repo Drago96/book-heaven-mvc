@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BookHeaven.Services.UtilityServices.Contracts;
 
 namespace BookHeaven.Services.Implementations
 {
@@ -17,11 +18,13 @@ namespace BookHeaven.Services.Implementations
     {
         private readonly BookHeavenDbContext db;
         private readonly UserManager<User> userManager;
+        private readonly IFileService fileService;
 
-        public UserService(BookHeavenDbContext db, UserManager<User> userManager)
+        public UserService(BookHeavenDbContext db, UserManager<User> userManager,IFileService fileService)
         {
             this.db = db;
             this.userManager = userManager;
+            this.fileService = fileService;
         }
 
         public async Task<IEnumerable<T>> AllPaginatedAsync<T>(string search = "", int page = 1, int take = 10)
@@ -57,7 +60,7 @@ namespace BookHeaven.Services.Implementations
             return roles;
         }
 
-        public async Task EditAsync(string id, string firstName, string lastName, string email, string username, IEnumerable<string> roles, byte[] profilePicture, byte[] profilePictureNav)
+        public async Task EditAsync(string id, string firstName, string lastName, string email, string username, IEnumerable<string> roles, string profilePicture,string profilePictureNav)
         {
             var user = await this.db.Users.FindAsync(id);
 
@@ -65,8 +68,16 @@ namespace BookHeaven.Services.Implementations
             user.LastName = lastName;
             user.Email = email;
             user.UserName = username;
-            user.ProfilePicture = profilePicture ?? user.ProfilePicture;
-            user.ProfilePictureNav = profilePictureNav ?? user.ProfilePictureNav;
+            if (profilePicture != null)
+            {
+                this.fileService.DeleteImage(user.ProfilePicture);
+                user.ProfilePicture = profilePicture;
+            }
+            if (profilePictureNav != null)
+            {
+                this.fileService.DeleteImage(user.ProfilePictureNav);
+                user.ProfilePictureNav = profilePictureNav;
+            }
 
             var allRoles = await this.db.Roles.Select(r => r.Name).ToListAsync();
 

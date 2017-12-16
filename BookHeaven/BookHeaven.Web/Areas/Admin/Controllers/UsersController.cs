@@ -119,22 +119,25 @@ namespace BookHeaven.Web.Areas.Admin.Controllers
                 return View(model);
             }
 
-            byte[] profilePicture = null;
-            byte[] profilePictureNav = null;
+            string profilePictureUrl = null;
+            string profilePictureNavUrl = null;
 
             if (model.NewProfilePicture != null)
             {
                 var profilePictureFromFormFile =
                     await this.fileService.GetByteArrayFromFormFileAsync(model.NewProfilePicture);
                 var pictureType = model.NewProfilePicture.ContentType.Split('/').Last();
-                profilePicture = this.fileService.ResizeImage(profilePictureFromFormFile,
+                var profilePicture = this.fileService.ResizeImage(profilePictureFromFormFile,
                     UserDataConstants.ProfilePictureWidth, UserDataConstants.ProfilePictureHeight, pictureType);
-                profilePictureNav = this.fileService.ResizeImage(profilePicture,
+                profilePictureUrl = this.fileService.UploadImage(profilePicture);
+
+                var profilePictureNav = this.fileService.ResizeImage(profilePicture,
                     UserDataConstants.ProfilePictureNavWidth, UserDataConstants.ProfilePictureNavHeight, pictureType);
+                profilePictureNavUrl = this.fileService.UploadImage(profilePictureNav);
 
             }
 
-            await this.users.EditAsync(id, model.FirstName, model.LastName, model.Email, model.Email, model.Roles, profilePicture,profilePictureNav);
+            await this.users.EditAsync(id, model.FirstName, model.LastName, model.Email, model.Email, model.Roles, profilePictureUrl, profilePictureNavUrl);
 
             TempData.AddSuccessMessage(UserSuccessMessages.EditMessage);
             return RedirectToAction(nameof(All));
@@ -151,6 +154,16 @@ namespace BookHeaven.Web.Areas.Admin.Controllers
             }
 
             var user = await this.userManager.FindByIdAsync(id);
+
+            if (user.ProfilePicture != null)
+            {
+                this.fileService.DeleteImage(user.ProfilePicture);
+            }
+            if (user.ProfilePictureNav != null)
+            {
+                this.fileService.DeleteImage(user.ProfilePictureNav);
+            }
+
             await this.userManager.DeleteAsync(user);
 
             TempData.AddSuccessMessage(UserSuccessMessages.DeleteMessage);

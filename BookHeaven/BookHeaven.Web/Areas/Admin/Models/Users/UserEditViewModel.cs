@@ -14,7 +14,7 @@ using ValidationContext = System.ComponentModel.DataAnnotations.ValidationContex
 
 namespace BookHeaven.Web.Areas.Admin.Models.Users
 {
-    public class UserEditViewModel : IMapFrom<User>, IHaveCustomMapping, IValidatableObject
+    public class UserEditViewModel : IMapFrom<User>, IValidatableObject
     {
         [Required]
         [StringLength(FirstNameMaxLength, ErrorMessage = CommonErrorConstants.InvalidParameterLength, MinimumLength = FirstNameMinLength)]
@@ -38,13 +38,6 @@ namespace BookHeaven.Web.Areas.Admin.Models.Users
 
         public IEnumerable<string> AllRoles { get; set; } = new List<string>();
 
-        public void ConfigureMapping(Profile profile)
-        {
-            profile
-                .CreateMap<UserDetailsServiceModel, UserEditViewModel>()
-                .ForMember(u => u.ProfilePicture,
-                    cfg => cfg.MapFrom(u => u.ProfilePicture.ConvertToBase64String()));
-        }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

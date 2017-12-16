@@ -6,7 +6,7 @@ using BookHeaven.Data.Models;
 
 namespace BookHeaven.Services.Models.Books
 {
-    public class BookSearchListingServiceModel : IMapFrom<Book>, IHaveCustomMapping
+    public class BookSearchListingServiceModel : IMapFrom<Book>
     {
         public int Id { get; set; }
 
@@ -18,12 +18,5 @@ namespace BookHeaven.Services.Models.Books
 
         public DateTime PublishedDate { get; set; }
 
-        public void ConfigureMapping(Profile profile)
-        {
-            profile
-                .CreateMap<Book, BookSearchListingServiceModel>()
-                .ForMember(b => b.BookListingPicture,
-                    cfg => cfg.MapFrom(b => b.BookListingPicture.ConvertToBase64String()));
-        }
     }
 }

@@ -6,16 +6,9 @@ using BookHeaven.Common.Extensions;
 
 namespace BookHeaven.Web.Areas.Publisher.Models.Books
 {
-    public class BookEditViewModel : BookCreateViewModel, IMapFrom<BookEditServiceModel>, IHaveCustomMapping
+    public class BookEditViewModel : BookCreateViewModel, IMapFrom<BookEditServiceModel>
     {
         public string BookPicture { get; set; }
 
-        public void ConfigureMapping(Profile profile)
-        {
-            profile
-                .CreateMap<BookEditServiceModel, BookEditViewModel>()
-                .ForMember(b => b.BookPicture,
-                    cfg => cfg.MapFrom(b => b.BookPicture.ConvertToBase64String()));
-        }
     }
 }

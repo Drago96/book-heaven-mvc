@@ -14,7 +14,7 @@ namespace BookHeaven.Services.Models.Books
 
         public decimal Price { get; set; }
 
-        public byte[] BookPicture { get; set; }
+        public string BookPicture { get; set; }
 
         public IEnumerable<int> Categories { get; set; } = new List<int>();
 

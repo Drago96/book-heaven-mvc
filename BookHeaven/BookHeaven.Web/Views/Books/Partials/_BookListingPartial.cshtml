@@ -1,17 +1,13 @@
 ﻿@using BookHeaven.Common.Extensions
 @model BookSearchListingServiceModel
 
-    @{
-        var bookPicture = string.IsNullOrEmpty(Model.BookListingPicture) ? ResourceConstants.DefaultBookListingPictureUrl : "data:image / png; base64," + Model.BookListingPicture;
-   
-    }
 
 <div class="col-md-4">
     <div class="well well-lg">
         <div class="row">
             <div class="col-md-5">
 
-                <img src="@bookPicture" class="book-listing-image" />
+                <img src="@Model.BookListingPicture.GetPictureUrlOrDefault(ResourceConstants.DefaultBookListingPictureUrl)" class="book-listing-image" />
             </div>
             <div class="col-md-7">
                 <div class="book-title-div">@Model.Title</div>

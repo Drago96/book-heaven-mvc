@@ -9,7 +9,7 @@ using BookHeaven.Common.Extensions;
 
 namespace BookHeaven.Web.Areas.Admin.Models.Users
 {
-    public class UserDetailsViewModel : IMapFrom<UserDetailsServiceModel>, IHaveCustomMapping
+    public class UserDetailsViewModel : IMapFrom<UserDetailsServiceModel>
     {
         [Display(Name = UserDisplayConstants.FirstName)]
         public string FirstName { get; set; }
@@ -23,12 +23,5 @@ namespace BookHeaven.Web.Areas.Admin.Models.Users
 
         public IEnumerable<string> Roles { get; set; } = new List<string>();
 
-        public void ConfigureMapping(Profile profile)
-        {
-            profile
-                .CreateMap<UserDetailsServiceModel, UserDetailsViewModel>()
-                .ForMember(u => u.ProfilePicture,
-                    cfg => cfg.MapFrom(u => u.ProfilePicture.ConvertToBase64String()));
-        }
     }
 }

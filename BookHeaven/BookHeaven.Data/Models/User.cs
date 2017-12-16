@@ -17,10 +17,9 @@ namespace BookHeaven.Data.Models
         [MaxLength(LastNameMaxLength)]
         public string LastName { get; set; }
 
-        [MaxLength(ProfilePictureMaxLength)]
-        public byte[] ProfilePicture { get; set; }
+        public string ProfilePicture { get; set; }
 
-        public byte[] ProfilePictureNav { get; set; }
+        public string ProfilePictureNav { get; set; }
 
         public ICollection<Book> PublishedBooks { get; set; } = new List<Book>();
 

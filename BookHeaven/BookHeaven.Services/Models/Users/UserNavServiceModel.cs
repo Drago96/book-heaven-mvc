@@ -8,15 +8,9 @@ using BookHeaven.Data.Models;
 
 namespace BookHeaven.Services.Models.Users
 {
-    public class UserNavServiceModel : IMapFrom<User>, IHaveCustomMapping
+    public class UserNavServiceModel : IMapFrom<User>
     {
         public string ProfilePictureNav { get; set; }
 
-        public void ConfigureMapping(Profile profile)
-        {
-            profile
-                .CreateMap<User, UserNavServiceModel>()
-                .ForMember(u => u.ProfilePictureNav, cfg => cfg.MapFrom(u => u.ProfilePictureNav.ConvertToBase64String()));
-        }
     }
 }

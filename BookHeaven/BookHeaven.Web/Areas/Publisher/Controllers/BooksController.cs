@@ -72,25 +72,28 @@ namespace BookHeaven.Web.Areas.Publisher.Controllers
                 return View(model);
             }
 
-            byte[] resizedBookPicture = null;
-            byte[] bookListingPicture = null;
+            string resizedBookPictureUrl = null;
+            string bookListingPictureUrl = null;
 
             if (model.BookFilePicture != null)
             {
                 var bookPicture = await this.fileService.GetByteArrayFromFormFileAsync(model.BookFilePicture);
                 var pictureType = model.BookFilePicture.ContentType.Split('/').Last();
-                resizedBookPicture = this.fileService.ResizeImage(bookPicture,
+                var resizedBookPicture = this.fileService.ResizeImage(bookPicture,
                     BookDataConstants.BookPictureWidth, BookDataConstants.BookPictureHeight, pictureType);
-                bookListingPicture = this.fileService.ResizeImage(bookPicture,
+                resizedBookPictureUrl = this.fileService.UploadImage(resizedBookPicture);
+
+                var bookListingPicture = this.fileService.ResizeImage(bookPicture,
                     BookDataConstants.BookPictureListingWidth, BookDataConstants.BookPictureListingHeight, pictureType);
+                bookListingPictureUrl = this.fileService.UploadImage(bookListingPicture);
             }
 
             var result = await this.books.CreateAsync(model.Title,
                 model.Price,
                 model.Description,
                 model.Categories,
-                resizedBookPicture,
-                bookListingPicture,
+                resizedBookPictureUrl,
+                bookListingPictureUrl,
                 userManager.GetUserId(HttpContext.User));
 
             if (!result)
@@ -181,21 +184,24 @@ namespace BookHeaven.Web.Areas.Publisher.Controllers
                 }
             }
 
-            byte[] bookPicture = null;
-            byte[] listingPicture = null;
+            string bookPictureUrl = null;
+            string listingPictureUrl = null;
 
             if (model.BookFilePicture != null)
             {
                 var bookPictureFromFormFile =
                     await this.fileService.GetByteArrayFromFormFileAsync(model.BookFilePicture);
                 var pictureType = model.BookFilePicture.ContentType.Split('/').Last();
-                bookPicture = this.fileService.ResizeImage(bookPictureFromFormFile,
+                var bookPicture = this.fileService.ResizeImage(bookPictureFromFormFile,
                     BookDataConstants.BookPictureWidth, BookDataConstants.BookPictureHeight, pictureType);
-                listingPicture = this.fileService.ResizeImage(bookPictureFromFormFile,
+                bookPictureUrl = this.fileService.UploadImage(bookPicture);
+
+                var listingPicture = this.fileService.ResizeImage(bookPictureFromFormFile,
                     BookDataConstants.BookPictureListingWidth, BookDataConstants.BookPictureListingHeight, pictureType);
+                listingPictureUrl = this.fileService.UploadImage(listingPicture);
             }
                 
-            await this.books.EditAsync(id, model.Title, model.Price, model.Description, model.Categories, bookPicture,listingPicture);
+            await this.books.EditAsync(id, model.Title, model.Price, model.Description, model.Categories, bookPictureUrl, listingPictureUrl);
 
             TempData.AddSuccessMessage(BookSuccessConstants.EditMessage);
             return RedirectToAction(nameof(All));

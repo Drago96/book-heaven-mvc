@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Authentication.ExtendedProtection;
 using System.Threading.Tasks;
+using BookHeaven.Services.UtilityServices.Contracts;
 
 namespace BookHeaven.Services.Implementations
 {
@@ -17,11 +18,13 @@ namespace BookHeaven.Services.Implementations
     {
         private readonly BookHeavenDbContext db;
         private readonly ICategoryService categories;
+        private readonly IFileService files;
 
-        public BookService(BookHeavenDbContext db, ICategoryService categories)
+        public BookService(BookHeavenDbContext db, ICategoryService categories, IFileService files)
         {
             this.db = db;
             this.categories = categories;
+            this.files = files;
         }
 
         public async Task<IEnumerable<T>> AllPaginatedAsync<T>(string searchTerm = "", int page = 1, int take = 10)
@@ -85,7 +88,7 @@ namespace BookHeaven.Services.Implementations
             return await books.CountAsync();
         }
 
-        public async Task<bool> CreateAsync(string title, decimal price, string description, IEnumerable<int> categoryIds, byte[] picture,byte[] listingPicture, string publisherId)
+        public async Task<bool> CreateAsync(string title, decimal price, string description, IEnumerable<int> categoryIds, string picture,string listingPicture, string publisherId)
         {
             foreach (var categoryId in categoryIds)
             {
@@ -132,20 +135,36 @@ namespace BookHeaven.Services.Implementations
         public async Task DeleteAsync(int id)
         {
             var book = await this.db.Books.FindAsync(id);
+            if (book.BookPicture != null)
+            {
+                this.files.DeleteImage(book.BookPicture);
+            }
+            if (book.BookListingPicture != null)
+            {
+                this.files.DeleteImage(book.BookListingPicture);
+            }
             this.db.Remove(book);
             await this.db.SaveChangesAsync();
         }
 
 
-        public async Task EditAsync(int id, string title, decimal price, string description, IEnumerable<int> categories, byte[] bookPicture, byte[] listingPicture)
+        public async Task EditAsync(int id, string title, decimal price, string description, IEnumerable<int> categories,string bookPicture,string listingPicture)
         {
             var book = await this.db.Books.Include(b => b.Categories).FirstOrDefaultAsync(b => b.Id == id);
 
             book.Title = title;
             book.Price = price;
             book.Description = description;
-            book.BookPicture = bookPicture ?? book.BookPicture;
-            book.BookListingPicture = listingPicture ?? book.BookListingPicture;
+            if (bookPicture != null)
+            {
+                this.files.DeleteImage(book.BookPicture);
+                book.BookPicture = bookPicture;
+            }
+            if (listingPicture != null)
+            {
+                this.files.DeleteImage(book.BookListingPicture);
+                book.BookListingPicture = listingPicture;
+            }
 
             foreach (var category in book.Categories)
             {

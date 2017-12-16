@@ -24,18 +24,15 @@ namespace BookHeaven.Web.Controllers
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
         private readonly IFileService fileService;
-        private readonly IUserService users;
 
         public AccountController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            IFileService fileService,
-            IUserService users)
+            IFileService fileService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.fileService = fileService;
-            this.users = users;
         }
 
         [AllowAnonymous]
@@ -121,10 +118,15 @@ namespace BookHeaven.Web.Controllers
             {
                 var profilePicture = await this.fileService.GetByteArrayFromFormFileAsync(model.ProfilePicture);
                 var pictureType = model.ProfilePicture.ContentType.Split('/').Last();
-                user.ProfilePicture = this.fileService.ResizeImage(profilePicture,
+
+                var profilePictureData = this.fileService.ResizeImage(profilePicture,
                     UserDataConstants.ProfilePictureWidth, UserDataConstants.ProfilePictureHeight, pictureType);
-                user.ProfilePictureNav = this.fileService.ResizeImage(profilePicture,
+                user.ProfilePicture= this.fileService.UploadImage(profilePictureData);
+
+                var profilePictureNavData = this.fileService.ResizeImage(profilePicture,
                     UserDataConstants.ProfilePictureNavWidth, UserDataConstants.ProfilePictureNavHeight, pictureType);
+                user.ProfilePictureNav= this.fileService.UploadImage(profilePictureNavData);
+
             }
 
             var result = await this.userManager.CreateAsync(user, model.Password);

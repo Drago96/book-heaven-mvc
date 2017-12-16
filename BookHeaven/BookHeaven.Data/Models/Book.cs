@@ -22,11 +22,9 @@ namespace BookHeaven.Data.Models
         [Range(0, double.MaxValue)]
         public decimal Price { get; set; }
 
-        [MaxLength(BookPictureMaxLength)]
-        public byte[] BookPicture { get; set; }
+        public string BookPicture { get; set; }
 
-        [MaxLength(BookPictureMaxLength)]
-        public byte[] BookListingPicture { get; set; }
+        public string BookListingPicture { get; set; }
 
         [Required]
         public string PublisherId { get; set; }
