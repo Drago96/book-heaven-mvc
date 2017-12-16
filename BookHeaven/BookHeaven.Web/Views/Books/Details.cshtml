@@ -60,7 +60,7 @@
                             <div class="list-group-item list-group-item-margined description-details">@Model.Description</div>
                         </div>
                     </div>
-                    <form class="form-inline" asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-id="@Context.GetRouteValue("id")" method="post">
+                    <form class="form-inline" asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-id="@Context.GetRouteValue("id")">
                         <div class="row  form-margin-row">
                         <button type="submit" class="btn btn-info btn-block" asp->Add Item to Cart</button>
                         </div>

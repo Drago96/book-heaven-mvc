@@ -57,7 +57,7 @@ namespace BookHeaven.Services.Implementations
             return roles;
         }
 
-        public async Task EditAsync(string id, string firstName, string lastName, string email, string username, IEnumerable<string> roles, byte[] profilePicture)
+        public async Task EditAsync(string id, string firstName, string lastName, string email, string username, IEnumerable<string> roles, byte[] profilePicture, byte[] profilePictureNav)
         {
             var user = await this.db.Users.FindAsync(id);
 
@@ -66,7 +66,7 @@ namespace BookHeaven.Services.Implementations
             user.Email = email;
             user.UserName = username;
             user.ProfilePicture = profilePicture ?? user.ProfilePicture;
-            
+            user.ProfilePictureNav = profilePictureNav ?? user.ProfilePictureNav;
 
             var allRoles = await this.db.Roles.Select(r => r.Name).ToListAsync();
 

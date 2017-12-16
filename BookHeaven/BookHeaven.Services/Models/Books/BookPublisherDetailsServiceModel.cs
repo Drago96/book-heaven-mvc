@@ -10,7 +10,7 @@ namespace BookHeaven.Services.Models.Books
 {
     public class BookPublisherDetailsServiceModel : BookDetailsServiceModel, IHaveCustomMapping
     {
-        public void ConfigureMapping(Profile profile)
+        public new void ConfigureMapping(Profile profile)
         {
             profile
                 .CreateMap<Book, BookPublisherDetailsServiceModel>()

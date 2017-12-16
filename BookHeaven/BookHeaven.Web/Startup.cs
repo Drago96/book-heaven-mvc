@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using BookHeaven.Services.UtilityServices.ShoppingCart;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
 
 namespace BookHeaven.Web
 {
@@ -52,6 +54,7 @@ namespace BookHeaven.Web
             
             services.AddRouting(options => options.LowercaseUrls = true);
             services.ConfigureCustomServices();
+            services.AddSingleton<IShoppingCartManager, ShoppingCartManager>();
             services.AddScoped<ClearCategoryCache>();
             services.AddAutoMapper();
             services.AddSession(options =>

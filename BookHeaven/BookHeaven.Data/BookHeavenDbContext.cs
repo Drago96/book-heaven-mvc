@@ -14,7 +14,9 @@ namespace BookHeaven.Data
 
         public DbSet<Category> Categories { get; set; }
 
-        public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<OrderItem> OrderItems { get; set; }
 
         public BookHeavenDbContext(DbContextOptions<BookHeavenDbContext> options)
             : base(options)
@@ -57,17 +59,23 @@ namespace BookHeaven.Data
                 .HasForeignKey(c => c.CategoryId);
 
             builder
-                .Entity<ShoppingCartItem>()
-                .HasOne(sci => sci.Book)
-                .WithMany(b => b.ShoppingCarts)
-                .HasForeignKey(sci => sci.BookId);
+                .Entity<Order>()
+                .HasMany(o => o.OrderItems)
+                .WithOne(oi => oi.Order)
+                .HasForeignKey(oi => oi.OrderId);
 
             builder
-                .Entity<ShoppingCartItem>()
-                .HasOne(sci => sci.User)
-                .WithMany(b => b.ShoppingCartItems)
-                .HasForeignKey(sci => sci.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .Entity<Order>()
+                .HasOne(o => o.User)
+                .WithMany(u => u.Orders)
+                .HasForeignKey(o => o.UserId);
+
+            builder
+                .Entity<OrderItem>()
+                .HasOne(oi => oi.Book)
+                .WithMany(b => b.Orders)
+                .HasForeignKey(o => o.BookId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             base.OnModelCreating(builder);
         }

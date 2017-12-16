@@ -23,7 +23,7 @@ namespace BookHeaven.Web.Infrastructure.Filters
         {
             var requestSession = context.HttpContext.Session;
 
-            if (requestSession.Keys.Contains(DataKeyConstants.LocationKey))
+            if (requestSession.Keys.Contains(SessionConstants.LocationKey))
             {
                 await next();
                 return;
@@ -40,7 +40,7 @@ namespace BookHeaven.Web.Infrastructure.Filters
 
             await this.visits.AddVisitAsync();
 
-            requestSession.SetString(DataKeyConstants.LocationKey, "True");
+            requestSession.SetString(SessionConstants.LocationKey, "True");
 
             await next();
         }

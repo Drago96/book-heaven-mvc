@@ -20,8 +20,11 @@ namespace BookHeaven.Data.Models
         [MaxLength(ProfilePictureMaxLength)]
         public byte[] ProfilePicture { get; set; }
 
+        public byte[] ProfilePictureNav { get; set; }
+
         public ICollection<Book> PublishedBooks { get; set; } = new List<Book>();
 
-        public ICollection<ShoppingCartItem> ShoppingCartItems { get; set; } = new List<ShoppingCartItem>();
+        public ICollection<Order> Orders { get; set; } = new List<Order>();
+
     }
 }

@@ -1,5 +1,4 @@
-﻿@using BookHeaven.Common.Extensions
-@model ShoppingCartViewModel
+﻿@model IEnumerable<ShoppingCartBookViewModel>
 @{
     ViewData["Title"] = "Cart Content";
 }
@@ -7,8 +6,10 @@
 <h2>@ViewData["Title"]</h2>
 <hr />
 
-<table class="table table-bordered table-striped table-hover book-cart-table">
-    <thead>
+@if (Model.Any())
+{
+    <table class="table table-bordered table-striped table-hover book-cart-table">
+        <thead>
         <tr>
             <th>
 
@@ -29,17 +30,17 @@
 
             </th>
         </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Items)
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
         {
             <tr>
                 <td width="20%">
-                    <img class="book-listing-image" src="@item.BookPicture.GetBase64PictureOrDefault(ResourceConstants.DefaultBookListingPictureUrl)" />
+                    <img class="book-listing-image" src="@item.BookListingPicture.GetBase64PictureOrDefault(ResourceConstants.DefaultBookListingPictureUrl)"/>
                 </td>
                 <td width="19%">
                     <div>
-                        @item.BookTitle
+                        @item.Title
                     </div>
                 </td>
                 <td width="19%">
@@ -50,19 +51,19 @@
                 </td>
                 <td width="19%">
                     <div>
-                        @item.BookPrice.ToEuro()
+                        @item.Price.ToEuro()
                     </div>
 
                 </td>
                 <td width="19%">
                     <div>
-                        @((item.Quantity * item.BookPrice).ToEuro())
+                        @((item.Quantity * item.Price).ToEuro())
                     </div>
 
                 </td>
                 <td>
                     <div>
-                        <form method="post" class="custom-inline-form" asp-action="DeleteCartItem" asp-route-id="@item.Id">
+                        <form method="post" class="custom-inline-form" asp-action="DeleteCartItem" asp-route-bookId="@item.Id">
                             <i class="glyphicon glyphicon-remove delete-icon link-icon"></i>
                         </form>
                     </div>
@@ -70,23 +71,35 @@
 
             </tr>
         }
-    </tbody>
-</table>
+        </tbody>
+    </table>
 
-<div class="row">
-    <div class="col-md-2 col-md-offset-10">
-        <div class="row text-center">
-            Total items: @Model.CartItemsCount
-        </div>
-        <div class="row text-center">
-            Total price: @Model.CartTotalSum.ToEuro()
-        </div>
-        <div class="row">
-            <form asp-action="CheckOutCart" method="post">
-                <div class="text-center">
-                    <button type="submit" class="btn btn-info">Check Out</button>
-                </div>
-            </form>
+    <div class="row">
+        <div class="col-md-2 col-md-offset-10">
+            <div class="row text-center">
+                Total items: @Model.Sum(b => b.Quantity)
+            </div>
+            <div class="row text-center">
+                Total price: @Model.Sum(b => b.Quantity * b.Price).ToEuro()
+            </div>
+            <div class="row">
+                <form asp-action="CheckOutCart" method="post">
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-info">Check Out</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+
+}
+else
+{
+    <h3>Your cart is empty!</h3>
+}
+
+@section Scripts{ 
+    <script>
+        DeleteItemDialogs.InitializeDialogs('.delete-icon', 'cart item')
+    </script>
+}

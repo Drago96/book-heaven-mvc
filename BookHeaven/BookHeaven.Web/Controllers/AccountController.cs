@@ -123,6 +123,8 @@ namespace BookHeaven.Web.Controllers
                 var pictureType = model.ProfilePicture.ContentType.Split('/').Last();
                 user.ProfilePicture = this.fileService.ResizeImage(profilePicture,
                     UserDataConstants.ProfilePictureWidth, UserDataConstants.ProfilePictureHeight, pictureType);
+                user.ProfilePictureNav = this.fileService.ResizeImage(profilePicture,
+                    UserDataConstants.ProfilePictureNavWidth, UserDataConstants.ProfilePictureNavHeight, pictureType);
             }
 
             var result = await this.userManager.CreateAsync(user, model.Password);

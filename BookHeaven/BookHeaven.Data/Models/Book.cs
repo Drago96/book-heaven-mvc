@@ -37,6 +37,6 @@ namespace BookHeaven.Data.Models
 
         public ICollection<BookCategory> Categories { get; set; } = new List<BookCategory>();
 
-        public ICollection<ShoppingCartItem> ShoppingCarts { get; set; } = new List<ShoppingCartItem>();
+        public ICollection<OrderItem> Orders { get; set; } = new List<OrderItem>();
     }
 }

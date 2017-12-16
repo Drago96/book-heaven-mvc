@@ -120,6 +120,7 @@ namespace BookHeaven.Web.Areas.Admin.Controllers
             }
 
             byte[] profilePicture = null;
+            byte[] profilePictureNav = null;
 
             if (model.NewProfilePicture != null)
             {
@@ -128,9 +129,12 @@ namespace BookHeaven.Web.Areas.Admin.Controllers
                 var pictureType = model.NewProfilePicture.ContentType.Split('/').Last();
                 profilePicture = this.fileService.ResizeImage(profilePictureFromFormFile,
                     UserDataConstants.ProfilePictureWidth, UserDataConstants.ProfilePictureHeight, pictureType);
+                profilePictureNav = this.fileService.ResizeImage(profilePicture,
+                    UserDataConstants.ProfilePictureNavWidth, UserDataConstants.ProfilePictureNavHeight, pictureType);
+
             }
 
-            await this.users.EditAsync(id, model.FirstName, model.LastName, model.Email, model.Email, model.Roles, profilePicture);
+            await this.users.EditAsync(id, model.FirstName, model.LastName, model.Email, model.Email, model.Roles, profilePicture,profilePictureNav);
 
             TempData.AddSuccessMessage(UserSuccessMessages.EditMessage);
             return RedirectToAction(nameof(All));

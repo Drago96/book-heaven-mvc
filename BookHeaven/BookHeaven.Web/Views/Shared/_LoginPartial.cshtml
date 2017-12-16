@@ -1,3 +1,4 @@
+@using BookHeaven.Web.Infrastructure.ViewComponents
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
@@ -9,6 +10,9 @@
                 <a asp-area="" asp-controller="ShoppingCart" asp-action="CartContent">
                     <i style="color: white; font-size: 1.5em" class="glyphicon glyphicon-shopping-cart"></i>
                 </a>
+            </li>
+            <li>
+                @await Component.InvokeAsync(typeof(UserProfileNavViewComponent))
             </li>
             @if (User.IsInRole(RoleConstants.Admin))
             {

@@ -15,6 +15,8 @@ namespace BookHeaven.Services.Contracts
 
         Task<T> ByIdAsync<T>(int id);
 
+        Task<IEnumerable<T>> ByIdsAsync<T>(IEnumerable<int> ids);
+
         Task<int> CountBySearchTermAsync(string searchTerm);
 
         Task<int> CountBySearchTermAndCategoriesAsync(IEnumerable<int> categoryIds, string searchTerm);

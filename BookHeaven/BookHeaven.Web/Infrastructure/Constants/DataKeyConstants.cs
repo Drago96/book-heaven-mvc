@@ -6,7 +6,5 @@
         public const string ErrorMessage = "ErrorMessage";
         public const string ReturnUrl = "ReturnUrl";
         public const string LoginProvider = "LoginProvider";
-
-        public const string LocationKey = "GeoLocation";
     }
 }

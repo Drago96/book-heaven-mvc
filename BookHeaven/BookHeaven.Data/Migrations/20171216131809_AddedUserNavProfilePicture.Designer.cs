@@ -11,9 +11,10 @@ using System;
 namespace BookHeaven.Data.Migrations
 {
     [DbContext(typeof(BookHeavenDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171216131809_AddedUserNavProfilePicture")]
+    partial class AddedUserNavProfilePicture
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,48 +104,6 @@ namespace BookHeaven.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Locations");
-                });
-
-            modelBuilder.Entity("BookHeaven.Data.Models.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("Date");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("BookHeaven.Data.Models.OrderItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("BookId");
-
-                    b.Property<decimal>("BookPrice");
-
-                    b.Property<string>("BookTitle")
-                        .IsRequired()
-                        .HasMaxLength(30);
-
-                    b.Property<int>("OrderId");
-
-                    b.Property<int>("Quantity");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("BookHeaven.Data.Models.SiteVisit", b =>
@@ -351,26 +310,6 @@ namespace BookHeaven.Data.Migrations
                     b.HasOne("BookHeaven.Data.Models.Category", "Category")
                         .WithMany("Books")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("BookHeaven.Data.Models.Order", b =>
-                {
-                    b.HasOne("BookHeaven.Data.Models.User", "User")
-                        .WithMany("Orders")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("BookHeaven.Data.Models.OrderItem", b =>
-                {
-                    b.HasOne("BookHeaven.Data.Models.Book", "Book")
-                        .WithMany("Orders")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("BookHeaven.Data.Models.Order", "Order")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

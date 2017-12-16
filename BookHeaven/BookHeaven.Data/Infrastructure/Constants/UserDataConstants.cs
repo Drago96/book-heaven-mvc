@@ -15,5 +15,8 @@
 
         public const int ProfilePictureWidth = 150;
         public const int ProfilePictureHeight = 150;
+
+        public const int ProfilePictureNavWidth = 28;
+        public const int ProfilePictureNavHeight = 28;
     }
 }

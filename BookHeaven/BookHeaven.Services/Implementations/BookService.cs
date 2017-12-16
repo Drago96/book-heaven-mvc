@@ -66,6 +66,9 @@ namespace BookHeaven.Services.Implementations
         public async Task<T> ByIdAsync<T>(int id)
             => await this.db.Books.Where(b => b.Id == id).ProjectTo<T>().FirstOrDefaultAsync();
 
+        public async Task<IEnumerable<T>> ByIdsAsync<T>(IEnumerable<int> ids)
+         => await this.db.Books.Where(b =>ids.Contains(b.Id)).ProjectTo<T>().ToListAsync();
+
 
         public async Task<int> CountBySearchTermAsync(string searchTerm = "")
             => await this.FindBookBySearchTerm(searchTerm).CountAsync();

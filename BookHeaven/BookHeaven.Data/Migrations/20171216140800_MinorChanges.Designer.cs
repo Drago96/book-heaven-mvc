@@ -11,9 +11,10 @@ using System;
 namespace BookHeaven.Data.Migrations
 {
     [DbContext(typeof(BookHeavenDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171216140800_MinorChanges")]
+    partial class MinorChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -365,8 +366,7 @@ namespace BookHeaven.Data.Migrations
                 {
                     b.HasOne("BookHeaven.Data.Models.Book", "Book")
                         .WithMany("Orders")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("BookId");
 
                     b.HasOne("BookHeaven.Data.Models.Order", "Order")
                         .WithMany("OrderItems")

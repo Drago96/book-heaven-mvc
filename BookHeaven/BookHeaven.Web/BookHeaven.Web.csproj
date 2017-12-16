@@ -35,8 +35,6 @@
 	
   <ItemGroup>
     <Folder Include="Areas\Publisher\Views\Shared\" />
-    <Folder Include="wwwroot\images\profile-images\" />
-    <Folder Include="wwwroot\images\user-images\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -274,3 +274,8 @@ table.book-cart-table tbody tr {
 table.book-cart-table tbody td div {
     margin-top: 65px;
 }
+
+img.profile-picture-nav {
+    width: 28px;
+    height: 28px;
+}
