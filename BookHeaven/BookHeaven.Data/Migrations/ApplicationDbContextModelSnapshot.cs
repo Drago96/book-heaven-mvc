@@ -21,400 +21,400 @@ namespace BookHeaven.Data.Migrations
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("BookHeaven.Data.Models.Book", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd();
 
-                    b.Property<string>("BookListingPicture");
+                b.Property<string>("BookListingPicture");
 
-                    b.Property<string>("BookPicture");
+                b.Property<string>("BookPicture");
 
-                    b.Property<string>("Description")
-                        .IsRequired();
+                b.Property<string>("Description")
+                    .IsRequired();
 
-                    b.Property<decimal>("Price");
+                b.Property<decimal>("Price");
 
-                    b.Property<DateTime>("PublishedDate");
+                b.Property<DateTime>("PublishedDate");
 
-                    b.Property<string>("PublisherId")
-                        .IsRequired();
+                b.Property<string>("PublisherId")
+                    .IsRequired();
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(30);
+                b.Property<string>("Title")
+                    .IsRequired()
+                    .HasMaxLength(30);
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("PublisherId");
+                b.HasIndex("PublisherId");
 
-                    b.ToTable("Books");
-                });
+                b.ToTable("Books");
+            });
 
             modelBuilder.Entity("BookHeaven.Data.Models.BookCategory", b =>
-                {
-                    b.Property<int>("BookId");
+            {
+                b.Property<int>("BookId");
 
-                    b.Property<int>("CategoryId");
+                b.Property<int>("CategoryId");
 
-                    b.HasKey("BookId", "CategoryId");
+                b.HasKey("BookId", "CategoryId");
 
-                    b.HasIndex("CategoryId");
+                b.HasIndex("CategoryId");
 
-                    b.ToTable("BookCategory");
-                });
+                b.ToTable("BookCategory");
+            });
 
             modelBuilder.Entity("BookHeaven.Data.Models.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(20);
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasMaxLength(20);
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
+                b.HasIndex("Name")
+                    .IsUnique();
 
-                    b.ToTable("Categories");
-                });
+                b.ToTable("Categories");
+            });
 
             modelBuilder.Entity("BookHeaven.Data.Models.Location", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd();
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(100);
+                b.Property<string>("City")
+                    .IsRequired()
+                    .HasMaxLength(100);
 
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasMaxLength(100);
+                b.Property<string>("Country")
+                    .IsRequired()
+                    .HasMaxLength(100);
 
-                    b.Property<int>("SiteVisits");
+                b.Property<int>("SiteVisits");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("City", "Country")
-                        .IsUnique();
+                b.HasIndex("City", "Country")
+                    .IsUnique();
 
-                    b.ToTable("Locations");
-                });
+                b.ToTable("Locations");
+            });
 
             modelBuilder.Entity("BookHeaven.Data.Models.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("Date");
+                b.Property<DateTime>("Date");
 
-                    b.Property<string>("UserId");
+                b.Property<string>("UserId");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
-                });
+                b.ToTable("Orders");
+            });
 
             modelBuilder.Entity("BookHeaven.Data.Models.OrderItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("BookId");
+                b.Property<int?>("BookId");
 
-                    b.Property<decimal>("BookPrice");
+                b.Property<decimal>("BookPrice");
 
-                    b.Property<string>("BookTitle")
-                        .IsRequired()
-                        .HasMaxLength(30);
+                b.Property<string>("BookTitle")
+                    .IsRequired()
+                    .HasMaxLength(30);
 
-                    b.Property<int>("OrderId");
+                b.Property<int>("OrderId");
 
-                    b.Property<int>("Quantity");
+                b.Property<int>("Quantity");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("BookId");
+                b.HasIndex("BookId");
 
-                    b.HasIndex("OrderId");
+                b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItems");
-                });
+                b.ToTable("OrderItems");
+            });
 
             modelBuilder.Entity("BookHeaven.Data.Models.SiteVisit", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("Date");
+                b.Property<DateTime>("Date");
 
-                    b.Property<int>("Visits");
+                b.Property<int>("Visits");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("Visits");
-                });
+                b.ToTable("Visits");
+            });
 
             modelBuilder.Entity("BookHeaven.Data.Models.User", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+            {
+                b.Property<string>("Id")
+                    .ValueGeneratedOnAdd();
 
-                    b.Property<int>("AccessFailedCount");
+                b.Property<int>("AccessFailedCount");
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
+                b.Property<string>("ConcurrencyStamp")
+                    .IsConcurrencyToken();
 
-                    b.Property<string>("Email")
-                        .HasMaxLength(256);
+                b.Property<string>("Email")
+                    .HasMaxLength(256);
 
-                    b.Property<bool>("EmailConfirmed");
+                b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50);
+                b.Property<string>("FirstName")
+                    .IsRequired()
+                    .HasMaxLength(50);
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50);
+                b.Property<string>("LastName")
+                    .IsRequired()
+                    .HasMaxLength(50);
 
-                    b.Property<bool>("LockoutEnabled");
+                b.Property<bool>("LockoutEnabled");
 
-                    b.Property<DateTimeOffset?>("LockoutEnd");
+                b.Property<DateTimeOffset?>("LockoutEnd");
 
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256);
+                b.Property<string>("NormalizedEmail")
+                    .HasMaxLength(256);
 
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256);
+                b.Property<string>("NormalizedUserName")
+                    .HasMaxLength(256);
 
-                    b.Property<string>("PasswordHash");
+                b.Property<string>("PasswordHash");
 
-                    b.Property<string>("PhoneNumber");
+                b.Property<string>("PhoneNumber");
 
-                    b.Property<bool>("PhoneNumberConfirmed");
+                b.Property<bool>("PhoneNumberConfirmed");
 
-                    b.Property<string>("ProfilePicture");
+                b.Property<string>("ProfilePicture");
 
-                    b.Property<string>("ProfilePictureNav");
+                b.Property<string>("ProfilePictureNav");
 
-                    b.Property<string>("SecurityStamp");
+                b.Property<string>("SecurityStamp");
 
-                    b.Property<bool>("TwoFactorEnabled");
+                b.Property<bool>("TwoFactorEnabled");
 
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256);
+                b.Property<string>("UserName")
+                    .HasMaxLength(256);
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
+                b.HasIndex("NormalizedEmail")
+                    .HasName("EmailIndex");
 
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                b.HasIndex("NormalizedUserName")
+                    .IsUnique()
+                    .HasName("UserNameIndex")
+                    .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("AspNetUsers");
-                });
+                b.ToTable("AspNetUsers");
+            });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+            {
+                b.Property<string>("Id")
+                    .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
+                b.Property<string>("ConcurrencyStamp")
+                    .IsConcurrencyToken();
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(256);
+                b.Property<string>("Name")
+                    .HasMaxLength(256);
 
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256);
+                b.Property<string>("NormalizedName")
+                    .HasMaxLength(256);
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                b.HasIndex("NormalizedName")
+                    .IsUnique()
+                    .HasName("RoleNameIndex")
+                    .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("AspNetRoles");
-                });
+                b.ToTable("AspNetRoles");
+            });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ClaimType");
+                b.Property<string>("ClaimType");
 
-                    b.Property<string>("ClaimValue");
+                b.Property<string>("ClaimValue");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired();
+                b.Property<string>("RoleId")
+                    .IsRequired();
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("RoleId");
+                b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims");
-                });
+                b.ToTable("AspNetRoleClaims");
+            });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ClaimType");
+                b.Property<string>("ClaimType");
 
-                    b.Property<string>("ClaimValue");
+                b.Property<string>("ClaimValue");
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                b.Property<string>("UserId")
+                    .IsRequired();
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims");
-                });
+                b.ToTable("AspNetUserClaims");
+            });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.Property<string>("LoginProvider");
+            {
+                b.Property<string>("LoginProvider");
 
-                    b.Property<string>("ProviderKey");
+                b.Property<string>("ProviderKey");
 
-                    b.Property<string>("ProviderDisplayName");
+                b.Property<string>("ProviderDisplayName");
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                b.Property<string>("UserId")
+                    .IsRequired();
 
-                    b.HasKey("LoginProvider", "ProviderKey");
+                b.HasKey("LoginProvider", "ProviderKey");
 
-                    b.HasIndex("UserId");
+                b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins");
-                });
+                b.ToTable("AspNetUserLogins");
+            });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.Property<string>("UserId");
+            {
+                b.Property<string>("UserId");
 
-                    b.Property<string>("RoleId");
+                b.Property<string>("RoleId");
 
-                    b.HasKey("UserId", "RoleId");
+                b.HasKey("UserId", "RoleId");
 
-                    b.HasIndex("RoleId");
+                b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles");
-                });
+                b.ToTable("AspNetUserRoles");
+            });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.Property<string>("UserId");
+            {
+                b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider");
+                b.Property<string>("LoginProvider");
 
-                    b.Property<string>("Name");
+                b.Property<string>("Name");
 
-                    b.Property<string>("Value");
+                b.Property<string>("Value");
 
-                    b.HasKey("UserId", "LoginProvider", "Name");
+                b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens");
-                });
+                b.ToTable("AspNetUserTokens");
+            });
 
             modelBuilder.Entity("BookHeaven.Data.Models.Book", b =>
-                {
-                    b.HasOne("BookHeaven.Data.Models.User", "Publisher")
-                        .WithMany("PublishedBooks")
-                        .HasForeignKey("PublisherId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
+            {
+                b.HasOne("BookHeaven.Data.Models.User", "Publisher")
+                    .WithMany("PublishedBooks")
+                    .HasForeignKey("PublisherId")
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
 
             modelBuilder.Entity("BookHeaven.Data.Models.BookCategory", b =>
-                {
-                    b.HasOne("BookHeaven.Data.Models.Book", "Book")
-                        .WithMany("Categories")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade);
+            {
+                b.HasOne("BookHeaven.Data.Models.Book", "Book")
+                    .WithMany("Categories")
+                    .HasForeignKey("BookId")
+                    .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("BookHeaven.Data.Models.Category", "Category")
-                        .WithMany("Books")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
+                b.HasOne("BookHeaven.Data.Models.Category", "Category")
+                    .WithMany("Books")
+                    .HasForeignKey("CategoryId")
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
 
             modelBuilder.Entity("BookHeaven.Data.Models.Order", b =>
-                {
-                    b.HasOne("BookHeaven.Data.Models.User", "User")
-                        .WithMany("Orders")
-                        .HasForeignKey("UserId");
-                });
+            {
+                b.HasOne("BookHeaven.Data.Models.User", "User")
+                    .WithMany("Orders")
+                    .HasForeignKey("UserId");
+            });
 
             modelBuilder.Entity("BookHeaven.Data.Models.OrderItem", b =>
-                {
-                    b.HasOne("BookHeaven.Data.Models.Book", "Book")
-                        .WithMany("Orders")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.SetNull);
+            {
+                b.HasOne("BookHeaven.Data.Models.Book", "Book")
+                    .WithMany("Orders")
+                    .HasForeignKey("BookId")
+                    .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("BookHeaven.Data.Models.Order", "Order")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
+                b.HasOne("BookHeaven.Data.Models.Order", "Order")
+                    .WithMany("OrderItems")
+                    .HasForeignKey("OrderId")
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
+            {
+                b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                    .WithMany()
+                    .HasForeignKey("RoleId")
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.HasOne("BookHeaven.Data.Models.User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
+            {
+                b.HasOne("BookHeaven.Data.Models.User")
+                    .WithMany()
+                    .HasForeignKey("UserId")
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.HasOne("BookHeaven.Data.Models.User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
+            {
+                b.HasOne("BookHeaven.Data.Models.User")
+                    .WithMany()
+                    .HasForeignKey("UserId")
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+            {
+                b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                    .WithMany()
+                    .HasForeignKey("RoleId")
+                    .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("BookHeaven.Data.Models.User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
+                b.HasOne("BookHeaven.Data.Models.User")
+                    .WithMany()
+                    .HasForeignKey("UserId")
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.HasOne("BookHeaven.Data.Models.User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
+            {
+                b.HasOne("BookHeaven.Data.Models.User")
+                    .WithMany()
+                    .HasForeignKey("UserId")
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
 #pragma warning restore 612, 618
         }
     }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using SixLabors.ImageSharp;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
@@ -56,8 +57,15 @@ namespace BookHeaven.Services.UtilityServices.Implementations
 
         public void DeleteImage(string url)
         {
-            var imageId = url.Split('/').Last().Split('.').First();
-            this.cloudinary.DeleteResources(imageId);
+            try
+            {
+                var imageId = url.Split('/').Last().Split('.').First();
+                this.cloudinary.DeleteResources(imageId);
+            }
+            catch
+            {
+                
+            }
         }
 
         public byte[] ResizeImage(byte[] image, int width, int height, string pictureType)

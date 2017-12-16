@@ -17,6 +17,7 @@ namespace BookHeaven.Services.UtilityServices.ShoppingCart.Models
 
         public IReadOnlyCollection<CartItem> GetItems()
         {
+   
             return this.books.ToList().AsReadOnly();
         }
 
@@ -63,6 +64,6 @@ namespace BookHeaven.Services.UtilityServices.ShoppingCart.Models
             => this.books.Any(b => b.BookId == bookId);
 
         public bool IsFull()
-            => this.books.Count > this.capacity;
+            => this.books.Sum(b => b.Quantity) >= this.capacity;
     }
 }

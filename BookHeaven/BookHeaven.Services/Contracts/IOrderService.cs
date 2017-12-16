@@ -9,5 +9,7 @@ namespace BookHeaven.Services.Contracts
     public interface IOrderService : IService
     {
         Task FinishOrder(string userId, IDictionary<int, int> items);
+
+        Task DeleteOrdersForUserAsync(string userId);
     }
 }

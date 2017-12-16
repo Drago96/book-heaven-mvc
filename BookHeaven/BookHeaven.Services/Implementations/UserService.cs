@@ -89,7 +89,10 @@ namespace BookHeaven.Services.Implementations
                 }
                 else
                 {
-                    await this.userManager.RemoveFromRoleAsync(user, role);
+                    if (await this.userManager.IsInRoleAsync(user, role))
+                    {
+                        await this.userManager.RemoveFromRoleAsync(user, role);
+                    }
                 }
             }
 

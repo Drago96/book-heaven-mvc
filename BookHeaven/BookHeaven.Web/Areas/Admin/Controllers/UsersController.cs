@@ -24,16 +24,18 @@ namespace BookHeaven.Web.Areas.Admin.Controllers
         private readonly IUserService users;
         private readonly IMapper mapper;
         private readonly IFileService fileService;
+        private readonly IOrderService orders;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<User> userManager;
 
-        public UsersController(IUserService users, IMapper mapper, RoleManager<IdentityRole> roleManager, UserManager<User> userManager, IFileService fileService)
+        public UsersController(IUserService users, IMapper mapper, RoleManager<IdentityRole> roleManager, UserManager<User> userManager, IFileService fileService,IOrderService orders)
         {
             this.users = users;
             this.mapper = mapper;
             this.roleManager = roleManager;
             this.userManager = userManager;
             this.fileService = fileService;
+            this.orders = orders;
         }
 
         public async Task<IActionResult> All(string searchTerm = "", int page = 1)
@@ -163,7 +165,7 @@ namespace BookHeaven.Web.Areas.Admin.Controllers
             {
                 this.fileService.DeleteImage(user.ProfilePictureNav);
             }
-
+            await this.orders.DeleteOrdersForUserAsync(user.Id);
             await this.userManager.DeleteAsync(user);
 
             TempData.AddSuccessMessage(UserSuccessMessages.DeleteMessage);

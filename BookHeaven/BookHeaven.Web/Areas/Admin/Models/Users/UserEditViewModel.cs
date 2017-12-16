@@ -14,7 +14,7 @@ using ValidationContext = System.ComponentModel.DataAnnotations.ValidationContex
 
 namespace BookHeaven.Web.Areas.Admin.Models.Users
 {
-    public class UserEditViewModel : IMapFrom<User>, IValidatableObject
+    public class UserEditViewModel : IMapFrom<UserDetailsServiceModel>, IValidatableObject
     {
         [Required]
         [StringLength(FirstNameMaxLength, ErrorMessage = CommonErrorConstants.InvalidParameterLength, MinimumLength = FirstNameMinLength)]

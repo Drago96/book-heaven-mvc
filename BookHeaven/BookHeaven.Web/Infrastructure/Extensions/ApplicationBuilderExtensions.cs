@@ -28,7 +28,6 @@ namespace BookHeaven.Web.Infrastructure.Extensions
             string[] roles = new string[]
             {
                 RoleConstants.Admin,
-                RoleConstants.SuperUser,
                 RoleConstants.Publisher
             };
 

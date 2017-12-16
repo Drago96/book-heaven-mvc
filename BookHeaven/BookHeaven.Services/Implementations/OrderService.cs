@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BookHeaven.Data;
 using BookHeaven.Data.Models;
 using BookHeaven.Services.Contracts;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
 
 namespace BookHeaven.Services.Implementations
@@ -45,6 +47,18 @@ namespace BookHeaven.Services.Implementations
 
             }
             this.db.Add(order);
+            await this.db.SaveChangesAsync();
+        }
+
+        public async Task DeleteOrdersForUserAsync(string userId)
+        {
+            var orders = await this.db.Orders.Where(o => o.UserId == userId).ToListAsync();
+
+            foreach (var order in orders)
+            {
+                this.db.Remove(order);
+            }
+
             await this.db.SaveChangesAsync();
         }
     }
