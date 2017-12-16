@@ -47,7 +47,7 @@
 @section Scripts    {
     @await Html.PartialAsync("_ValidationScriptsPartial")
     <script>
-        DeleteItemDialogs.InitializeDialogs('.delete-icon', 'category');
         AllCategoriesModule.Initialize();
+        DeleteItemDialogs.InitializeDialogs('.delete-icon', 'category');
     </script>
 }

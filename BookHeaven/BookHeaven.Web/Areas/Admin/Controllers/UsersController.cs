@@ -65,7 +65,7 @@ namespace BookHeaven.Web.Areas.Admin.Controllers
             var model = this.mapper.Map<UserDetailsServiceModel, UserDetailsViewModel>(user);
 
             model.Roles = await this.users.GetRolesByIdAsync(id);
-
+            
             return View(model);
         }
 

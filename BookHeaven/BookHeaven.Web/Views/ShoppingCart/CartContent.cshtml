@@ -25,6 +25,9 @@
             <th>
                 Total
             </th>
+            <th>
+
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -34,28 +37,35 @@
                 <td width="20%">
                     <img class="book-listing-image" src="@item.BookPicture.GetBase64PictureOrDefault(ResourceConstants.DefaultBookListingPictureUrl)" />
                 </td>
-                <td width="20%">
+                <td width="19%">
                     <div>
                         @item.BookTitle
                     </div>
                 </td>
-                <td width="20%">
+                <td width="19%">
                     <div>
                         @item.Quantity
                     </div>
 
                 </td>
-                <td width="20%">
+                <td width="19%">
                     <div>
                         @item.BookPrice.ToEuro()
                     </div>
 
                 </td>
-                <td width="20%">
+                <td width="19%">
                     <div>
                         @((item.Quantity * item.BookPrice).ToEuro())
                     </div>
 
+                </td>
+                <td>
+                    <div>
+                        <form method="post" class="custom-inline-form" asp-action="DeleteCartItem" asp-route-id="@item.Id">
+                            <i class="glyphicon glyphicon-remove delete-icon link-icon"></i>
+                        </form>
+                    </div>
                 </td>
 
             </tr>

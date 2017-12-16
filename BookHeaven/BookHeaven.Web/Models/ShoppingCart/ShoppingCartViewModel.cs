@@ -10,7 +10,7 @@ namespace BookHeaven.Web.Models.ShoppingCart
     {
         public IEnumerable<ShoppingCartItemServiceModel> Items { get; set; }
 
-        public int CartItemsCount => Items.Count();
+        public int CartItemsCount => Items.Sum(i => i.Quantity);
 
         public decimal CartTotalSum => Items.Sum(i => (i.BookPrice * i.Quantity));
     }

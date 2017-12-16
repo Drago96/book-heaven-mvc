@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BookHeaven.Common.Extensions
 {
@@ -8,5 +9,6 @@ namespace BookHeaven.Common.Extensions
     {
         public static string ConvertToBase64String(this byte[] array)
             => array != null ? Convert.ToBase64String(array) : null;
+
     }
 }
