@@ -1,0 +1,48 @@
+﻿@model UserProfileViewModel
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-3 col-md-offset-2">
+        <div class="text-center"><img id="profile-picture" alt="User" class="featurette-image img-circle img-responsive" src="@Model.User.ProfilePicture.GetPictureUrlOrDefault(ResourceConstants.DefaultProfilePictureUrl)" /></div>
+        <div class="text-left form-margin-row"><i class="glyphicon glyphicon-user"></i>  @Model.User.FirstName @Model.User.LastName</div>
+        <div class="text-left form-margin-row"><i class="glyphicon glyphicon-envelope"></i> @Model.User.Email</div>
+    </div>
+    <div class="col-md-5">
+        <h3>Last Orders</h3>
+        <hr />
+        @if (Model.Orders.Any())
+        {
+            for (var i = 0; i < Model.Orders.Count(); i++)
+            {
+
+                var currentOrder = Model.Orders.ElementAt(i);
+
+
+                <div class="well">
+                    <h4 class="order-header" data-toggle="collapse" data-target="#order@(i)">
+                        <em>@currentOrder.OrderItems.Sum(oi => oi.Quantity * oi.BookPrice).ToEuro() - @currentOrder.Date.ToShortDateString()</em>
+                        <span width="100%" class="text-right"><i class="glyphicon glyphicon-menu-down"></i></span>
+                    </h4>
+                    <div id="order@(i)" class="collapse">
+                        @foreach (var orderItem in currentOrder.OrderItems)
+                        {
+                            <div>
+                                @orderItem.BookTitle - @(orderItem.Quantity)x@(orderItem.BookPrice.ToEuro())
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <h5>You have no orders yet !</h5>
+        }
+
+    </div>
+</div>

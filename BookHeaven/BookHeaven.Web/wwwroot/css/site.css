@@ -279,3 +279,8 @@ img.profile-picture-nav {
     width: 28px;
     height: 28px;
 }
+
+.order-header {
+    cursor: pointer;
+    text-decoration: underline
+}

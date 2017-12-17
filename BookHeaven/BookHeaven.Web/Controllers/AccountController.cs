@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using BookHeaven.Services.Models.Orders;
+using BookHeaven.Services.Models.Users;
 using BookHeaven.Web.Models.Account;
 
 namespace BookHeaven.Web.Controllers
@@ -24,15 +26,21 @@ namespace BookHeaven.Web.Controllers
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
         private readonly IFileService fileService;
+        private readonly IUserService users;
+        private readonly IOrderService orders;
 
         public AccountController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            IFileService fileService)
+            IFileService fileService,
+            IUserService users,
+            IOrderService orders)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.fileService = fileService;
+            this.users = users;
+            this.orders = orders;
         }
 
         [AllowAnonymous]
@@ -271,6 +279,19 @@ namespace BookHeaven.Web.Controllers
             await this.signInManager.SignInAsync(user, isPersistent: false);
             TempData.AddSuccessMessage(string.Format(UserSuccessMessages.RegisterMessage, model.FirstName, model.LastName));
             return RedirectToLocal(returnUrl);
+        }
+
+        public async Task<IActionResult> Profile()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await this.users.ByIdAsync<UserDetailsServiceModel>(userId);
+            var userOrders = await this.orders.ByUserIdAsync<OrderDetailsServiceModel>(userId);
+
+            return View(new UserProfileViewModel
+            {
+                User = user,
+                Orders = userOrders
+            });
         }
 
         private IActionResult RedirectToLocal(string returnUrl)

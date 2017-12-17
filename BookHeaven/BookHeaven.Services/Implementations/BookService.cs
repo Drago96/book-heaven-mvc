@@ -47,6 +47,7 @@ namespace BookHeaven.Services.Implementations
         public async Task<IEnumerable<T>> FilterAndTakeAsync<T>(string searchTerm = "", int booksToTake = 10)
             => await this.db.Books.Where(b => b.Title.ContainsInsensitive(searchTerm))
                 .Take(booksToTake)
+                .OrderByDescending(b => b.Id)
                 .ProjectTo<T>()
                 .ToListAsync();
 

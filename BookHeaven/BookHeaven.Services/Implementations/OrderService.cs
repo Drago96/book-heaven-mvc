@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper.QueryableExtensions;
 using BookHeaven.Data;
 using BookHeaven.Data.Models;
 using BookHeaven.Services.Contracts;
@@ -61,5 +62,8 @@ namespace BookHeaven.Services.Implementations
 
             await this.db.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<T>> ByUserIdAsync<T>(string userId)
+            => await this.db.Orders.Where(o => o.UserId == userId).OrderByDescending(o => o.Id).ProjectTo<T>().ToListAsync();
     }
 }

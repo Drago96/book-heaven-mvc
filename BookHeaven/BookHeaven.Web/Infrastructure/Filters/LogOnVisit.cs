@@ -32,8 +32,7 @@ namespace BookHeaven.Web.Infrastructure.Filters
             var currentLocation = await this.GetLocation(context);
 
             if (currentLocation != null &&
-                !string.IsNullOrEmpty(currentLocation.Country) &&
-                !string.IsNullOrEmpty(currentLocation.City))
+                !string.IsNullOrEmpty(currentLocation.Country))
             {
                 await this.locations.AddLocationVisitAsync(currentLocation.City, currentLocation.Country);
             }

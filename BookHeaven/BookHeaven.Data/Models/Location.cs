@@ -13,8 +13,6 @@ namespace BookHeaven.Data.Models
         [MaxLength(CountryNameMaxLength)]
         public string Country { get; set; }
 
-        [Required]
-        [MinLength(CityNameMinLength)]
         [MaxLength(CityNameMaxLength)]
         public string City { get; set; }
 
