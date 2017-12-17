@@ -16,9 +16,13 @@
         public const string ExternalLoginInformation =
             "Error loading external login information during confirmation.";
 
-        public const string ExternalLoginInsufficientCredentials = "External user doesn't have all the credentials required to sign up.";
+        public const string ExternalLoginInsufficientCredentials =
+            "External user doesn't have all the credentials required to sign up.";
+
         public const string LogOutFirst = "You need to logout first!";
         public const string UserAlreadyExists = "Email is already taken!";
         public const string UserDoesNotExist = "User does not exist!";
+        public const string ErrorChaningPassword = "There was an error changing your password.";
+        public const string ErrorSettingPassword = "There was an error setting your password.";
     }
 }

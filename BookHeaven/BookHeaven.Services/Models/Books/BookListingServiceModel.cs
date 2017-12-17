@@ -6,7 +6,7 @@ using BookHeaven.Data.Models;
 
 namespace BookHeaven.Services.Models.Books
 {
-    public class BookSearchListingServiceModel : IMapFrom<Book>
+    public class BookListingServiceModel : IMapFrom<Book>
     {
         public int Id { get; set; }
 

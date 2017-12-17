@@ -1,13 +1,13 @@
 ﻿@using BookHeaven.Common.Extensions
-@model UserAdminEditViewModel
+@using BookHeaven.Common.Infrastructure.Constants
+@model UserEditViewModel
 @{
-    ViewData["Title"] = "Edit User";
+    ViewData["Title"] = "Edit Profile";
 }
 
 <div class="resume">
     <header class="page-header">
         <h2 class="page-title">@ViewData["Title"]</h2>
-        <small> @Model.Email</small>
     </header>
 </div>
 
@@ -36,27 +36,12 @@
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Roles"></label>
-                @foreach (var role in Model.AllRoles)
-                {
-                    bool isUserInRole = Model.Roles.Contains(role);
-                    string isChecked = isUserInRole ? "checked" : "";
-                    <div class="checkbox-row">
-                        <label>
-                            <input class="checkbox-inline" name="@nameof(Model.Roles)" value="@role" type="checkbox" @isChecked />
-                            <span class="checkbox-label"> @role</span>
-                        </label>
-                    </div>
-
-                }
-            </div>
             <div class="row">
                 <div class="col-md-6">
                     <button type="submit" class="btn btn-warning btn-block">Edit</button>
                 </div>
                 <div class="col-md-6">
-                    <a asp-action="All" class="btn btn-block btn-default">Cancel</a>
+                    <a asp-action="Profile" class="btn btn-block btn-default">Cancel</a>
                 </div>
             </div>
         </form>

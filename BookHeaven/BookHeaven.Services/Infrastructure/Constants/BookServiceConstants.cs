@@ -7,5 +7,7 @@
         public const int BookPublisherSearchCount = 7;
 
         public const int BookUserListingPageSize = 9;
+
+        public const int PopularBooksToTake = 3;
     }
 }

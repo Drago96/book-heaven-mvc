@@ -64,6 +64,14 @@ img.profile-picture-select {
     height: 150px;
 }
 
+img.profile-picture {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 150px;
+    height: 150px;
+}
+
 img.no-cursor {
     cursor: default
 }

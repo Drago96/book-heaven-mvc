@@ -12,6 +12,6 @@ namespace BookHeaven.Services.Contracts
 
         Task DeleteOrdersForUserAsync(string userId);
 
-        Task<IEnumerable<T>> ByUserIdAsync<T>(string userId);
+        Task<IEnumerable<T>> ByUserIdAsync<T>(string userId, int take);
     }
 }

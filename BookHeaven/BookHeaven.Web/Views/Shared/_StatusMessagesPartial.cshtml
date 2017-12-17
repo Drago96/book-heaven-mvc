@@ -10,3 +10,9 @@
         @TempData[DataKeyConstants.SuccessMessage]
     </div>
 }
+@if (TempData.ContainsKey(DataKeyConstants.WarningMessage))
+{
+    <div class="alert alert-warning text-center custom-alert fade">
+        @TempData[DataKeyConstants.WarningMessage]
+    </div>
+}

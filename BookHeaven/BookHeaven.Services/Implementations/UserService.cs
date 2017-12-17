@@ -99,6 +99,29 @@ namespace BookHeaven.Services.Implementations
             await this.userManager.UpdateAsync(user);
         }
 
+        public async Task ProfileEditAsync(string id, string firstName, string lastName, string email, string username,
+            string profilePicture, string profilePictureNav)
+        {
+            var user = await this.db.Users.FindAsync(id);
+
+            user.FirstName = firstName;
+            user.LastName = lastName;
+            user.Email = email;
+            user.UserName = username;
+            if (profilePicture != null)
+            {
+                this.fileService.DeleteImage(user.ProfilePicture);
+                user.ProfilePicture = profilePicture;
+            }
+            if (profilePictureNav != null)
+            {
+                this.fileService.DeleteImage(user.ProfilePictureNav);
+                user.ProfilePictureNav = profilePictureNav;
+            }
+
+            await this.userManager.UpdateAsync(user);
+        }
+
         public async Task<bool> AlreadyExistsAsync(string id, string username)
             => await this.db.Users.AnyAsync(u => u.Id != id && u.UserName.Equals(username, StringComparison.OrdinalIgnoreCase));
 

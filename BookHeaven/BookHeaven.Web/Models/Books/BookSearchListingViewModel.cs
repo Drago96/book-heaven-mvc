@@ -9,7 +9,7 @@ namespace BookHeaven.Web.Models.Books
 {
     public class BookSearchListingViewModel
     {
-        public PaginatedViewModel<BookSearchListingServiceModel> Books { get; set; }
+        public PaginatedViewModel<BookListingServiceModel> Books { get; set; }
 
         public IEnumerable<CategoryInfoServiceModel> Categories { get; set; }
     }

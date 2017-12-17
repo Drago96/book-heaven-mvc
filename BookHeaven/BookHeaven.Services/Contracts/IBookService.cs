@@ -30,5 +30,7 @@ namespace BookHeaven.Services.Contracts
         Task<bool> ExistsAsync(int id);
 
         Task<bool> IsPublisherAsync(int id, string userId);
+
+        Task<IEnumerable<T>> GetMostPopularThisWeekAsync<T>(int popularBooksToTake);
     }
 }

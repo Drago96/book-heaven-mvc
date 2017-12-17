@@ -63,7 +63,12 @@ namespace BookHeaven.Services.Implementations
             await this.db.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<T>> ByUserIdAsync<T>(string userId)
-            => await this.db.Orders.Where(o => o.UserId == userId).OrderByDescending(o => o.Id).ProjectTo<T>().ToListAsync();
+        public async Task<IEnumerable<T>> ByUserIdAsync<T>(string userId, int take = 5)
+            => await this.db.Orders
+            .Where(o => o.UserId == userId)
+            .OrderByDescending(o => o.Id)
+            .Take(take)
+            .ProjectTo<T>()
+            .ToListAsync();
     }
 }

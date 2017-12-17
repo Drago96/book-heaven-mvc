@@ -133,6 +133,16 @@ namespace BookHeaven.Services.Implementations
         public async Task<bool> IsPublisherAsync(int id, string userId)
             => await this.db.Books.AnyAsync(b => b.Id == id && b.PublisherId == userId);
 
+        public async Task<IEnumerable<T>> GetMostPopularThisWeekAsync<T>(int popularBooksToTake)
+            => await this.db.Books
+                .OrderByDescending(b =>
+                    b.Orders
+                        .Where(o => o.Order.Date >= DateTime.UtcNow.AddDays(-7))
+                        .Sum(o => o.Quantity))
+                .Take(popularBooksToTake)
+                .ProjectTo<T>()
+                .ToListAsync();
+
         public async Task DeleteAsync(int id)
         {
             var book = await this.db.Books.FindAsync(id);

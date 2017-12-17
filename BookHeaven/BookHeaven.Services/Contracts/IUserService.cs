@@ -21,6 +21,8 @@ namespace BookHeaven.Services.Contracts
 
         Task EditAsync(string id, string firstName, string lastName, string email, string username, IEnumerable<string> roles, string profilePicture,string profilePictureNav);
 
+        Task ProfileEditAsync(string id, string firstName, string lastName, string email, string username, string profilePicture, string profilePictureNav);
+
         Task<bool> AlreadyExistsAsync(string id, string username);
     }
 }

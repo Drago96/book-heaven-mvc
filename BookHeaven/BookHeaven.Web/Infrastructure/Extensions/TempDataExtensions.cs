@@ -14,5 +14,10 @@ namespace BookHeaven.Web.Infrastructure.Extensions
         {
             tempData[DataKeyConstants.SuccessMessage] = message;
         }
+
+        public static void AddWarningMessage(this ITempDataDictionary tempData, string message)
+        {
+            tempData[DataKeyConstants.WarningMessage] = message;
+        }
     }
 }

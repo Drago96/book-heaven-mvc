@@ -80,7 +80,7 @@ namespace BookHeaven.Web.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var model = this.mapper.Map<UserDetailsServiceModel, UserEditViewModel>(user);
+            var model = this.mapper.Map<UserDetailsServiceModel, UserAdminEditViewModel>(user);
 
             model.Roles = await this.users.GetRolesByIdAsync(id);
             model.AllRoles = await this.roleManager.Roles.Select(r => r.Name).ToListAsync();
@@ -89,7 +89,7 @@ namespace BookHeaven.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string id, UserEditViewModel model)
+        public async Task<IActionResult> Edit(string id, UserAdminEditViewModel model)
         {
             if (!ModelState.IsValid)
             {

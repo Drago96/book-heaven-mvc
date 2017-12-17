@@ -35,6 +35,7 @@
 	
   <ItemGroup>
     <Folder Include="Areas\Publisher\Views\Shared\" />
+    <Folder Include="Views\Shared\Partials\" />
   </ItemGroup>
 
   <ItemGroup>

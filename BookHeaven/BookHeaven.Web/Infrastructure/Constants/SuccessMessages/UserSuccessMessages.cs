@@ -7,5 +7,9 @@
         public const string DeleteMessage = "User deleted successfully.";
 
         public const string EditMessage = "User edited successfully";
+
+        public const string ProfileEditMessage = "Profile edited successfully";
+        public const string PasswordChangeMessage = "Password changed successfully";
+        public const string PasswordSetSuccessfully = "Password set successfully";
     }
 }

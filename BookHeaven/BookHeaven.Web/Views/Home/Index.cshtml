@@ -1,10 +1,21 @@
-﻿@{
+﻿@model IEnumerable<BookListingServiceModel>
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="jumbotron homepage-jumbotron">
     <h1 class="text-center">Welcome to our library</h1>
     <p class="text-center">Book Heaven is your number one source for acquiring new knowledge in any area of life.</p>
+</div>
+
+<h3>Most popular books</h3>
+<hr/>
+
+<div class="row">
+    @foreach (var book in Model)
+    {
+        await Html.RenderPartialAsync("_BookListingPartial", book);
+    }
 </div>
 
 <div class="container">

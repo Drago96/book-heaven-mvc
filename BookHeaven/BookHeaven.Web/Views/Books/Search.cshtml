@@ -17,7 +17,7 @@ else
         @foreach (var book in Model.Books.Items)
         {
 
-            await Html.RenderPartialAsync("Partials/_BookListingPartial", book);
+            await Html.RenderPartialAsync("_BookListingPartial", book);
         }
     </div>
 }

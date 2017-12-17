@@ -51,6 +51,22 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-md-2 list-group-label">
+                            <strong>Total Sales:</strong>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="list-group-item list-group-item-margined">@Model.TotalSales</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 list-group-label">
+                            <strong>Revenue:</strong>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="list-group-item list-group-item-margined">@Model.TotalRevenue.ToEuro()</div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-2  list-group-label">
                             <strong>Description:</strong>
                         </div>

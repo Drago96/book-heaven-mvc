@@ -14,8 +14,12 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
+using BookHeaven.Services.Infrastructure.Constants;
 using BookHeaven.Services.Models.Orders;
 using BookHeaven.Services.Models.Users;
+using BookHeaven.Web.Areas.Admin.Models.Users;
+using BookHeaven.Web.Infrastructure.Constants.WarningMessages;
 using BookHeaven.Web.Models.Account;
 
 namespace BookHeaven.Web.Controllers
@@ -28,19 +32,22 @@ namespace BookHeaven.Web.Controllers
         private readonly IFileService fileService;
         private readonly IUserService users;
         private readonly IOrderService orders;
+        private readonly IMapper mapper;
 
         public AccountController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             IFileService fileService,
             IUserService users,
-            IOrderService orders)
+            IOrderService orders,
+            IMapper mapper)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.fileService = fileService;
             this.users = users;
             this.orders = orders;
+            this.mapper = mapper;
         }
 
         [AllowAnonymous]
@@ -285,13 +292,165 @@ namespace BookHeaven.Web.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await this.users.ByIdAsync<UserDetailsServiceModel>(userId);
-            var userOrders = await this.orders.ByUserIdAsync<OrderDetailsServiceModel>(userId);
+            var userOrders = await this.orders.ByUserIdAsync<OrderDetailsServiceModel>(userId, OrderServiceConstants.OrdersToList);
 
             return View(new UserProfileViewModel
             {
                 User = user,
                 Orders = userOrders
             });
+        }
+
+        public async Task<IActionResult> Edit()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await this.users.ByIdAsync<UserDetailsServiceModel>(userId);
+
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            var model = this.mapper.Map<UserDetailsServiceModel, UserEditViewModel>(user);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateModelState]
+        public async Task<IActionResult> Edit(UserEditViewModel model)
+        {
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var exists = await this.users.ExistsAsync(id);
+
+            if (!exists)
+            {
+                return BadRequest();
+            }
+
+            var usernameAlreadyTaken = await this.users.AlreadyExistsAsync(id, model.Email);
+
+            if (usernameAlreadyTaken)
+            {
+                TempData.AddErrorMessage(UserErrorConstants.UserAlreadyExists);
+                return View(model);
+            }
+
+            string profilePictureUrl = null;
+            string profilePictureNavUrl = null;
+
+            if (model.NewProfilePicture != null)
+            {
+                var profilePictureFromFormFile =
+                    await this.fileService.GetByteArrayFromFormFileAsync(model.NewProfilePicture);
+                var pictureType = model.NewProfilePicture.ContentType.Split('/').Last();
+                var profilePicture = this.fileService.ResizeImage(profilePictureFromFormFile,
+                    UserDataConstants.ProfilePictureWidth, UserDataConstants.ProfilePictureHeight, pictureType);
+                profilePictureUrl = this.fileService.UploadImage(profilePicture);
+
+                var profilePictureNav = this.fileService.ResizeImage(profilePicture,
+                    UserDataConstants.ProfilePictureNavWidth, UserDataConstants.ProfilePictureNavHeight, pictureType);
+                profilePictureNavUrl = this.fileService.UploadImage(profilePictureNav);
+
+            }
+
+            await this.users.ProfileEditAsync(id, model.FirstName, model.LastName, model.Email, model.Email, profilePictureUrl, profilePictureNavUrl);
+
+            TempData.AddSuccessMessage(UserSuccessMessages.ProfileEditMessage);
+            return RedirectToAction(nameof(Profile));
+        }
+
+        public async Task<IActionResult> ChangePassword()
+        {
+            var user = await this.userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            var hasPassword = await this.userManager.HasPasswordAsync(user);
+            if (!hasPassword)
+            {
+                TempData.AddWarningMessage(UserWarningConstants.SetPasswordFirst);
+                return RedirectToAction(nameof(SetPassword));
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateModelState]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            var user = await this.userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            var changePasswordResult = await this.userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+            if (!changePasswordResult.Succeeded)
+            {
+                TempData.AddWarningMessage(UserErrorConstants.ErrorChaningPassword);
+                return View(model);
+            }
+
+            await this.signInManager.SignInAsync(user, isPersistent: false);
+
+            TempData.AddSuccessMessage(UserSuccessMessages.PasswordChangeMessage);
+            return RedirectToAction(nameof(Profile));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> SetPassword()
+        {
+            var user = await this.userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            var hasPassword = await this.userManager.HasPasswordAsync(user);
+
+            if (hasPassword)
+            {
+                TempData.AddWarningMessage(UserWarningConstants.AlreadyHasAPassword);
+                return RedirectToAction(nameof(ChangePassword));
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateModelState]
+        public async Task<IActionResult> SetPassword(SetPasswordViewModel model)
+        {
+
+            var user = await this.userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            var hasPassword = await this.userManager.HasPasswordAsync(user);
+
+            if (hasPassword)
+            {
+                return BadRequest();
+            }
+
+            var addPasswordResult = await this.userManager.AddPasswordAsync(user, model.Password);
+            if (!addPasswordResult.Succeeded)
+            {
+                TempData.AddErrorMessage(UserErrorConstants.ErrorSettingPassword);
+                return View(model);
+            }
+
+            await this.signInManager.SignInAsync(user, isPersistent: false);
+
+            TempData.AddSuccessMessage(UserSuccessMessages.PasswordSetSuccessfully);
+            return RedirectToAction(nameof(Profile));
         }
 
         private IActionResult RedirectToLocal(string returnUrl)

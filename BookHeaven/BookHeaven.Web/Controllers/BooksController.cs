@@ -33,12 +33,12 @@ namespace BookHeaven.Web.Controllers
 
             var searchTerm = model.SearchTerm ?? "";
 
-            var searchResult = await this.books.FilterByTermAndCategoriesAsync<BookSearchListingServiceModel>(model.Categories, page, searchTerm, BookServiceConstants.BookUserListingPageSize);
+            var searchResult = await this.books.FilterByTermAndCategoriesAsync<BookListingServiceModel>(model.Categories, page, searchTerm, BookServiceConstants.BookUserListingPageSize);
 
             var listingModel = new BookSearchListingViewModel
             {
                 Categories = await this.categories.ByIdsAsync<CategoryInfoServiceModel>(model.Categories),
-                Books = new PaginatedViewModel<BookSearchListingServiceModel>
+                Books = new PaginatedViewModel<BookListingServiceModel>
                 {
                     CurrentPage = page,
                     Items = searchResult,

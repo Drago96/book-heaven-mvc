@@ -77,7 +77,7 @@ namespace BookHeaven.Web.Controllers
                 if (!bookExists)
                 {
                     this.shoppingCarts.RemoveFromCart(shoppingCartId,bookId);
-                    TempData.AddErrorMessage(ShoppingCartErrorMessages.ErrorFindingItem);
+                    TempData.AddWarningMessage(ShoppingCartErrorMessages.ErrorFindingItem);
                 }
             }
 

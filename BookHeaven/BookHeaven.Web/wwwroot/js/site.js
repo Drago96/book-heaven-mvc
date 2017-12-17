@@ -372,7 +372,7 @@ var PublishBookModule = (function (module) {
     return module;
 }({}))
 
-var RegisterUserPageModule = (function(module) {
+var UserFormModule = (function(module) {
     var moduleProfilePictureFieldName;
     var moduleProfilePictureUrl;
     var moduleProfilePictureWidth;

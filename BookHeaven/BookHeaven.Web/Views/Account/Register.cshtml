@@ -48,7 +48,7 @@
     @await Html.PartialAsync("_ValidationScriptsPartial")
 
     <script>
-        RegisterUserPageModule.initializeModule('@nameof(Model.ProfilePicture)',
+        UserFormModule.initializeModule('@nameof(Model.ProfilePicture)',
             '@ResourceConstants.DefaultProfilePictureUrl',
             @UserDataConstants.ProfilePictureWidth,
             @UserDataConstants.ProfilePictureHeight,
