@@ -8,15 +8,9 @@
         <h1>My Published Books</h1>
         <hr />
     </div>
-    <div class="col-md-2 well links-well">
-        <ul class="nav navbar-nav navbar-collapse publisher-links-nav">
-            <li>
-
-                <a asp-action="Create" class="item btn-block">Publish New Book</a>
-            </li>
-        </ul>
-    </div>
-    <div class="col-md-10">
+</div>
+<div class="row">
+    <div class="col-md-10 col-md-offset-2">
         <form id="search-form" method="get" asp-route-page="1">
             <div class="form-group">
                 <div class="col-md-5 col-no-padding-left ui search">
@@ -29,6 +23,18 @@
                 <a asp-action="All" asp-route-searchTerm="" class="btn btn-default">Clear Filter</a>
             </div>
         </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 well links-well">
+        <ul class="nav navbar-nav navbar-collapse publisher-links-nav">
+            <li>
+
+                <a asp-action="Create" class="item btn-block">Publish New Book</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-10">
         @if (!string.IsNullOrEmpty(Model.SearchTerm))
         {
             <h3 class="text-info search-info">Displaying results for search : @Model.SearchTerm</h3>

@@ -1,5 +1,4 @@
 ﻿@model BookSearchComponentModel
-
 <form method="get" asp-area="" asp-controller="Books" asp-action="Search" class="navbar-form">
     <div class="form-group-sm">
         <input asp-for="SearchTerm" placeholder="Search..." class="form-control" />
@@ -7,6 +6,3 @@
         <select class="selectpicker" data-style="btn-sm" data-actions-box="true" title="Select categories..." asp-for="Categories" asp-items="@Model.AllCategories"></select>
     </div>
 </form>
-
-
-
