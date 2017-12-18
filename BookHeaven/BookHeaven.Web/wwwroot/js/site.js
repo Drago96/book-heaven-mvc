@@ -56,7 +56,7 @@ var AdminUsersListModule = (function (module) {
             .search({
                 apiSettings: {
                     url: '/api/users?searchTerm={query}',
-                    onResponse(response) {
+                    onResponse: function(response) {
                         var result = []
                         for (var key in response) {
                             if (key != undefined && key != 'contains') {
