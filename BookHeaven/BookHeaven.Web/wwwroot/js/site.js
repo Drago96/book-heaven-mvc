@@ -372,6 +372,87 @@ var PublishBookModule = (function (module) {
     return module;
 }({}))
 
+var PublisherSalesModule = (function (module) {
+
+    module.Initialize = function() {
+        var yearSelector = $('#year-select')
+
+        changeYearSales(yearSelector)
+
+        $(yearSelector).change(function () {
+            changeYearSales(this)
+        })
+
+        function changeYearSales(el) {
+            var year = $(el).val()
+            $.get('/api/orders/' + year).then(function (data) {
+                var months = [];
+                var sales = [];
+                for (var i = 0; i < data.length; i++) {
+                    months.push(data[i].month);
+                    sales.push(data[i].sales);
+                }
+                initChart(months, sales);
+            })
+        }
+
+        function initChart(months, sales) {
+            var ctx = document.getElementById("bar-chart").getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: '# of Sales',
+                        data: sales,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255,99,132,1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }   
+    }
+
+    return module;
+
+}({}))
+
 var UserFormModule = (function(module) {
     var moduleProfilePictureFieldName;
     var moduleProfilePictureUrl;

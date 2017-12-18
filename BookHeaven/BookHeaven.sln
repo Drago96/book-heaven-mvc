@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookHeaven.Web", "BookHeaven.Web\BookHeaven.Web.csproj", "{5F73167D-C54E-4FDE-9EAC-184928931003}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookHeaven.Web", "BookHeaven.Web\BookHeaven.Web.csproj", "{5F73167D-C54E-4FDE-9EAC-184928931003}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookHeaven.Data", "BookHeaven.Data\BookHeaven.Data.csproj", "{15C7B30A-2E99-4C4C-9B02-D4E68C31BFFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookHeaven.Data", "BookHeaven.Data\BookHeaven.Data.csproj", "{15C7B30A-2E99-4C4C-9B02-D4E68C31BFFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookHeaven.Services", "BookHeaven.Services\BookHeaven.Services.csproj", "{CAA26CC3-D631-4509-8093-19BF07BE46F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookHeaven.Services", "BookHeaven.Services\BookHeaven.Services.csproj", "{CAA26CC3-D631-4509-8093-19BF07BE46F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookHeaven.Common", "BookHeaven.Common\BookHeaven.Common.csproj", "{72458CD3-6548-499A-B86C-45E4E8D0EFBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookHeaven.Common", "BookHeaven.Common\BookHeaven.Common.csproj", "{72458CD3-6548-499A-B86C-45E4E8D0EFBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

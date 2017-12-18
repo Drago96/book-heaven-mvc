@@ -19,7 +19,7 @@ namespace BookHeaven.Web.Controllers.ApiControllers
             this.orders = orders;
         }
 
-        [HttpGet]
+        [HttpGet("{year}")]
         [Authorize(Roles = RoleConstants.Publisher)]
         public async Task<IActionResult> GetSalesForYear(int year)
         {

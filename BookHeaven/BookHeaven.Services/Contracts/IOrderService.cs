@@ -15,6 +15,8 @@ namespace BookHeaven.Services.Contracts
 
         Task<IEnumerable<T>> ByUserIdAsync<T>(string userId, int take);
 
-        Task<IEnumerable<OrderPublisherSalesModel>> SalesForYear(int year, string publisherId);
+        Task<IEnumerable<OrderPublisherSalesServiceModel>> SalesForYear(int year, string publisherId);
+
+        Task<IEnumerable<int>> GetYearsWithSalesAsync(string userId);
     }
 }

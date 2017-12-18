@@ -25,17 +25,19 @@ namespace BookHeaven.Web.Areas.Publisher.Controllers
     {
         private readonly ICategoryService categories;
         private readonly IBookService books;
+        private readonly IOrderService orders;
         private readonly IFileService fileService;
         private readonly IMapper mapper;
         private readonly UserManager<User> userManager;
 
-        public BooksController(ICategoryService categories, IBookService books, IFileService fileService, UserManager<User> userManager, IMapper mapper)
+        public BooksController(ICategoryService categories, IBookService books, IFileService fileService, UserManager<User> userManager, IMapper mapper, IOrderService orders)
         {
             this.categories = categories;
             this.fileService = fileService;
             this.books = books;
             this.userManager = userManager;
             this.mapper = mapper;
+            this.orders = orders;
         }
 
         public async Task<IActionResult> All(string searchTerm = "", int page = 1)
@@ -234,7 +236,17 @@ namespace BookHeaven.Web.Areas.Publisher.Controllers
 
         public async Task<IActionResult> Sales()
         {
-            return View();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            IEnumerable<int> yearsWithSales = await this.orders.GetYearsWithSalesAsync(userId);
+
+            var yearsModel = yearsWithSales.Select(y => new SelectListItem
+            {
+                Value = y.ToString(),
+                Text = y.ToString()
+            });
+
+            return View(yearsModel);
         }
 
         private async Task<IEnumerable<SelectListItem>> GetAllCategories()

@@ -73,9 +73,9 @@ namespace BookHeaven.Services.Implementations
             .ProjectTo<T>()
             .ToListAsync();
 
-        public async Task<IEnumerable<OrderPublisherSalesModel>> SalesForYear(int year, string publisherId)
+        public async Task<IEnumerable<OrderPublisherSalesServiceModel>> SalesForYear(int year, string publisherId)
         {
-            ICollection<OrderPublisherSalesModel> result = new List<OrderPublisherSalesModel>();
+            ICollection<OrderPublisherSalesServiceModel> result = new List<OrderPublisherSalesServiceModel>();
 
             for (var i = 1; i <= 12; i++)
             {
@@ -85,7 +85,15 @@ namespace BookHeaven.Services.Implementations
             return result;
         }
 
-        private async Task<OrderPublisherSalesModel> SalesForMonth(int year, int month, string publisherId)
+        public async Task<IEnumerable<int>> GetYearsWithSalesAsync(string userId)
+            => await this.db
+                .OrderItems
+                .Where(oi => oi.Book.PublisherId == userId)
+                .Select(oi => oi.Order.Date.Year)
+                .Distinct()
+                .ToListAsync();
+
+        private async Task<OrderPublisherSalesServiceModel> SalesForMonth(int year, int month, string publisherId)
         {
             var sales = await this.db
                 .OrderItems
@@ -95,9 +103,9 @@ namespace BookHeaven.Services.Implementations
                     && o.Book.PublisherId == publisherId)
                 .SumAsync(o => o.Quantity);
 
-            return new OrderPublisherSalesModel
+            return new OrderPublisherSalesServiceModel
             {
-                Month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(1),
+                Month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month),
                 Sales = sales
             };
 

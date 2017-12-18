@@ -27,15 +27,7 @@
 </div>
 <div class="row">
     <div class="col-md-2 well links-well">
-        <ul class="nav navbar-nav navbar-collapse publisher-links-nav">
-            <li>
-
-                <a asp-action="Create" class="item btn-block">Publish New Book</a>
-            </li>
-            <li>
-                <a asp-action="Sales" class="item btn-block">Sales</a>
-            </li>
-        </ul>
+        @await Html.PartialAsync("_PublisherLinksPartial")
     </div>
     <div class="col-md-10">
         @if (!string.IsNullOrEmpty(Model.SearchTerm))
