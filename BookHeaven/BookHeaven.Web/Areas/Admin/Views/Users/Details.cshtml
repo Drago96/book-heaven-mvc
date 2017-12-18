@@ -2,7 +2,7 @@
 @using System.Text
 @using BookHeaven.Common.Extensions
 @using Microsoft.AspNetCore.Routing
-@model UserDetailsViewModel
+@model UserAdminDetailsViewModel
 @{
     ViewData["Title"] = "Manage User";
 }
@@ -49,6 +49,22 @@
                                 </div>
                                 <div class="col-md-10">
                                     <div class="list-group-item list-group-item-margined">@(Model.Roles.Any() ? string.Join("/", Model.Roles) : "No Roles")</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2 list-group-label">
+                                    <strong>Purchases:</strong>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="list-group-item list-group-item-margined">@Model.TotalPurchases</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2 list-group-label">
+                                    <strong>Spent:</strong>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="list-group-item list-group-item-margined">@Model.MoneySpent.ToEuro()</div>
                                 </div>
                             </div>
                         </div>

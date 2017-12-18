@@ -9,7 +9,7 @@ using BookHeaven.Common.Extensions;
 
 namespace BookHeaven.Web.Areas.Admin.Models.Users
 {
-    public class UserDetailsViewModel : IMapFrom<UserDetailsServiceModel>
+    public class UserAdminDetailsViewModel : IMapFrom<UserAdminDetailsServiceModel>
     {
         [Display(Name = UserDisplayConstants.FirstName)]
         public string FirstName { get; set; }
@@ -20,6 +20,10 @@ namespace BookHeaven.Web.Areas.Admin.Models.Users
         public string Email { get; set; }
 
         public string ProfilePicture { get; set; }
+
+        public int TotalPurchases { get; set; }
+
+        public decimal MoneySpent { get; set; }
 
         public IEnumerable<string> Roles { get; set; } = new List<string>();
 

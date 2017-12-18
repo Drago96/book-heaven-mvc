@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using BookHeaven.Services.Models.Orders;
 using BookHeaven.Services.UtilityServices.ShoppingCart.Models;
 
 namespace BookHeaven.Services.Contracts
@@ -13,5 +14,7 @@ namespace BookHeaven.Services.Contracts
         Task DeleteOrdersForUserAsync(string userId);
 
         Task<IEnumerable<T>> ByUserIdAsync<T>(string userId, int take);
+
+        Task<IEnumerable<OrderPublisherSalesModel>> SalesForYear(int year, string publisherId);
     }
 }

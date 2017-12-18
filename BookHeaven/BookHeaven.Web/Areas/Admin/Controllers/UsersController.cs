@@ -57,14 +57,14 @@ namespace BookHeaven.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> Details(string id)
         {
-            var user = await this.users.ByIdAsync<UserDetailsServiceModel>(id);
+            var user = await this.users.ByIdAsync<UserAdminDetailsServiceModel>(id);
 
             if (user == null)
             {
                 return NotFound();
             }
 
-            var model = this.mapper.Map<UserDetailsServiceModel, UserDetailsViewModel>(user);
+            var model = this.mapper.Map<UserAdminDetailsServiceModel, UserAdminDetailsViewModel>(user);
 
             model.Roles = await this.users.GetRolesByIdAsync(id);
             

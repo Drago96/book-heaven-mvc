@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using AutoMapper.QueryableExtensions;
 using BookHeaven.Data;
 using BookHeaven.Data.Models;
 using BookHeaven.Services.Contracts;
+using BookHeaven.Services.Models.Orders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
 
@@ -70,5 +72,37 @@ namespace BookHeaven.Services.Implementations
             .Take(take)
             .ProjectTo<T>()
             .ToListAsync();
+
+        public async Task<IEnumerable<OrderPublisherSalesModel>> SalesForYear(int year, string publisherId)
+        {
+            ICollection<OrderPublisherSalesModel> result = new List<OrderPublisherSalesModel>();
+
+            for (var i = 1; i <= 12; i++)
+            {
+                result.Add(await this.SalesForMonth(year,i,publisherId));
+            }
+
+            return result;
+        }
+
+        private async Task<OrderPublisherSalesModel> SalesForMonth(int year, int month, string publisherId)
+        {
+            var sales = await this.db
+                .OrderItems
+                .Where(o => o.Order.Date.Year == year
+                    && o.Order.Date.Month == month
+                    && o.BookId != null
+                    && o.Book.PublisherId == publisherId)
+                .SumAsync(o => o.Quantity);
+
+            return new OrderPublisherSalesModel
+            {
+                Month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(1),
+                Sales = sales
+            };
+
+        }
+
+
     }
 }

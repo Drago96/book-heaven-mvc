@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewData["Title"] = "Sales";
+}
+
+<div class="row">
+    <div class="col-md-10 col-md-offset-2">
+        <h1>Sales</h1>
+        <hr />
+    </div>
+</div>
+
+
+<canvas id="bar-chart" width="800" height="450"></canvas>
+
+@section Scripts{
+    <script>
+        var myBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: data,
+            options: options
+        });
+    </script>
+}

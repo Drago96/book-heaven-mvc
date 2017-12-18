@@ -232,6 +232,11 @@ namespace BookHeaven.Web.Areas.Publisher.Controllers
             return RedirectToAction(nameof(All));
         }
 
+        public async Task<IActionResult> Sales()
+        {
+            return View();
+        }
+
         private async Task<IEnumerable<SelectListItem>> GetAllCategories()
             => (await this.categories.AllAsync<CategoryInfoServiceModel>())
                 .Select(c => new SelectListItem
