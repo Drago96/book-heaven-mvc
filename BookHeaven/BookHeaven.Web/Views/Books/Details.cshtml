@@ -1,21 +1,47 @@
 ﻿@using BookHeaven.Common.Extensions
+@using BookHeaven.Data.Models.Enums
 @using Microsoft.AspNetCore.Routing
-@model BookDetailsServiceModel
+@model BookDetailsViewModel
 @{
     ViewData["Title"] = "Details";
 }
 
 <h2>@ViewData["Title"]</h2>
-<hr/>
+<hr />
 
 <div class="panel panel-default">
     <div class="panel-heading resume-heading">
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-4">
-                    <figure>
-                        <img id="book-picture" alt="Book" class="book-picture" src="@Model.BookPicture.GetPictureUrlOrDefault(ResourceConstants.DefaultBookPictureUrl)" />
-                    </figure>
+                <div class="col-md-4 col-no-padding-left">
+                    <div class="row">
+                        <div class="col-md-1  vote-col">
+                            <div class="vote-div">
+                                @{
+                                    var upvote = Model.UserVote == VoteValue.Like ? "upvote" : string.Empty;
+                                    var downvote = Model.UserVote == VoteValue.Dislike ? "downvote" : string.Empty;
+                                    var otherVotes = Model.Rating;
+                                    if (upvote != string.Empty)
+                                    {
+                                        otherVotes--;
+                                    }
+                                    if (downvote != string.Empty)
+                                    {
+                                        otherVotes++;
+                                    }
+                                }
+                                <div class="arrow-up @upvote"></div>
+                                <div id="rating" val="@otherVotes">@Model.Rating</div>
+                                <div class="arrow-down @downvote"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <figure style="margin-top: 30px">
+                                <img id="book-picture" alt="Book" class="book-picture" src="@Model.BookPicture.GetPictureUrlOrDefault(ResourceConstants.DefaultBookPictureUrl)" />
+                            </figure>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="col-md-8">
                     <div class="row">
@@ -62,7 +88,7 @@
                     </div>
                     <form class="form-inline" asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-id="@Context.GetRouteValue("id")">
                         <div class="row  form-margin-row">
-                        <button type="submit" class="btn btn-info btn-block" asp->Add Item to Cart</button>
+                            <button type="submit" class="btn btn-info btn-block" asp->Add Item to Cart</button>
                         </div>
                     </form>
                 </div>
@@ -70,3 +96,9 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+       BookDetailsModule.InitalizeModule(@Context.GetRouteValue("id"),@(User.Identity.IsAuthenticated ? 1 : 0))
+    </script>
+}

@@ -247,6 +247,89 @@ var AllCategoriesModule = (function (module) {
     return module;
 }({}));
 
+var BookDetailsModule = (function (module) {
+    module.InitalizeModule = function(bookId,isAuthenticated) {
+        $('.arrow-up').click(function () {
+            if (!isAuthenticated) {
+                showYouMustLoginDialog()
+            } else {
+                vote(1)     
+            }
+           
+        })
+        $('.arrow-down').click(function () {
+            if (!isAuthenticated) {
+                showYouMustLoginDialog()
+            } else {
+                vote(-1)
+            }
+        })
+
+        function showYouMustLoginDialog() {
+            $.alert({
+                title: 'You need to login first!',
+                content:'',
+                buttons: {
+                    ok: {
+                        action: function () {
+                            this.close()
+                        }
+                    }
+                }
+            });
+        }
+
+        function vote(value) {
+            $.ajax({
+                url: '/api/votes/' + bookId,
+                contentType: 'application/json',
+                accepts: 'applicaiton/json',
+                type: 'Post',
+                data: JSON.stringify({ vote: value }),
+                success: function () {
+                    updateControl(value)
+                },
+                error: function () {
+                    $.alert({
+                        title: 'There was an error processing your vote!',
+                        content: 'Please try again later.',
+                        buttons: {
+                            ok: {
+                                action: function () {
+                                    this.close()
+                                }
+                            }
+                        }
+                    });
+                }
+            })
+        }
+
+        function updateControl(value) {
+            if (value == -1) {
+                var rating = $("#rating").attr('val');
+                $('.arrow-down').toggleClass('downvote')
+                if ($('.arrow-down').hasClass('downvote')) {
+                    rating--;
+                }
+                $('.arrow-up').removeClass('upvote')
+                $("#rating").text(rating);
+            }
+            else if (value == 1) {
+                var rating = $("#rating").attr('val');
+                $('.arrow-up').toggleClass('upvote')
+                if ($('.arrow-up').hasClass('upvote')) {
+                    rating++;
+                }
+                $('.arrow-down').removeClass('downvote')
+                $("#rating").text(rating);
+            }
+        }
+    }
+
+    return module;
+}({}))
+
 var DeleteItemDialogs = (function(module) {
     module.InitializeDialogs = function(selector, itemName) {
         $(selector).each(function() {

@@ -21,13 +21,16 @@ namespace BookHeaven.Services.Models.Books
 
         public DateTime PublishedDate { get; set; }
 
+        public int Rating { get; set; }
+
         public IEnumerable<string> Categories { get; set; } = new List<string>();
 
-        public void ConfigureMapping(Profile profile)
+        public virtual void ConfigureMapping(Profile profile)
         {
             profile
                 .CreateMap<Book, BookDetailsServiceModel>()
-                .ForMember(b => b.Categories, cfg => cfg.MapFrom(b => b.Categories.Select(c => c.Category.Name)));
+                .ForMember(b => b.Categories, cfg => cfg.MapFrom(b => b.Categories.Select(c => c.Category.Name)))
+                .ForMember(b => b.Rating, cfg => cfg.MapFrom(b => b.Votes.Where(v => v.VoteValue != null).Sum(v => (int)v.VoteValue)));
         }
     }
 }

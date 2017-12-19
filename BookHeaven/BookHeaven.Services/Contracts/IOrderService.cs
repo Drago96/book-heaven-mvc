@@ -11,8 +11,6 @@ namespace BookHeaven.Services.Contracts
     {
         Task FinishOrder(string userId, IDictionary<int, int> items);
 
-        Task DeleteOrdersForUserAsync(string userId);
-
         Task<IEnumerable<T>> ByUserIdAsync<T>(string userId, int take);
 
         Task<IEnumerable<OrderPublisherSalesServiceModel>> SalesForYear(int year, string publisherId);

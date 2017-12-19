@@ -296,3 +296,55 @@ img.profile-picture-nav {
     cursor: pointer;
     text-decoration: underline
 }
+
+.arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 15px solid gray;
+    cursor: pointer
+}
+
+.upvote {
+    border-bottom: 15px solid green;
+}
+
+.arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 15px solid gray;
+    cursor: pointer
+}
+
+.downvote {
+    border-top: 15px solid red;
+}
+
+.arrow-right {
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-left: 20px solid gray;
+}
+
+.arrow-left {
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-right: 20px solid gray;
+}
+
+div.vote-col {
+    padding-left: 5px;
+    padding-right: 0px;
+}
+
+div.vote-div {
+    margin-top: 200px;
+    text-align: center;
+}

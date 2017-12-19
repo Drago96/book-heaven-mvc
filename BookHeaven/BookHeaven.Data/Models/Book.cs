@@ -36,5 +36,7 @@ namespace BookHeaven.Data.Models
         public ICollection<BookCategory> Categories { get; set; } = new List<BookCategory>();
 
         public ICollection<OrderItem> Orders { get; set; } = new List<OrderItem>();
+
+        public ICollection<Vote> Votes { get; set; } = new List<Vote>();
     }
 }

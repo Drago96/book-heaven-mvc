@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using BookHeaven.Data.Models.Enums;
 
 namespace BookHeaven.Data.Models
 {
-    public class Order
+    public class Vote
     {
-        public int Id { get; set; }
+        public int BookId { get; set; }
+
+        public Book Book { get; set; }
 
         public string UserId { get; set; }
 
         public User User { get; set; }
 
-        public DateTime Date { get; set; }
-
-        public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+        public VoteValue? VoteValue { get; set; }
     }
 }

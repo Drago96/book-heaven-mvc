@@ -53,18 +53,6 @@ namespace BookHeaven.Services.Implementations
             await this.db.SaveChangesAsync();
         }
 
-        public async Task DeleteOrdersForUserAsync(string userId)
-        {
-            var orders = await this.db.Orders.Where(o => o.UserId == userId).ToListAsync();
-
-            foreach (var order in orders)
-            {
-                this.db.Remove(order);
-            }
-
-            await this.db.SaveChangesAsync();
-        }
-
         public async Task<IEnumerable<T>> ByUserIdAsync<T>(string userId, int take = 5)
             => await this.db.Orders
             .Where(o => o.UserId == userId)

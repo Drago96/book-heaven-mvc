@@ -18,6 +18,8 @@ namespace BookHeaven.Data
 
         public DbSet<OrderItem> OrderItems { get; set; }
 
+        public DbSet<Vote> Votes { get; set; }
+
         public BookHeavenDbContext(DbContextOptions<BookHeavenDbContext> options)
             : base(options)
         {
@@ -68,7 +70,8 @@ namespace BookHeaven.Data
                 .Entity<Order>()
                 .HasOne(o => o.User)
                 .WithMany(u => u.Orders)
-                .HasForeignKey(o => o.UserId);
+                .HasForeignKey(o => o.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder
                 .Entity<OrderItem>()
@@ -76,6 +79,22 @@ namespace BookHeaven.Data
                 .WithMany(b => b.Orders)
                 .HasForeignKey(o => o.BookId)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            builder
+                .Entity<Vote>()
+                .HasKey(v => new {v.BookId, v.UserId});
+
+            builder
+                .Entity<Vote>()
+                .HasOne(v => v.Book)
+                .WithMany(b => b.Votes)
+                .HasForeignKey(v => v.BookId);
+
+            builder
+                .Entity<Vote>()
+                .HasOne(v => v.User)
+                .WithMany(u => u.Votes)
+                .HasForeignKey(v => v.UserId);
 
             base.OnModelCreating(builder);
         }

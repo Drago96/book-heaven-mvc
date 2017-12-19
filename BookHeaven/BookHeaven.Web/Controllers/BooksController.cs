@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
+using AutoMapper;
 using BookHeaven.Services.Contracts;
 using BookHeaven.Services.Infrastructure.Constants;
 using BookHeaven.Services.Models.Books;
@@ -14,11 +16,15 @@ namespace BookHeaven.Web.Controllers
     {
         private readonly IBookService books;
         private readonly ICategoryService categories;
+        private readonly IVoteService votes;
+        private readonly IMapper mapper;
 
-        public BooksController(IBookService books, ICategoryService categories)
+        public BooksController(IBookService books, ICategoryService categories,IVoteService votes, IMapper mapper)
         {
             this.books = books;
             this.categories = categories;
+            this.mapper = mapper;
+            this.votes = votes;
         }
 
         public async Task<IActionResult> Search(BookSearchComponentModel model, int page = 1)
@@ -61,7 +67,15 @@ namespace BookHeaven.Web.Controllers
                 return NotFound();
             }
 
-            var model = await this.books.ByIdAsync<BookDetailsServiceModel>(id);
+            var book = await this.books.ByIdAsync<BookDetailsServiceModel>(id);
+
+            var model = this.mapper.Map<BookDetailsServiceModel, BookDetailsViewModel>(book);
+
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                model.UserVote = await this.votes.GetUserVoteAsync(userId, id);
+            }
 
             return View(model);
         }
