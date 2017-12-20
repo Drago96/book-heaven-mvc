@@ -13,7 +13,7 @@ namespace BookHeaven.Services.Contracts
 
         Task<bool> AlreadyExistsAsync(int id, string name);
 
-        Task CreateAsync(string name);
+        Task<int> CreateAsync(string name);
 
         Task EditAsync(int id, string name);
 

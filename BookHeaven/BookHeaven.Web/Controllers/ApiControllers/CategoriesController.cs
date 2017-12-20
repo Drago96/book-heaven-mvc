@@ -56,9 +56,9 @@ namespace BookHeaven.Web.Controllers.ApiControllers
                 return BadRequest(CategoryErrorConstants.CategoryAlreadyExists);
             }
 
-            await this.categories.CreateAsync(model.Name);
+            var result = await this.categories.CreateAsync(model.Name);
 
-            return Ok();
+            return Ok(result);
         }
     }
 }

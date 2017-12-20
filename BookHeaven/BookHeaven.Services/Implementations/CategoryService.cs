@@ -41,7 +41,7 @@ namespace BookHeaven.Services.Implementations
             await this.db.SaveChangesAsync();
         }
 
-        public async Task CreateAsync(string name)
+        public async Task<int> CreateAsync(string name)
         {
             Category category = new Category
             {
@@ -50,6 +50,8 @@ namespace BookHeaven.Services.Implementations
 
             this.db.Add(category);
             await this.db.SaveChangesAsync();
+
+            return category.Id;
         }
 
         public async Task DeleteAsync(int id)

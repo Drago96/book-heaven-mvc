@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookHeaven.Services", "Book
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookHeaven.Common", "BookHeaven.Common\BookHeaven.Common.csproj", "{72458CD3-6548-499A-B86C-45E4E8D0EFBE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookHeaven.Tests", "BookHeaven.Tests\BookHeaven.Tests.csproj", "{033957AB-233B-4EB0-A2A9-A23AB0AD3E2A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{72458CD3-6548-499A-B86C-45E4E8D0EFBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72458CD3-6548-499A-B86C-45E4E8D0EFBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72458CD3-6548-499A-B86C-45E4E8D0EFBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{033957AB-233B-4EB0-A2A9-A23AB0AD3E2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{033957AB-233B-4EB0-A2A9-A23AB0AD3E2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{033957AB-233B-4EB0-A2A9-A23AB0AD3E2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{033957AB-233B-4EB0-A2A9-A23AB0AD3E2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,7 +6,7 @@ namespace BookHeaven.Services.Models.Categories
 {
     public class CategoryAdminListingServiceModel : IMapFrom<Category>, IHaveCustomMapping
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
 
