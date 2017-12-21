@@ -31,7 +31,7 @@ namespace BookHeaven.Tests.Services
             //Arrange
             var db = BookHeavenDbContextInMemory.New();
             this.FillDatabase(db);
-            var service = new BookService(db, null, null);
+            var service = new BookService(db, null);
 
             //Act
             var count = await service.CountBySearchTermAsync("");
@@ -87,24 +87,6 @@ namespace BookHeaven.Tests.Services
         }
 
         [Fact]
-        public async Task CreateAsyncShouldReturnFalseIfCategoryDoesNotExist()
-        {
-            //Arrange
-            var db = BookHeavenDbContextInMemory.New();
-
-            var fileServiceMock = new Mock<IFileService>();
-            var categoryServiceMock = new Mock<ICategoryService>();
-            categoryServiceMock.Setup(c => c.ExistsAsync(It.IsAny<int>())).ReturnsAsync(false);
-            var service = new BookService(db, categoryServiceMock.Object, fileServiceMock.Object);
-
-            //Act
-            var result = await service.CreateAsync(null, 0, null, new List<int> { 1, 2, 3 }, null, null, null);
-
-            //Assert
-            result.Should().BeFalse();
-        }
-
-        [Fact]
         public async Task CreateAsyncShouldCreateBookSuccessfullyIfAllDataIsCorrect()
         {
             //Arrange
@@ -119,17 +101,14 @@ namespace BookHeaven.Tests.Services
             var db = BookHeavenDbContextInMemory.New();
 
             var fileServiceMock = new Mock<IFileService>();
-            var categoryServiceMock = new Mock<ICategoryService>();
-            categoryServiceMock.Setup(c => c.ExistsAsync(It.IsAny<int>())).ReturnsAsync(true);
-            var service = new BookService(db, categoryServiceMock.Object, fileServiceMock.Object);
+            var service = new BookService(db,  fileServiceMock.Object);
 
             //Act
             var result = await service.CreateAsync(bookTitle, bookPrice, bookDescription, categoryIds,
                 pictureLink, listingPictureLink, userId);
 
             //Assert
-            result.Should().BeTrue();
-            var book = db.Books.FirstOrDefault(b => b.Title == bookTitle);
+            var book = db.Books.Find(result);
 
             book.Should().NotBe(null);
             book.Price.Should().Be(bookPrice);
@@ -145,7 +124,7 @@ namespace BookHeaven.Tests.Services
         {
             var db = BookHeavenDbContextInMemory.New();
             this.FillDatabase(db);
-            return new BookService(db, null, null);
+            return new BookService(db,  null);
         }
 
         private void FillDatabase(BookHeavenDbContext db)
