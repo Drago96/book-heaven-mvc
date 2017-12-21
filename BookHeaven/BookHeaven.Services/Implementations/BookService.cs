@@ -27,25 +27,25 @@ namespace BookHeaven.Services.Implementations
 
         public async Task<IEnumerable<T>> AllPaginatedAsync<T>(string searchTerm = "", int page = 1, int take = 10)
             => await this.FindBookBySearchTerm(searchTerm)
+                .OrderByDescending(b => b.Id)
                 .Skip((page - 1) * take)
                 .Take(take)
-                .OrderByDescending(b => b.Id)
                 .ProjectTo<T>()
                 .ToListAsync();
 
         public async Task<IEnumerable<T>> AllByPublisherPaginatedAsync<T>(string userId, string searchTerm = "", int page = 1, int take = 10)
         => await this.FindBookBySearchTerm(searchTerm)
+            .OrderByDescending(b => b.Id)
             .Skip((page - 1) * take)
             .Take(take)
             .Where(b => b.PublisherId == userId)
-            .OrderByDescending(b => b.Id)
             .ProjectTo<T>()
         .ToListAsync();
 
         public async Task<IEnumerable<T>> FilterAndTakeAsync<T>(string searchTerm = "", int booksToTake = 10)
             => await this.db.Books.Where(b => b.Title.ContainsInsensitive(searchTerm))
-                .Take(booksToTake)
                 .OrderByDescending(b => b.Id)
+                .Take(booksToTake)
                 .ProjectTo<T>()
                 .ToListAsync();
 
@@ -58,9 +58,10 @@ namespace BookHeaven.Services.Implementations
                 books = books.Where(b => b.Categories.Any(c => categories.Contains(c.CategoryId)));
             }
 
-            books = books.Skip((page - 1) * take)
-                .Take(take)
-                .OrderByDescending(b => b.Id);
+            books = books
+                .OrderByDescending(b => b.Id)
+                .Skip((page - 1) * take)
+                .Take(take);
 
             return await books.ProjectTo<T>().ToListAsync();
         }

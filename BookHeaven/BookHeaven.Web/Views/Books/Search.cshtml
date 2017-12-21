@@ -13,6 +13,8 @@
 }
 else
 {
+
+
     <div class="row">
         @foreach (var book in Model.Books.Items)
         {
@@ -24,7 +26,7 @@ else
 
 <ul class="pagination">
     <li class="@(Model.Books.CurrentPage <= Model.Books.PreviousPage ? "disabled" : "")">
-        <a  href="@Url.Action("Search", new {categories = Model.Categories.Select(c => c.Id), searchTerm = Model.Books.SearchTerm, page = Model.Books.PreviousPage})">&laquo;</a>
+        <a href="@Url.Action("Search", new {categories = Model.Categories.Select(c => c.Id), searchTerm = Model.Books.SearchTerm, page = Model.Books.PreviousPage})">&laquo;</a>
     </li>
 
     @for (int i = 1; i <= Model.Books.TotalPages; i++)
@@ -34,6 +36,6 @@ else
         </li>
     }
     <li class="@(Model.Books.CurrentPage >= Model.Books.NextPage ? "disabled" : "")">
-        <a  href="@Url.Action("Search", new {categories = Model.Categories.Select(c => c.Id), searchTerm = Model.Books.SearchTerm, page = Model.Books.NextPage})">&raquo;</a>
+        <a href="@Url.Action("Search", new {categories = Model.Categories.Select(c => c.Id), searchTerm = Model.Books.SearchTerm, page = Model.Books.NextPage})">&raquo;</a>
     </li>
 </ul>   
