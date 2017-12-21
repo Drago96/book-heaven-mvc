@@ -75,7 +75,7 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
             var model = (result as ViewResult).Model;
             model.Should().BeOfType<AdminHomeViewModel>();
             var modelResult = model as AdminHomeViewModel;
-            modelResult.Locations.ShouldBeEquivalentTo(locationsWithMostVisits);
+            modelResult.Locations.ShouldAllBeEquivalentTo(locationsWithMostVisits, options => options.WithStrictOrdering());
             modelResult.MostVisits.Should().Be(mostVisitsInADay);
             modelResult.TotalUsers.Should().Be(usersToReturn);
             modelResult.VisitsToday.Should().Be(visitsToday);

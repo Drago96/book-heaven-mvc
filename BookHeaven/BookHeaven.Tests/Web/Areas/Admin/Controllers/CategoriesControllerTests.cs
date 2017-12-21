@@ -76,8 +76,7 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
             model.Should().BeOfType<List<CategoryAdminListingServiceModel>>();
 
             var modelResult = model as List<CategoryAdminListingServiceModel>;
-            modelResult.Count().Should().Be(categoriesToReturn.Count);
-            modelResult.ShouldBeEquivalentTo(categoriesToReturn);
+            modelResult.ShouldBeEquivalentTo(categoriesToReturn, options => options.WithStrictOrdering());
 
 
 
@@ -122,9 +121,9 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
         [Fact]
         public async Task DeleteShouldDeleteCorrectCategoryAndReturnCorrectResultIfExists()
         {
-            const int categoryToDelete = 1;
 
             //Arrange
+            const int categoryToDelete = 1;
             int deletedCategory = 0;
             string successMessage = null;
 

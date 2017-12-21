@@ -16,8 +16,4 @@
     <ProjectReference Include="..\BookHeaven.Web\BookHeaven.Web.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Web\Areas\Publisher\Controllers\" />
-  </ItemGroup>
-
 </Project>
