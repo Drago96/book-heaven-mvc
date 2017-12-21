@@ -7,6 +7,7 @@ using BookHeaven.Data;
 using BookHeaven.Data.Models.Enums;
 using BookHeaven.Services.Contracts;
 using BookHeaven.Services.Models.Votes;
+using BookHeaven.Web.Infrastructure.Constants.ErrorMessages;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,7 +32,7 @@ namespace BookHeaven.Web.Controllers.ApiControllers
 
             if (!exists)
             {
-                return BadRequest();
+                return BadRequest(VoteErrorConstants.ErrorProcessingVoteMessage);
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

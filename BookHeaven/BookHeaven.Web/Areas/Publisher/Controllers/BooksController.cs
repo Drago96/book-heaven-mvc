@@ -74,6 +74,15 @@ namespace BookHeaven.Web.Areas.Publisher.Controllers
                 return View(model);
             }
 
+            foreach (var categoryId in model.Categories)
+            {
+                var categoryExsits = await this.categories.ExistsAsync(categoryId);
+                if (!categoryExsits)
+                {
+                    return BadRequest();
+                }
+            }
+
             string resizedBookPictureUrl = null;
             string bookListingPictureUrl = null;
 
@@ -90,18 +99,13 @@ namespace BookHeaven.Web.Areas.Publisher.Controllers
                 bookListingPictureUrl = this.fileService.UploadImage(bookListingPicture);
             }
 
-            var result = await this.books.CreateAsync(model.Title,
+            await this.books.CreateAsync(model.Title,
                 model.Price,
                 model.Description,
                 model.Categories,
                 resizedBookPictureUrl,
                 bookListingPictureUrl,
                 userManager.GetUserId(HttpContext.User));
-
-            if (!result)
-            {
-                return BadRequest();
-            }
 
             TempData.AddSuccessMessage(string.Format(BookSuccessConstants.BookPublishedMeessage, model.Title));
 

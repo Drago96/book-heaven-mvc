@@ -17,13 +17,11 @@ namespace BookHeaven.Services.Implementations
     public class BookService : IBookService
     {
         private readonly BookHeavenDbContext db;
-        private readonly ICategoryService categories;
         private readonly IFileService files;
 
-        public BookService(BookHeavenDbContext db, ICategoryService categories, IFileService files)
+        public BookService(BookHeavenDbContext db, IFileService files)
         {
             this.db = db;
-            this.categories = categories;
             this.files = files;
         }
 
@@ -89,16 +87,8 @@ namespace BookHeaven.Services.Implementations
             return await books.CountAsync();
         }
 
-        public async Task<bool> CreateAsync(string title, decimal price, string description, IEnumerable<int> categoryIds, string picture,string listingPicture, string publisherId)
+        public async Task<int> CreateAsync(string title, decimal price, string description, IEnumerable<int> categoryIds, string picture,string listingPicture, string publisherId)
         {
-            foreach (var categoryId in categoryIds)
-            {
-                var categoryExsits = await this.categories.ExistsAsync(categoryId);
-                if (!categoryExsits)
-                {
-                    return false;
-                }
-            }
 
             Book book = new Book
             {
@@ -124,7 +114,7 @@ namespace BookHeaven.Services.Implementations
             this.db.Add(book);
             await this.db.SaveChangesAsync();
 
-            return true;
+            return book.Id;
         }
 
         public async Task<bool> ExistsAsync(int id)
