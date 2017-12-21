@@ -480,6 +480,7 @@ var PublisherSalesModule = (function (module) {
         }
 
         function initChart(months, sales) {
+            $('#bar-chart').replaceWith('<canvas id="bar-chart" width="500" height="300"></canvas>');
             var ctx = document.getElementById("bar-chart").getContext('2d');
             var myChart = new Chart(ctx, {
                 type: 'bar',

@@ -79,6 +79,7 @@ namespace BookHeaven.Services.Implementations
                 .Where(oi => oi.Book.PublisherId == userId)
                 .Select(oi => oi.Order.Date.Year)
                 .Distinct()
+                .OrderByDescending(y => y)
                 .ToListAsync();
 
         private async Task<OrderPublisherSalesServiceModel> SalesForMonth(int year, int month, string publisherId)
