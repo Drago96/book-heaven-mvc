@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using BookHeaven.Data.Models.Enums;
+﻿using BookHeaven.Data.Models.Enums;
 
 namespace BookHeaven.Data.Models
 {

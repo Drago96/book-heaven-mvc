@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using BookHeaven.Data;
+﻿using BookHeaven.Data;
 using Microsoft.EntityFrameworkCore;
-using Moq;
+using System;
 
 namespace BookHeaven.Tests.Mocks
 {

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using AutoMapper;
-using BookHeaven.Common.Extensions;
+﻿using AutoMapper;
 using BookHeaven.Common.Mapping;
 using BookHeaven.Data.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BookHeaven.Services.Models.Books
 {

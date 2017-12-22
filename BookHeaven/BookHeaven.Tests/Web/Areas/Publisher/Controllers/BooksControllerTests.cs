@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BookHeaven.Services.Contracts;
+﻿using BookHeaven.Services.Contracts;
 using BookHeaven.Services.Models.Categories;
-using BookHeaven.Web.Areas.Admin.Controllers;
 using BookHeaven.Web.Areas.Publisher.Controllers;
 using BookHeaven.Web.Areas.Publisher.Models.Books;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Moq;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace BookHeaven.Tests.Web.Areas.Publisher.Controllers
@@ -32,7 +29,6 @@ namespace BookHeaven.Tests.Web.Areas.Publisher.Controllers
 
             //Assert
             baseController.IsAssignableFrom(controller).Should().BeTrue();
-
         }
 
         [Fact]
@@ -63,7 +59,7 @@ namespace BookHeaven.Tests.Web.Areas.Publisher.Controllers
             categoriesMock.Setup(c => c.AllAsync<CategoryInfoServiceModel>())
                 .ReturnsAsync(categoriesToReturn);
 
-            var controller = new BooksController(categoriesMock.Object,null,null,null,null,null);
+            var controller = new BooksController(categoriesMock.Object, null, null, null, null, null);
 
             //Act
             var result = await controller.Create();
@@ -74,7 +70,6 @@ namespace BookHeaven.Tests.Web.Areas.Publisher.Controllers
             resultModel.Should().BeOfType<BookCreateViewModel>();
             (resultModel as BookCreateViewModel).AllCategories.ShouldBeEquivalentTo(expectedCategories, options => options.WithStrictOrdering());
             (resultModel as BookCreateViewModel).Categories.Count().Should().Be(0);
-
         }
     }
 }

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using BookHeaven.Data.Infrastructure.Constants;
+﻿using BookHeaven.Data.Infrastructure.Constants;
 using BookHeaven.Web.Infrastructure.Constants.Display;
 using BookHeaven.Web.Infrastructure.Constants.ErrorMessages;
+using System.ComponentModel.DataAnnotations;
 
 namespace BookHeaven.Web.Models.Account
 {

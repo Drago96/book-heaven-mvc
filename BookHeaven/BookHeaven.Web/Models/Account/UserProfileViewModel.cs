@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BookHeaven.Services.Models.Orders;
+﻿using BookHeaven.Services.Models.Orders;
 using BookHeaven.Services.Models.Users;
+using System.Collections.Generic;
 
 namespace BookHeaven.Web.Models.Account
 {

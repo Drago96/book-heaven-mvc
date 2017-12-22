@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BookHeaven.Web.Infrastructure.Constants.ErrorMessages
+﻿namespace BookHeaven.Web.Infrastructure.Constants.ErrorMessages
 {
     public static class ShoppingCartErrorMessages
     {

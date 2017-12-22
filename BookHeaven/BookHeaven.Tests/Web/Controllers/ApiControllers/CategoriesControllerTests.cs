@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BookHeaven.Services.Contracts;
+﻿using BookHeaven.Services.Contracts;
 using BookHeaven.Web.Areas.Admin.Models.Categories;
-using BookHeaven.Web.Areas.Publisher.Controllers;
 using BookHeaven.Web.Controllers.ApiControllers;
 using BookHeaven.Web.Infrastructure.Constants;
 using BookHeaven.Web.Infrastructure.Constants.ErrorMessages;
@@ -14,6 +8,8 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace BookHeaven.Tests.Web.Controllers.ApiControllers
@@ -29,7 +25,6 @@ namespace BookHeaven.Tests.Web.Controllers.ApiControllers
 
             //Assert
             baseController.IsAssignableFrom(controller).Should().BeTrue();
-
         }
 
         [Fact]
@@ -52,7 +47,6 @@ namespace BookHeaven.Tests.Web.Controllers.ApiControllers
                     .FirstOrDefault(a => a.GetType() == typeof(ValidateApiModelState))
                 as ValidateApiModelState;
 
-
             //Assert
             httpPutAttribute.Should().NotBe(null);
             httpPutAttribute.Template.Should().Be("{id}");
@@ -64,7 +58,6 @@ namespace BookHeaven.Tests.Web.Controllers.ApiControllers
 
             serviceFilterAttribute.Should().NotBe(null);
             serviceFilterAttribute.ServiceType.ShouldBeEquivalentTo(typeof(ClearCategoryCache));
-
         }
 
         [Fact]
@@ -77,13 +70,12 @@ namespace BookHeaven.Tests.Web.Controllers.ApiControllers
             var controller = new CategoriesController(categoryServiceMock.Object);
 
             //Act
-            var result = await controller.Edit(1,null);
+            var result = await controller.Edit(1, null);
 
             //Assert
             result.Should().BeOfType<BadRequestObjectResult>();
             (result as BadRequestObjectResult).Value.Should().Be(CategoryErrorConstants.CategoryDoesNotExist);
         }
-
 
         [Fact]
         public async Task EditShouldReturnBadRequestIfCategoryAlreadyExists()
@@ -91,14 +83,14 @@ namespace BookHeaven.Tests.Web.Controllers.ApiControllers
             //Arrange
             var categoryServiceMock = new Mock<ICategoryService>();
             categoryServiceMock.Setup(c => c.ExistsAsync(It.IsAny<int>())).ReturnsAsync(true);
-            categoryServiceMock.Setup(c => c.AlreadyExistsAsync(It.IsAny<int>(),It.IsAny<string>())).ReturnsAsync(true);
+            categoryServiceMock.Setup(c => c.AlreadyExistsAsync(It.IsAny<int>(), It.IsAny<string>())).ReturnsAsync(true);
 
             var controller = new CategoriesController(categoryServiceMock.Object);
 
             //Act
             var result = await controller.Edit(1, new CategoryBasicInfoViewModel
             {
-               Name = ""
+                Name = ""
             });
 
             //Assert

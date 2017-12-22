@@ -3,14 +3,13 @@ using BookHeaven.Common.Extensions;
 using BookHeaven.Data;
 using BookHeaven.Data.Models;
 using BookHeaven.Services.Contracts;
-using BookHeaven.Services.Infrastructure.Constants;
+using BookHeaven.Services.UtilityServices.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BookHeaven.Services.UtilityServices.Contracts;
 
 namespace BookHeaven.Services.Implementations
 {
@@ -20,7 +19,7 @@ namespace BookHeaven.Services.Implementations
         private readonly UserManager<User> userManager;
         private readonly IFileService fileService;
 
-        public UserService(BookHeavenDbContext db, UserManager<User> userManager,IFileService fileService)
+        public UserService(BookHeavenDbContext db, UserManager<User> userManager, IFileService fileService)
         {
             this.db = db;
             this.userManager = userManager;
@@ -29,7 +28,7 @@ namespace BookHeaven.Services.Implementations
 
         public async Task<IEnumerable<T>> AllPaginatedAsync<T>(string search = "", int page = 1, int take = 10)
             => await this.FindUsersBySearchTerm(search)
-                .Skip((page - 1) *take)
+                .Skip((page - 1) * take)
                 .Take(take)
                 .ProjectTo<T>()
                 .ToListAsync();
@@ -60,7 +59,7 @@ namespace BookHeaven.Services.Implementations
             return roles;
         }
 
-        public async Task EditAsync(string id, string firstName, string lastName, string email, string username, IEnumerable<string> roles, string profilePicture,string profilePictureNav)
+        public async Task EditAsync(string id, string firstName, string lastName, string email, string username, IEnumerable<string> roles, string profilePicture, string profilePictureNav)
         {
             var user = await this.db.Users.FindAsync(id);
 

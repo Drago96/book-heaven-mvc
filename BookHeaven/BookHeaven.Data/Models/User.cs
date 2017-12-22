@@ -26,6 +26,5 @@ namespace BookHeaven.Data.Models
         public ICollection<Order> Orders { get; set; } = new List<Order>();
 
         public ICollection<Vote> Votes { get; set; } = new List<Vote>();
-
     }
 }

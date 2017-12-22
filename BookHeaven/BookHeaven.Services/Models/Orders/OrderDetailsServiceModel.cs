@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using BookHeaven.Common.Mapping;
 using BookHeaven.Data.Models;
 using BookHeaven.Services.Models.OrderItems;
+using System;
+using System.Collections.Generic;
 
 namespace BookHeaven.Services.Models.Orders
 {
-    public class OrderDetailsServiceModel : IMapFrom<Order>,IHaveCustomMapping
+    public class OrderDetailsServiceModel : IMapFrom<Order>, IHaveCustomMapping
     {
         public DateTime Date { get; set; }
 

@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using AutoMapper;
-using BookHeaven.Data.Models;
+﻿using AutoMapper;
 using BookHeaven.Services.Contracts;
 using BookHeaven.Services.Models.Books;
 using BookHeaven.Services.UtilityServices.ShoppingCart;
-using BookHeaven.Services.UtilityServices.ShoppingCart.Models;
-using BookHeaven.Web.Infrastructure.Constants;
 using BookHeaven.Web.Infrastructure.Constants.ErrorMessages;
 using BookHeaven.Web.Infrastructure.Constants.SuccessMessages;
 using BookHeaven.Web.Infrastructure.Extensions;
 using BookHeaven.Web.Models.ShoppingCart;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.Edm.Validation;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace BookHeaven.Web.Controllers
 {
@@ -48,20 +42,19 @@ namespace BookHeaven.Web.Controllers
                 return BadRequest();
             }
 
-            var cartIsFull =  this.shoppingCarts.CartIsFull(shoppingCartId);
+            var cartIsFull = this.shoppingCarts.CartIsFull(shoppingCartId);
 
             if (cartIsFull)
             {
                 TempData.AddErrorMessage(ShoppingCartErrorMessages.CartIsFull);
-                return RedirectToAction("Details", "Books", new {id});
+                return RedirectToAction("Details", "Books", new { id });
             }
 
-            this.shoppingCarts.AddToCart(shoppingCartId,id);
+            this.shoppingCarts.AddToCart(shoppingCartId, id);
 
             TempData.AddSuccessMessage(ShoppingCartSuccessMessages.ItemAddedSuccess);
 
-            return RedirectToAction("Details", "Books", new {id});
-
+            return RedirectToAction("Details", "Books", new { id });
         }
 
         public async Task<IActionResult> CartContent()
@@ -76,7 +69,7 @@ namespace BookHeaven.Web.Controllers
 
                 if (!bookExists)
                 {
-                    this.shoppingCarts.RemoveFromCart(shoppingCartId,bookId);
+                    this.shoppingCarts.RemoveFromCart(shoppingCartId, bookId);
                     TempData.AddWarningMessage(ShoppingCartErrorMessages.ErrorFindingItem);
                 }
             }
@@ -85,7 +78,7 @@ namespace BookHeaven.Web.Controllers
 
             var bookQuantities = shoppingCartItems.ToDictionary(b => b.BookId, b => b.Quantity);
 
-            var bookViewModels = this.mapper.Map<IEnumerable<BookShoppingCartServiceModel>,IEnumerable<ShoppingCartBookViewModel>>(books).ToList();
+            var bookViewModels = this.mapper.Map<IEnumerable<BookShoppingCartServiceModel>, IEnumerable<ShoppingCartBookViewModel>>(books).ToList();
             bookViewModels.ForEach(b => b.Quantity = bookQuantities[b.Id]);
 
             return View(bookViewModels);
@@ -102,7 +95,7 @@ namespace BookHeaven.Web.Controllers
                 return BadRequest();
             }
 
-            this.shoppingCarts.RemoveFromCart(shoppingCartId,bookId);
+            this.shoppingCarts.RemoveFromCart(shoppingCartId, bookId);
             TempData.AddSuccessMessage(ShoppingCartSuccessMessages.ItemDeletedSuccess);
             return RedirectToAction(nameof(CartContent));
         }
@@ -127,7 +120,5 @@ namespace BookHeaven.Web.Controllers
 
             return RedirectToAction("Index", "Home", new { area = "Home" });
         }
-
-
     }
 }

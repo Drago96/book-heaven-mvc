@@ -82,7 +82,7 @@ namespace BookHeaven.Data
 
             builder
                 .Entity<Vote>()
-                .HasKey(v => new {v.BookId, v.UserId});
+                .HasKey(v => new { v.BookId, v.UserId });
 
             builder
                 .Entity<Vote>()

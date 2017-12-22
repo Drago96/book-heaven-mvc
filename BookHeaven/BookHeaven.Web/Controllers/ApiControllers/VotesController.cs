@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using BookHeaven.Data;
-using BookHeaven.Data.Models.Enums;
-using BookHeaven.Services.Contracts;
+﻿using BookHeaven.Services.Contracts;
 using BookHeaven.Services.Models.Votes;
 using BookHeaven.Web.Infrastructure.Constants.ErrorMessages;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace BookHeaven.Web.Controllers.ApiControllers
 {

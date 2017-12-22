@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BookHeaven.Data.Models.Enums
+﻿namespace BookHeaven.Data.Models.Enums
 {
     public enum VoteValue
     {

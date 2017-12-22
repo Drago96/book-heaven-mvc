@@ -1,10 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BookHeaven.Services.Models.Categories;
-using BookHeaven.Web.Areas.Admin.Models.Categories;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BookHeaven.Web.Models.Shared
 {

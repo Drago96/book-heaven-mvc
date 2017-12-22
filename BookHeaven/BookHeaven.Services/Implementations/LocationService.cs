@@ -36,7 +36,6 @@ namespace BookHeaven.Services.Implementations
             return result;
         }
 
-
         public async Task<IEnumerable<T>> LocationsWithMostVisitsAsync<T>(int countryVisitsToDisplay)
             => await this.db.Locations
                 .GroupBy(l => l.Country)

@@ -3,14 +3,12 @@ using BookHeaven.Common.Extensions;
 using BookHeaven.Data;
 using BookHeaven.Data.Models;
 using BookHeaven.Services.Contracts;
-using BookHeaven.Services.Infrastructure.Constants;
+using BookHeaven.Services.UtilityServices.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Authentication.ExtendedProtection;
 using System.Threading.Tasks;
-using BookHeaven.Services.UtilityServices.Contracts;
 
 namespace BookHeaven.Services.Implementations
 {
@@ -49,7 +47,7 @@ namespace BookHeaven.Services.Implementations
                 .ProjectTo<T>()
                 .ToListAsync();
 
-        public async Task<IEnumerable<T>> FilterByTermAndCategoriesAsync<T>(IEnumerable<int> categories,int page=1, string searchTerm = "",int take = 10)
+        public async Task<IEnumerable<T>> FilterByTermAndCategoriesAsync<T>(IEnumerable<int> categories, int page = 1, string searchTerm = "", int take = 10)
         {
             var books = this.FindBookBySearchTerm(searchTerm);
 
@@ -70,8 +68,7 @@ namespace BookHeaven.Services.Implementations
             => await this.db.Books.Where(b => b.Id == id).ProjectTo<T>().FirstOrDefaultAsync();
 
         public async Task<IEnumerable<T>> ByIdsAsync<T>(IEnumerable<int> ids)
-         => await this.db.Books.Where(b =>ids.Contains(b.Id)).ProjectTo<T>().ToListAsync();
-
+         => await this.db.Books.Where(b => ids.Contains(b.Id)).ProjectTo<T>().ToListAsync();
 
         public async Task<int> CountBySearchTermAsync(string searchTerm = "")
             => await this.FindBookBySearchTerm(searchTerm).CountAsync();
@@ -88,9 +85,8 @@ namespace BookHeaven.Services.Implementations
             return await books.CountAsync();
         }
 
-        public async Task<int> CreateAsync(string title, decimal price, string description, IEnumerable<int> categoryIds, string picture,string listingPicture, string publisherId)
+        public async Task<int> CreateAsync(string title, decimal price, string description, IEnumerable<int> categoryIds, string picture, string listingPicture, string publisherId)
         {
-
             Book book = new Book
             {
                 Title = title,
@@ -149,8 +145,7 @@ namespace BookHeaven.Services.Implementations
             await this.db.SaveChangesAsync();
         }
 
-
-        public async Task EditAsync(int id, string title, decimal price, string description, IEnumerable<int> categories,string bookPicture,string listingPicture)
+        public async Task EditAsync(int id, string title, decimal price, string description, IEnumerable<int> categories, string bookPicture, string listingPicture)
         {
             var book = await this.db.Books.Include(b => b.Categories).FirstOrDefaultAsync(b => b.Id == id);
 

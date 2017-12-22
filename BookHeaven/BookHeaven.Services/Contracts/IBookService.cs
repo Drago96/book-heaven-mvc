@@ -11,7 +11,7 @@ namespace BookHeaven.Services.Contracts
 
         Task<IEnumerable<T>> FilterAndTakeAsync<T>(string searchTerm, int booksToTake);
 
-        Task<IEnumerable<T>> FilterByTermAndCategoriesAsync<T>(IEnumerable<int> categories,int page,string searchTerm, int take);
+        Task<IEnumerable<T>> FilterByTermAndCategoriesAsync<T>(IEnumerable<int> categories, int page, string searchTerm, int take);
 
         Task<T> ByIdAsync<T>(int id);
 
@@ -21,7 +21,7 @@ namespace BookHeaven.Services.Contracts
 
         Task<int> CountBySearchTermAndCategoriesAsync(IEnumerable<int> categoryIds, string searchTerm);
 
-        Task<int> CreateAsync(string title, decimal price, string description, IEnumerable<int> categoryIds, string picture,string listingPicture, string publisherId);
+        Task<int> CreateAsync(string title, decimal price, string description, IEnumerable<int> categoryIds, string picture, string listingPicture, string publisherId);
 
         Task EditAsync(int id, string title, decimal price, string description, IEnumerable<int> categories, string bookPicture, string listingPicture);
 

@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper.QueryableExtensions;
+﻿using AutoMapper.QueryableExtensions;
 using BookHeaven.Data;
 using BookHeaven.Data.Models;
 using BookHeaven.Services.Contracts;
 using BookHeaven.Services.Models.Orders;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Net.Http.Headers;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BookHeaven.Services.Implementations
 {
@@ -47,7 +45,6 @@ namespace BookHeaven.Services.Implementations
                 };
 
                 order.OrderItems.Add(orderItem);
-
             }
             this.db.Add(order);
             await this.db.SaveChangesAsync();
@@ -67,7 +64,7 @@ namespace BookHeaven.Services.Implementations
 
             for (var i = 1; i <= 12; i++)
             {
-                result.Add(await this.SalesForMonth(year,i,publisherId));
+                result.Add(await this.SalesForMonth(year, i, publisherId));
             }
 
             return result;
@@ -97,9 +94,6 @@ namespace BookHeaven.Services.Implementations
                 Month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month),
                 Sales = sales
             };
-
         }
-
-
     }
 }

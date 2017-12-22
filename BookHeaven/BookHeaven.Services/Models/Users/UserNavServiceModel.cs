@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using AutoMapper;
-using BookHeaven.Common.Extensions;
-using BookHeaven.Common.Mapping;
+﻿using BookHeaven.Common.Mapping;
 using BookHeaven.Data.Models;
 
 namespace BookHeaven.Services.Models.Users
@@ -11,6 +6,5 @@ namespace BookHeaven.Services.Models.Users
     public class UserNavServiceModel : IMapFrom<User>
     {
         public string ProfilePictureNav { get; set; }
-
     }
 }

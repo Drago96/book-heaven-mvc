@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using BookHeaven.Services.UtilityServices.Contracts;
-using Microsoft.AspNetCore.Http;
-using SixLabors.ImageSharp;
-using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
+﻿using BookHeaven.Services.UtilityServices.Contracts;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
+using Microsoft.AspNetCore.Http;
+using SixLabors.ImageSharp;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BookHeaven.Services.UtilityServices.Implementations
 {
@@ -52,7 +50,6 @@ namespace BookHeaven.Services.UtilityServices.Implementations
                 var uploadResult = this.cloudinary.Upload(uploadParams);
                 return uploadResult.Uri.AbsoluteUri;
             }
-
         }
 
         public void DeleteImage(string url)
@@ -64,7 +61,6 @@ namespace BookHeaven.Services.UtilityServices.Implementations
             }
             catch
             {
-                
             }
         }
 

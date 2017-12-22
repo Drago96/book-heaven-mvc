@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BookHeaven.Services.Contracts;
+﻿using BookHeaven.Services.Contracts;
 using BookHeaven.Services.Models.Categories;
 using BookHeaven.Web.Infrastructure.Constants;
 using BookHeaven.Web.Models.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Caching.Memory;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BookHeaven.Web.Infrastructure.ViewComponents
 {
@@ -42,7 +42,6 @@ namespace BookHeaven.Web.Infrastructure.ViewComponents
                     Value = c.Id.ToString()
                 })
             });
-
         }
     }
 }

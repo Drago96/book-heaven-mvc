@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using BookHeaven.Common.Extensions;
+﻿using BookHeaven.Common.Extensions;
 using BookHeaven.Data.Infrastructure.Constants;
 using BookHeaven.Web.Infrastructure.Constants.Display;
 using BookHeaven.Web.Infrastructure.Constants.ErrorMessages;
 using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace BookHeaven.Web.Models.Account
 {

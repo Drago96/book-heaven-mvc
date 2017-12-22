@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using BookHeaven.Web.Infrastructure.Mapping;
 
 namespace BookHeaven.Tests
@@ -21,12 +18,10 @@ namespace BookHeaven.Tests
                     Mapper.Initialize(cfg =>
                     {
                         cfg.AddProfile<AutoMapperProfile>();
-
                     });
                     IsInitialized = true;
                 }
             }
-            
         }
     }
 }

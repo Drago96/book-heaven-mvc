@@ -1,6 +1,4 @@
-﻿using System.Security.Claims;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using BookHeaven.Services.Contracts;
 using BookHeaven.Services.Infrastructure.Constants;
 using BookHeaven.Services.Models.Books;
@@ -9,6 +7,8 @@ using BookHeaven.Web.Models;
 using BookHeaven.Web.Models.Books;
 using BookHeaven.Web.Models.Shared;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace BookHeaven.Web.Controllers
 {
@@ -19,7 +19,7 @@ namespace BookHeaven.Web.Controllers
         private readonly IVoteService votes;
         private readonly IMapper mapper;
 
-        public BooksController(IBookService books, ICategoryService categories,IVoteService votes, IMapper mapper)
+        public BooksController(IBookService books, ICategoryService categories, IVoteService votes, IMapper mapper)
         {
             this.books = books;
             this.categories = categories;

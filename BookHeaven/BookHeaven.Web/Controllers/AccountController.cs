@@ -1,12 +1,18 @@
-﻿using BookHeaven.Data.Infrastructure.Constants;
+﻿using AutoMapper;
+using BookHeaven.Data.Infrastructure.Constants;
 using BookHeaven.Data.Models;
 using BookHeaven.Services.Contracts;
+using BookHeaven.Services.Infrastructure.Constants;
+using BookHeaven.Services.Models.Orders;
+using BookHeaven.Services.Models.Users;
 using BookHeaven.Services.UtilityServices.Contracts;
 using BookHeaven.Web.Infrastructure.Constants;
 using BookHeaven.Web.Infrastructure.Constants.ErrorMessages;
 using BookHeaven.Web.Infrastructure.Constants.SuccessMessages;
+using BookHeaven.Web.Infrastructure.Constants.WarningMessages;
 using BookHeaven.Web.Infrastructure.Extensions;
 using BookHeaven.Web.Infrastructure.Filters;
+using BookHeaven.Web.Models.Account;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,13 +20,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using AutoMapper;
-using BookHeaven.Services.Infrastructure.Constants;
-using BookHeaven.Services.Models.Orders;
-using BookHeaven.Services.Models.Users;
-using BookHeaven.Web.Areas.Admin.Models.Users;
-using BookHeaven.Web.Infrastructure.Constants.WarningMessages;
-using BookHeaven.Web.Models.Account;
 
 namespace BookHeaven.Web.Controllers
 {
@@ -136,12 +135,11 @@ namespace BookHeaven.Web.Controllers
 
                 var profilePictureData = this.fileService.ResizeImage(profilePicture,
                     UserDataConstants.ProfilePictureWidth, UserDataConstants.ProfilePictureHeight, pictureType);
-                user.ProfilePicture= this.fileService.UploadImage(profilePictureData);
+                user.ProfilePicture = this.fileService.UploadImage(profilePictureData);
 
                 var profilePictureNavData = this.fileService.ResizeImage(profilePicture,
                     UserDataConstants.ProfilePictureNavWidth, UserDataConstants.ProfilePictureNavHeight, pictureType);
-                user.ProfilePictureNav= this.fileService.UploadImage(profilePictureNavData);
-
+                user.ProfilePictureNav = this.fileService.UploadImage(profilePictureNavData);
             }
 
             var result = await this.userManager.CreateAsync(user, model.Password);
@@ -352,7 +350,6 @@ namespace BookHeaven.Web.Controllers
                 var profilePictureNav = this.fileService.ResizeImage(profilePicture,
                     UserDataConstants.ProfilePictureNavWidth, UserDataConstants.ProfilePictureNavHeight, pictureType);
                 profilePictureNavUrl = this.fileService.UploadImage(profilePictureNav);
-
             }
 
             await this.users.ProfileEditAsync(id, model.FirstName, model.LastName, model.Email, model.Email, profilePictureUrl, profilePictureNavUrl);
@@ -426,7 +423,6 @@ namespace BookHeaven.Web.Controllers
         [ValidateModelState]
         public async Task<IActionResult> SetPassword(SetPasswordViewModel model)
         {
-
             var user = await this.userManager.GetUserAsync(User);
             if (user == null)
             {

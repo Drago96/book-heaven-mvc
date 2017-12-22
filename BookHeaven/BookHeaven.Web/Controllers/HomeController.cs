@@ -1,10 +1,10 @@
-﻿using BookHeaven.Web.Models;
+﻿using BookHeaven.Services.Contracts;
+using BookHeaven.Services.Infrastructure.Constants;
+using BookHeaven.Services.Models.Books;
+using BookHeaven.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using BookHeaven.Services.Contracts;
-using BookHeaven.Services.Infrastructure.Constants;
-using BookHeaven.Services.Models.Books;
 
 namespace BookHeaven.Web.Controllers
 {

@@ -2,6 +2,7 @@
 using BookHeaven.Data;
 using BookHeaven.Data.Infrastructure.Constants;
 using BookHeaven.Data.Models;
+using BookHeaven.Services.UtilityServices.ShoppingCart;
 using BookHeaven.Web.Infrastructure.Extensions;
 using BookHeaven.Web.Infrastructure.Filters;
 using Microsoft.AspNetCore.Builder;
@@ -12,8 +13,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using BookHeaven.Services.UtilityServices.ShoppingCart;
-using Microsoft.AspNetCore.Mvc.TagHelpers;
 
 namespace BookHeaven.Web
 {
@@ -51,7 +50,7 @@ namespace BookHeaven.Web
                 googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
                 googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
             });
-            
+
             services.AddRouting(options => options.LowercaseUrls = true);
             services.ConfigureCustomServices();
             services.AddSingleton<IShoppingCartManager, ShoppingCartManager>();
@@ -86,7 +85,6 @@ namespace BookHeaven.Web
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            
             app.UseSession(new SessionOptions());
 
             app.UseStaticFiles();

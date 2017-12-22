@@ -12,7 +12,6 @@
         <thead>
         <tr>
             <th>
-
             </th>
             <th>
                 Title
@@ -27,7 +26,6 @@
                 Total
             </th>
             <th>
-
             </th>
         </tr>
         </thead>
@@ -36,7 +34,7 @@
         {
             <tr>
                 <td width="20%">
-                    <img class="book-listing-image" src="@item.BookListingPicture.GetPictureUrlOrDefault(ResourceConstants.DefaultBookListingPictureUrl)"/>
+                    <img class="book-listing-image" src="@item.BookListingPicture.GetPictureUrlOrDefault(ResourceConstants.DefaultBookListingPictureUrl)" />
                 </td>
                 <td width="19%">
                     <div>
@@ -47,19 +45,16 @@
                     <div>
                         @item.Quantity
                     </div>
-
                 </td>
                 <td width="19%">
                     <div>
                         @item.Price.ToEuro()
                     </div>
-
                 </td>
                 <td width="19%">
                     <div>
                         @((item.Quantity * item.Price).ToEuro())
                     </div>
-
                 </td>
                 <td>
                     <div>
@@ -68,7 +63,6 @@
                         </form>
                     </div>
                 </td>
-
             </tr>
         }
         </tbody>
@@ -98,7 +92,7 @@ else
     <h3>Your cart is empty!</h3>
 }
 
-@section Scripts{ 
+@section Scripts{
     <script>
         DeleteItemDialogs.InitializeDialogs('.delete-icon', 'cart item')
     </script>

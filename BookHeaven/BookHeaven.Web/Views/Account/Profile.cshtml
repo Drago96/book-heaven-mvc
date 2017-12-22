@@ -28,7 +28,6 @@
 
                 var currentOrder = Model.Orders.ElementAt(i);
 
-
                 <div class="well">
                     <h4 class="order-header" data-toggle="collapse" data-target="#order@(i)">
                         <em>@currentOrder.OrderItems.Sum(oi => oi.Quantity * oi.BookPrice).ToEuro() - @currentOrder.Date.ToShortDateString()</em>
@@ -49,6 +48,5 @@
         {
             <h5>You have no orders yet !</h5>
         }
-
     </div>
 </div>

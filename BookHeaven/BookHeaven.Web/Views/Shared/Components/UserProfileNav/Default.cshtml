@@ -1,6 +1,5 @@
 ﻿@model UserNavServiceModel
 
-
 <a asp-area="" asp-controller="Account" asp-action="Profile" class="navbar-link">
-    <img alt="Profile" class="featurette-image img-circle img-responsive pull-right profile-picture-nav" src="@Model.ProfilePictureNav.GetPictureUrlOrDefault(ResourceConstants.DefaultProfilePictureNavUrl)"/>
+    <img alt="Profile" class="featurette-image img-circle img-responsive pull-right profile-picture-nav" src="@Model.ProfilePictureNav.GetPictureUrlOrDefault(ResourceConstants.DefaultProfilePictureNavUrl)" />
 </a>

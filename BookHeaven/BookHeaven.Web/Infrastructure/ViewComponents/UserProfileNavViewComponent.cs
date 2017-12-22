@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using BookHeaven.Services.Contracts;
+using BookHeaven.Services.Models.Users;
+using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using BookHeaven.Services.Contracts;
-using BookHeaven.Services.Models.Categories;
-using BookHeaven.Services.Models.Users;
-using BookHeaven.Web.Infrastructure.Constants;
-using BookHeaven.Web.Models.Shared;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace BookHeaven.Web.Infrastructure.ViewComponents
 {

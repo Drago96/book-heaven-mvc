@@ -1,9 +1,6 @@
-﻿using System;
+﻿using BookHeaven.Services.Models.Orders;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using BookHeaven.Services.Models.Orders;
-using BookHeaven.Services.UtilityServices.ShoppingCart.Models;
 
 namespace BookHeaven.Services.Contracts
 {

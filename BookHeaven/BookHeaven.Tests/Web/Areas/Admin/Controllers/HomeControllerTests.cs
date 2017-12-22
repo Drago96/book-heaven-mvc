@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using BookHeaven.Services.Contracts;
+﻿using BookHeaven.Services.Contracts;
 using BookHeaven.Services.Models.Locations;
 using BookHeaven.Web.Areas.Admin.Controllers;
 using BookHeaven.Web.Areas.Admin.Models.Home;
@@ -10,6 +6,9 @@ using BookHeaven.Web.Infrastructure.Constants.Areas;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
@@ -19,7 +18,6 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
         public HomeControllerTests()
         {
             AutoMapperInitializer.Initialize();
-
         }
 
         [Fact]
@@ -31,7 +29,6 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
 
             //Assert
             baseController.IsAssignableFrom(controller).Should().BeTrue();
-
         }
 
         [Fact]
@@ -65,7 +62,7 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
                     l.LocationsWithMostVisitsAsync<LocationVisitsServiceModel>(AdminConstants.CountryVisitsToDisplay))
                 .ReturnsAsync(locationsWithMostVisits);
 
-            var controller = new HomeController(users.Object,siteVisits.Object,locations.Object);
+            var controller = new HomeController(users.Object, siteVisits.Object, locations.Object);
 
             //Act
             var result = await controller.Index();

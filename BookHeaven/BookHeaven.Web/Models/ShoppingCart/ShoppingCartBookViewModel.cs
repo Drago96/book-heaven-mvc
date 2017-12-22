@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BookHeaven.Common.Mapping;
+﻿using BookHeaven.Common.Mapping;
 using BookHeaven.Services.Models.Books;
 
 namespace BookHeaven.Web.Models.ShoppingCart

@@ -116,7 +116,6 @@ div.custom-alert {
     }
 }
 
-
 body.admin-body {
     padding-top: 0;
 }
@@ -268,7 +267,7 @@ a.book-details-btn {
 .input-block-level {
     display: block;
     width: 100%;
-    min-height: 28px; 
+    min-height: 28px;
 }
 
 table.book-cart-table thead th {

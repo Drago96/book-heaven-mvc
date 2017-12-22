@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BookHeaven.Services.Models.Orders
+﻿namespace BookHeaven.Services.Models.Orders
 {
     public class OrderPublisherSalesServiceModel
     {

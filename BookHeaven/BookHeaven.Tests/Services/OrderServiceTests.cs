@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BookHeaven.Data;
+﻿using BookHeaven.Data;
 using BookHeaven.Data.Models;
 using BookHeaven.Services.Implementations;
 using BookHeaven.Tests.Mocks;
 using BookHeaven.Tests.Services.Models;
 using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace BookHeaven.Tests.Services
@@ -73,7 +72,6 @@ namespace BookHeaven.Tests.Services
 
             //Assert
             salesForYear.Count().ShouldBeEquivalentTo(12);
-
         }
 
         private void FillDbData(BookHeavenDbContext db)

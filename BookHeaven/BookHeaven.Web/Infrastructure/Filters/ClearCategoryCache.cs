@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BookHeaven.Services.Contracts;
+﻿using BookHeaven.Services.Contracts;
 using BookHeaven.Services.Models.Categories;
 using BookHeaven.Web.Infrastructure.Constants;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Caching.Memory;
+using System;
+using System.Threading.Tasks;
 
 namespace BookHeaven.Web.Infrastructure.Filters
 {
@@ -15,7 +13,7 @@ namespace BookHeaven.Web.Infrastructure.Filters
         private readonly ICategoryService categories;
         private readonly IMemoryCache cache;
 
-        public ClearCategoryCache(ICategoryService categories,IMemoryCache cache)
+        public ClearCategoryCache(ICategoryService categories, IMemoryCache cache)
         {
             this.categories = categories;
             this.cache = cache;

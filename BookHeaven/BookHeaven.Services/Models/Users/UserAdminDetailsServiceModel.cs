@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using BookHeaven.Common.Mapping;
 using BookHeaven.Data.Models;
+using System.Linq;
 
 namespace BookHeaven.Services.Models.Users
 {
@@ -22,7 +19,6 @@ namespace BookHeaven.Services.Models.Users
                     cfg => cfg.MapFrom(u => u.Orders.Sum(o => o.OrderItems.Sum(oi => oi.Quantity))))
                 .ForMember(u => u.MoneySpent,
                     cfg => cfg.MapFrom(u => u.Orders.Sum(o => o.OrderItems.Sum(oi => oi.Quantity * oi.BookPrice))));
-
         }
     }
 }

@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BookHeaven.Data;
+﻿using BookHeaven.Data;
 using BookHeaven.Data.Models;
 using BookHeaven.Services.Implementations;
 using BookHeaven.Tests.Mocks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Identity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace BookHeaven.Tests.Services
@@ -124,7 +123,6 @@ namespace BookHeaven.Tests.Services
                     RoleId = TestRoleThreeId
                 }
             });
-
 
             db.SaveChanges();
         }

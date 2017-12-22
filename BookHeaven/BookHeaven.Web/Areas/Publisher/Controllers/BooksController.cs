@@ -17,7 +17,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using BookHeaven.Common.Extensions;
 
 namespace BookHeaven.Web.Areas.Publisher.Controllers
 {
@@ -51,7 +50,7 @@ namespace BookHeaven.Web.Areas.Publisher.Controllers
 
             return View(new PaginatedViewModel<BookPublisherListingServiceModel>
             {
-                Items = await this.books.AllByPublisherPaginatedAsync<BookPublisherListingServiceModel>(userId,searchTerm, page, BookServiceConstants.BookPublisherListingPageSize),
+                Items = await this.books.AllByPublisherPaginatedAsync<BookPublisherListingServiceModel>(userId, searchTerm, page, BookServiceConstants.BookPublisherListingPageSize),
                 TotalItems = await this.books.CountBySearchTermAsync(searchTerm),
                 CurrentPage = page,
                 SearchTerm = searchTerm,
@@ -206,7 +205,7 @@ namespace BookHeaven.Web.Areas.Publisher.Controllers
                     BookDataConstants.BookPictureListingWidth, BookDataConstants.BookPictureListingHeight, pictureType);
                 listingPictureUrl = this.fileService.UploadImage(listingPicture);
             }
-                
+
             await this.books.EditAsync(id, model.Title, model.Price, model.Description, model.Categories, bookPictureUrl, listingPictureUrl);
 
             TempData.AddSuccessMessage(BookSuccessConstants.EditMessage);
@@ -260,6 +259,5 @@ namespace BookHeaven.Web.Areas.Publisher.Controllers
                     Text = c.Name,
                     Value = c.Id.ToString()
                 });
-
     }
 }

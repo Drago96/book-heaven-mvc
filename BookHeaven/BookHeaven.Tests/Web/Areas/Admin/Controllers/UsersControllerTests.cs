@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using BookHeaven.Services.Contracts;
 using BookHeaven.Services.Infrastructure.Constants;
 using BookHeaven.Services.Models.Users;
@@ -10,9 +6,10 @@ using BookHeaven.Web.Areas.Admin.Controllers;
 using BookHeaven.Web.Areas.Admin.Models.Users;
 using BookHeaven.Web.Models;
 using FluentAssertions;
-using LearningSystem.Test.Mocks;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
@@ -24,7 +21,6 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
             AutoMapperInitializer.Initialize();
         }
 
-
         [Fact]
         public void UsersControllerShouldExtendAdminBaseController()
         {
@@ -34,7 +30,6 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
 
             //Assert
             baseController.IsAssignableFrom(controller).Should().BeTrue();
-
         }
 
         [Fact]
@@ -47,19 +42,18 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
             const int expectedUsersCount = 333;
             List<UserAdminListingServiceModel> expectedUsers = this.GetExpectedUsers();
 
-
             var usersServiceMock = new Mock<IUserService>();
             usersServiceMock.Setup(u =>
-                    u.AllPaginatedAsync<UserAdminListingServiceModel>(expectedSearchTerm,expectedPage,expectedPageSize))
+                    u.AllPaginatedAsync<UserAdminListingServiceModel>(expectedSearchTerm, expectedPage, expectedPageSize))
                 .ReturnsAsync(expectedUsers);
 
             usersServiceMock.Setup(u => u.CountBySearchTermAsync(expectedSearchTerm))
                 .ReturnsAsync(expectedUsersCount);
 
-            var controller = new UsersController(usersServiceMock.Object,null,null, null, null,null);
+            var controller = new UsersController(usersServiceMock.Object, null, null, null, null, null);
 
             //Act
-            var result = await controller.All(expectedSearchTerm,expectedPage);
+            var result = await controller.All(expectedSearchTerm, expectedPage);
 
             //Assert
             result.Should().BeOfType<ViewResult>();
@@ -74,7 +68,6 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
             parsedResultModel.PageSize.Should().Be(expectedPageSize);
             parsedResultModel.SearchTerm.Should().Be(expectedSearchTerm);
             parsedResultModel.PageSize.Should().Be(expectedPageSize);
-
         }
 
         [Fact]
@@ -85,7 +78,7 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
             userServiceMock.Setup(u => u.ByIdAsync<UserAdminDetailsServiceModel>(It.IsAny<string>()))
                 .ReturnsAsync((UserAdminDetailsServiceModel)null);
 
-            var controller = new UsersController(userServiceMock.Object,null,null,null,null,null);
+            var controller = new UsersController(userServiceMock.Object, null, null, null, null, null);
 
             //Act
             var result = await controller.Details("");
@@ -108,7 +101,7 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
                 ProfilePicture = "TestPicture",
                 TotalPurchases = 10
             };
-            var expectedRoles = new List<string> {"TestRole1", "TestRole2"};
+            var expectedRoles = new List<string> { "TestRole1", "TestRole2" };
 
             var userServiceMock = new Mock<IUserService>();
             userServiceMock.Setup(u => u.ByIdAsync<UserAdminDetailsServiceModel>(userId))
@@ -128,7 +121,7 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
                     TotalPurchases = expectedUser.TotalPurchases
                 });
 
-            var controller = new UsersController(userServiceMock.Object,mapperMock.Object,null,null,null,null);
+            var controller = new UsersController(userServiceMock.Object, mapperMock.Object, null, null, null, null);
 
             //Act
             var result = await controller.Details(userId);
@@ -166,6 +159,5 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
                  LastName = "TestLastName2"
              }
          };
-
     }
 }

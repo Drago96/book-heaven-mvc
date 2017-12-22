@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BookHeaven.Services.Contracts;
-using BookHeaven.Services.Implementations;
+﻿using BookHeaven.Services.Contracts;
 using BookHeaven.Services.Models.Categories;
 using BookHeaven.Web.Areas.Admin.Controllers;
 using BookHeaven.Web.Infrastructure.Constants;
@@ -14,6 +8,9 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Moq;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
@@ -29,7 +26,6 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
         public CategoriesControllerTests()
         {
             AutoMapperInitializer.Initialize();
-            
         }
 
         [Fact]
@@ -41,7 +37,6 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
 
             //Assert
             baseController.IsAssignableFrom(controller).Should().BeTrue();
-
         }
 
         [Fact]
@@ -77,9 +72,6 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
 
             var modelResult = model as List<CategoryAdminListingServiceModel>;
             modelResult.ShouldBeEquivalentTo(categoriesToReturn, options => options.WithStrictOrdering());
-
-
-
         }
 
         [Fact]
@@ -100,7 +92,6 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
             httpPostAttribute.Should().NotBe(null);
             serviceFilterAttribute.Should().NotBe(null);
             serviceFilterAttribute.ServiceType.ShouldBeEquivalentTo(typeof(ClearCategoryCache));
-
         }
 
         [Fact]
@@ -121,7 +112,6 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
         [Fact]
         public async Task DeleteShouldDeleteCorrectCategoryAndReturnCorrectResultIfExists()
         {
-
             //Arrange
             const int categoryToDelete = 1;
             int deletedCategory = 0;

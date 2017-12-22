@@ -30,7 +30,6 @@ namespace BookHeaven.Services.Implementations
         public async Task<bool> ExistsAsync(string categoryName)
             => await this.db.Categories.AnyAsync(c => c.Name == categoryName);
 
-
         public Task<bool> AlreadyExistsAsync(int id, string name)
             => this.db.Categories.AnyAsync(c => c.Id != id && c.Name == name);
 

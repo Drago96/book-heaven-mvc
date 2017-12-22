@@ -11,6 +11,5 @@ namespace BookHeaven.Services.Contracts
         Task<IEnumerable<T>> LocationsWithMostVisitsAsync<T>(int countryVisitsToDisplay);
 
         Task AddLocationVisitAsync(string city, string country);
-
     }
 }

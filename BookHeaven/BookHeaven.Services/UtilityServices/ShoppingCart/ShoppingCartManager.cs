@@ -1,8 +1,8 @@
-﻿using System.Collections.Concurrent;
+﻿using BookHeaven.Services.Infrastructure.Constants;
+using BookHeaven.Services.UtilityServices.ShoppingCart.Models;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using BookHeaven.Services.Infrastructure.Constants;
-using BookHeaven.Services.UtilityServices.ShoppingCart.Models;
 
 namespace BookHeaven.Services.UtilityServices.ShoppingCart
 {
@@ -14,15 +14,14 @@ namespace BookHeaven.Services.UtilityServices.ShoppingCart
         {
             var shoppingCart = this.GetShoppingCart(id);
 
-           shoppingCart.AddToCart(bookId);
-           
+            shoppingCart.AddToCart(bookId);
         }
 
         public void UpdateQuantity(string id, int bookId, int quantity)
         {
             var shoppingCart = this.GetShoppingCart(id);
 
-            shoppingCart.UpdateQuantity(bookId,quantity);
+            shoppingCart.UpdateQuantity(bookId, quantity);
         }
 
         public void RemoveFromCart(string id, int bookId)
@@ -51,7 +50,6 @@ namespace BookHeaven.Services.UtilityServices.ShoppingCart
 
             shoppingCart.Clear();
         }
-
 
         private Models.ShoppingCart GetShoppingCart(string id)
         {

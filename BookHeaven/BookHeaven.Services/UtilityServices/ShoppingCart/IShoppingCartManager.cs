@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using BookHeaven.Services.UtilityServices.ShoppingCart.Models;
+﻿using BookHeaven.Services.UtilityServices.ShoppingCart.Models;
+using System.Collections.Generic;
 
 namespace BookHeaven.Services.UtilityServices.ShoppingCart
 {

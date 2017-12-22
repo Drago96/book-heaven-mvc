@@ -253,9 +253,8 @@ var BookDetailsModule = (function (module) {
             if (!isAuthenticated) {
                 showYouMustLoginDialog()
             } else {
-                vote(1)     
+                vote(1)
             }
-           
         })
         $('.arrow-down').click(function () {
             if (!isAuthenticated) {
@@ -456,7 +455,6 @@ var PublishBookModule = (function (module) {
 }({}))
 
 var PublisherSalesModule = (function (module) {
-
     module.Initialize = function() {
         var yearSelector = $('#year-select')
 
@@ -530,11 +528,10 @@ var PublisherSalesModule = (function (module) {
                     }
                 }
             });
-        }   
+        }
     }
 
     return module;
-
 }({}))
 
 var UserFormModule = (function(module) {

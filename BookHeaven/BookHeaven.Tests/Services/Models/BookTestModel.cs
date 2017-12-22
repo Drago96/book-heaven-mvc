@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using BookHeaven.Common.Mapping;
+﻿using BookHeaven.Common.Mapping;
 using BookHeaven.Data.Models;
 
 namespace BookHeaven.Tests.Services.Models
@@ -11,6 +8,5 @@ namespace BookHeaven.Tests.Services.Models
         public int Id { get; set; }
 
         public string Title { get; set; }
-
     }
 }

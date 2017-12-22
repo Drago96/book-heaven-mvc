@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace BookHeaven.Services.UtilityServices.ShoppingCart.Models
 {
@@ -17,7 +15,6 @@ namespace BookHeaven.Services.UtilityServices.ShoppingCart.Models
 
         public IReadOnlyCollection<CartItem> GetItems()
         {
-   
             return this.books.ToList().AsReadOnly();
         }
 
@@ -54,7 +51,6 @@ namespace BookHeaven.Services.UtilityServices.ShoppingCart.Models
             {
                 this.books.Remove(book);
             }
-
         }
 
         public void Clear()

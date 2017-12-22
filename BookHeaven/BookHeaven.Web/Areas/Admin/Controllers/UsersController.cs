@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
-using BookHeaven.Common.Extensions;
 
 namespace BookHeaven.Web.Areas.Admin.Controllers
 {
@@ -67,7 +66,7 @@ namespace BookHeaven.Web.Areas.Admin.Controllers
             var model = this.mapper.Map<UserAdminDetailsServiceModel, UserAdminDetailsViewModel>(user);
 
             model.Roles = await this.users.GetRolesByIdAsync(id);
-            
+
             return View(model);
         }
 
@@ -136,7 +135,6 @@ namespace BookHeaven.Web.Areas.Admin.Controllers
                 var profilePictureNav = this.fileService.ResizeImage(profilePicture,
                     UserDataConstants.ProfilePictureNavWidth, UserDataConstants.ProfilePictureNavHeight, pictureType);
                 profilePictureNavUrl = this.fileService.UploadImage(profilePictureNav);
-
             }
 
             await this.users.EditAsync(id, model.FirstName, model.LastName, model.Email, model.Email, model.Roles, profilePictureUrl, profilePictureNavUrl);

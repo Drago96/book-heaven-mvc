@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using BookHeaven.Common.Extensions;
+﻿using BookHeaven.Common.Extensions;
 using BookHeaven.Common.Mapping;
 using BookHeaven.Services.Models.Users;
 using BookHeaven.Web.Infrastructure.Constants.Display;
 using BookHeaven.Web.Infrastructure.Constants.ErrorMessages;
 using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using static BookHeaven.Data.Infrastructure.Constants.UserDataConstants;
 
 namespace BookHeaven.Web.Models.Account
 {
-    public class UserEditViewModel:IMapFrom<UserDetailsServiceModel>, IValidatableObject
+    public class UserEditViewModel : IMapFrom<UserDetailsServiceModel>, IValidatableObject
     {
         [Required]
         [StringLength(FirstNameMaxLength, ErrorMessage = CommonErrorConstants.InvalidParameterLength, MinimumLength = FirstNameMinLength)]

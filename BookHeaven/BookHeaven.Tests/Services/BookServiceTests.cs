@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using BookHeaven.Data;
+﻿using BookHeaven.Data;
 using BookHeaven.Data.Models;
 using BookHeaven.Services.Contracts;
 using BookHeaven.Services.Implementations;
 using BookHeaven.Services.UtilityServices.Contracts;
 using BookHeaven.Tests.Mocks;
 using BookHeaven.Tests.Services.Models;
-using BookHeaven.Web.Infrastructure.Mapping;
 using FluentAssertions;
 using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace BookHeaven.Tests.Services
@@ -93,7 +90,7 @@ namespace BookHeaven.Tests.Services
             string bookTitle = Guid.NewGuid().ToString();
             const decimal bookPrice = 100;
             const string bookDescription = "Random Description";
-            List<int> categoryIds = new List<int> {1, 2, 3};
+            List<int> categoryIds = new List<int> { 1, 2, 3 };
             const string pictureLink = "RandomLink";
             const string listingPictureLink = "RandomListingLink";
             const string userId = "RandomId";
@@ -101,7 +98,7 @@ namespace BookHeaven.Tests.Services
             var db = BookHeavenDbContextInMemory.New();
 
             var fileServiceMock = new Mock<IFileService>();
-            var service = new BookService(db,  fileServiceMock.Object);
+            var service = new BookService(db, fileServiceMock.Object);
 
             //Act
             var result = await service.CreateAsync(bookTitle, bookPrice, bookDescription, categoryIds,
@@ -117,14 +114,13 @@ namespace BookHeaven.Tests.Services
             book.BookPicture.ShouldBeEquivalentTo(pictureLink);
             book.BookListingPicture.Should().Be(listingPictureLink);
             book.PublisherId.Should().Be(userId);
-
         }
 
         private IBookService GetSimpleBookService()
         {
             var db = BookHeavenDbContextInMemory.New();
             this.FillDatabase(db);
-            return new BookService(db,  null);
+            return new BookService(db, null);
         }
 
         private void FillDatabase(BookHeavenDbContext db)
@@ -159,7 +155,5 @@ namespace BookHeaven.Tests.Services
 
             db.SaveChanges();
         }
-
-
     }
 }

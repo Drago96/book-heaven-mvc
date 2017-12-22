@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BookHeaven.Web.Infrastructure.Constants;
+﻿using BookHeaven.Web.Infrastructure.Constants;
 using Microsoft.AspNetCore.Http;
+using System;
 
 namespace BookHeaven.Web.Infrastructure.Extensions
 {

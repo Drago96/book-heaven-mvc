@@ -1,8 +1,6 @@
-﻿using System;
-using AutoMapper;
-using BookHeaven.Common.Extensions;
-using BookHeaven.Common.Mapping;
+﻿using BookHeaven.Common.Mapping;
 using BookHeaven.Data.Models;
+using System;
 
 namespace BookHeaven.Services.Models.Books
 {
@@ -17,6 +15,5 @@ namespace BookHeaven.Services.Models.Books
         public decimal Price { get; set; }
 
         public DateTime PublishedDate { get; set; }
-
     }
 }

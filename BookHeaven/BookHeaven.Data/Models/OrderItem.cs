@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BookHeaven.Data.Infrastructure.Constants;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
-using BookHeaven.Data.Infrastructure.Constants;
 
 namespace BookHeaven.Data.Models
 {
@@ -23,10 +20,10 @@ namespace BookHeaven.Data.Models
         [MaxLength(BookDataConstants.BookTitleMaxLength)]
         public string BookTitle { get; set; }
 
-        [Range(0,double.MaxValue)]
+        [Range(0, double.MaxValue)]
         public decimal BookPrice { get; set; }
 
-        [Range(0,int.MaxValue)]
+        [Range(0, int.MaxValue)]
         public int Quantity { get; set; }
     }
 }
