@@ -17,7 +17,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -130,16 +129,11 @@ namespace BookHeaven.Web.Controllers
 
             if (model.ProfilePicture != null)
             {
-                var profilePicture = await this.fileService.GetByteArrayFromFormFileAsync(model.ProfilePicture);
-                var pictureType = model.ProfilePicture.ContentType.Split('/').Last();
+                user.ProfilePicture = await this.fileService.UploadImageAndGetUrlAsync(
+                    model.ProfilePicture, UserDataConstants.ProfilePictureWidth, UserDataConstants.ProfilePictureHeight);
 
-                var profilePictureData = this.fileService.ResizeImage(profilePicture,
-                    UserDataConstants.ProfilePictureWidth, UserDataConstants.ProfilePictureHeight, pictureType);
-                user.ProfilePicture = this.fileService.UploadImage(profilePictureData);
-
-                var profilePictureNavData = this.fileService.ResizeImage(profilePicture,
-                    UserDataConstants.ProfilePictureNavWidth, UserDataConstants.ProfilePictureNavHeight, pictureType);
-                user.ProfilePictureNav = this.fileService.UploadImage(profilePictureNavData);
+                user.ProfilePictureNav = await this.fileService.UploadImageAndGetUrlAsync(
+                    model.ProfilePicture, UserDataConstants.ProfilePictureNavWidth, UserDataConstants.ProfilePictureNavHeight);
             }
 
             var result = await this.userManager.CreateAsync(user, model.Password);
@@ -335,22 +329,10 @@ namespace BookHeaven.Web.Controllers
                 return View(model);
             }
 
-            string profilePictureUrl = null;
-            string profilePictureNavUrl = null;
-
-            if (model.NewProfilePicture != null)
-            {
-                var profilePictureFromFormFile =
-                    await this.fileService.GetByteArrayFromFormFileAsync(model.NewProfilePicture);
-                var pictureType = model.NewProfilePicture.ContentType.Split('/').Last();
-                var profilePicture = this.fileService.ResizeImage(profilePictureFromFormFile,
-                    UserDataConstants.ProfilePictureWidth, UserDataConstants.ProfilePictureHeight, pictureType);
-                profilePictureUrl = this.fileService.UploadImage(profilePicture);
-
-                var profilePictureNav = this.fileService.ResizeImage(profilePicture,
-                    UserDataConstants.ProfilePictureNavWidth, UserDataConstants.ProfilePictureNavHeight, pictureType);
-                profilePictureNavUrl = this.fileService.UploadImage(profilePictureNav);
-            }
+            string profilePictureUrl = model.NewProfilePicture != null ? await this.fileService.UploadImageAndGetUrlAsync(
+                model.NewProfilePicture, UserDataConstants.ProfilePictureWidth, UserDataConstants.ProfilePictureHeight) : null;
+            string profilePictureNavUrl = model.NewProfilePicture != null ? await this.fileService.UploadImageAndGetUrlAsync(
+                model.NewProfilePicture, UserDataConstants.ProfilePictureNavWidth, UserDataConstants.ProfilePictureNavHeight) : null;
 
             await this.users.ProfileEditAsync(id, model.FirstName, model.LastName, model.Email, model.Email, profilePictureUrl, profilePictureNavUrl);
 

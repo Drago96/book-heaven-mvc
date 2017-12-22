@@ -120,22 +120,10 @@ namespace BookHeaven.Web.Areas.Admin.Controllers
                 return View(model);
             }
 
-            string profilePictureUrl = null;
-            string profilePictureNavUrl = null;
-
-            if (model.NewProfilePicture != null)
-            {
-                var profilePictureFromFormFile =
-                    await this.fileService.GetByteArrayFromFormFileAsync(model.NewProfilePicture);
-                var pictureType = model.NewProfilePicture.ContentType.Split('/').Last();
-                var profilePicture = this.fileService.ResizeImage(profilePictureFromFormFile,
-                    UserDataConstants.ProfilePictureWidth, UserDataConstants.ProfilePictureHeight, pictureType);
-                profilePictureUrl = this.fileService.UploadImage(profilePicture);
-
-                var profilePictureNav = this.fileService.ResizeImage(profilePicture,
-                    UserDataConstants.ProfilePictureNavWidth, UserDataConstants.ProfilePictureNavHeight, pictureType);
-                profilePictureNavUrl = this.fileService.UploadImage(profilePictureNav);
-            }
+            string profilePictureUrl = model.NewProfilePicture != null ? await this.fileService.UploadImageAndGetUrlAsync(
+                model.NewProfilePicture, UserDataConstants.ProfilePictureWidth, UserDataConstants.ProfilePictureHeight) : null;
+            string profilePictureNavUrl = model.NewProfilePicture != null ? await this.fileService.UploadImageAndGetUrlAsync(
+                model.NewProfilePicture, UserDataConstants.ProfilePictureNavWidth, UserDataConstants.ProfilePictureNavHeight) : null;
 
             await this.users.EditAsync(id, model.FirstName, model.LastName, model.Email, model.Email, model.Roles, profilePictureUrl, profilePictureNavUrl);
 

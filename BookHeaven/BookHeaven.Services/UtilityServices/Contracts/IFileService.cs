@@ -5,12 +5,8 @@ namespace BookHeaven.Services.UtilityServices.Contracts
 {
     public interface IFileService : IService
     {
-        Task<byte[]> GetByteArrayFromFormFileAsync(IFormFile file);
-
-        string UploadImage(byte[] image);
+        Task<string> UploadImageAndGetUrlAsync(IFormFile image, int width, int height);
 
         void DeleteImage(string url);
-
-        byte[] ResizeImage(byte[] image, int width, int height, string pictureType);
     }
 }

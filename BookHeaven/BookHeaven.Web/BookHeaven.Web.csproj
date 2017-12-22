@@ -6,9 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Shared\Partials\**" />
     <Compile Remove="wwwroot\images\NewFolder1\**" />
+    <Content Remove="Views\Shared\Partials\**" />
     <Content Remove="wwwroot\images\NewFolder1\**" />
+    <EmbeddedResource Remove="Views\Shared\Partials\**" />
     <EmbeddedResource Remove="wwwroot\images\NewFolder1\**" />
+    <None Remove="Views\Shared\Partials\**" />
     <None Remove="wwwroot\images\NewFolder1\**" />
   </ItemGroup>
 
@@ -36,7 +40,6 @@
 	
   <ItemGroup>
     <Folder Include="Areas\Publisher\Views\Shared\" />
-    <Folder Include="Views\Shared\Partials\" />
   </ItemGroup>
 
   <ItemGroup>

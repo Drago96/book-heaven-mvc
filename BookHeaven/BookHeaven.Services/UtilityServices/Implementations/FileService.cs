@@ -26,20 +26,15 @@ namespace BookHeaven.Services.UtilityServices.Implementations
                 CloudinaryApiSecret));
         }
 
-        public async Task<byte[]> GetByteArrayFromFormFileAsync(IFormFile file)
+        public async Task<string> UploadImageAndGetUrlAsync(IFormFile image, int width, int height)
         {
-            using (var stream = new MemoryStream())
-            {
-                await file.CopyToAsync(stream);
-                return stream.ToArray();
-            }
-        }
-
-        public string UploadImage(byte[] image)
-        {
+            var imageByteArray = await this.GetByteArrayFromFormFileAsync(image);
+            var pictureType = image.ContentType.Split('/').Last();
+            var resizedImage = this.ResizeImage(imageByteArray,
+               width, height, pictureType);
             var nameGuid = Guid.NewGuid().ToString();
 
-            using (MemoryStream stream = new MemoryStream(image))
+            using (MemoryStream stream = new MemoryStream(resizedImage))
             {
                 var uploadParams = new ImageUploadParams()
                 {
@@ -64,7 +59,16 @@ namespace BookHeaven.Services.UtilityServices.Implementations
             }
         }
 
-        public byte[] ResizeImage(byte[] image, int width, int height, string pictureType)
+        private async Task<byte[]> GetByteArrayFromFormFileAsync(IFormFile file)
+        {
+            using (var stream = new MemoryStream())
+            {
+                await file.CopyToAsync(stream);
+                return stream.ToArray();
+            }
+        }
+
+        private byte[] ResizeImage(byte[] image, int width, int height, string pictureType)
         {
             var currentImage = Image.Load(image);
             currentImage.Mutate(x => x.Resize(width, height));

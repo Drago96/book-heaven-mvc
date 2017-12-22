@@ -9,7 +9,6 @@ namespace BookHeaven.Web.Controllers.ApiControllers
     public class BooksController : BaseApiController
     {
         private readonly IBookService books;
-        private readonly IUserService users;
 
         public BooksController(IBookService books)
         {
