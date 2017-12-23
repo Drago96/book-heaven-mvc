@@ -67,9 +67,10 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
 
             //Assert
             result.Should().BeOfType<ViewResult>();
-            var model = result.As<ViewResult>().Model;
+            var viewResult = result as ViewResult;
+            viewResult.ViewName.Should().Be(null);
+            var model = viewResult.Model;
             model.Should().BeOfType<List<CategoryAdminListingServiceModel>>();
-
             var modelResult = model as List<CategoryAdminListingServiceModel>;
             modelResult.ShouldBeEquivalentTo(categoriesToReturn, options => options.WithStrictOrdering());
         }

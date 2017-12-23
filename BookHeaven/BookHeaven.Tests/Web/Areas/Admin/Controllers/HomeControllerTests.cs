@@ -69,7 +69,9 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
 
             //Assert
             result.Should().BeOfType<ViewResult>();
-            var model = (result as ViewResult).Model;
+            var viewResult = result as ViewResult;
+            viewResult.ViewName.Should().Be(null);
+            var model = viewResult.Model;
             model.Should().BeOfType<AdminHomeViewModel>();
             var modelResult = model as AdminHomeViewModel;
             modelResult.Locations.ShouldAllBeEquivalentTo(locationsWithMostVisits, options => options.WithStrictOrdering());

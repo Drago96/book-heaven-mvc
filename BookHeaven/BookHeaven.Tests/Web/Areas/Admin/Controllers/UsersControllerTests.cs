@@ -57,7 +57,9 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
 
             //Assert
             result.Should().BeOfType<ViewResult>();
-            var resultModel = (result as ViewResult).Model;
+            var viewResult = result as ViewResult;
+            viewResult.ViewName.Should().Be(null);
+            var resultModel = viewResult.Model;
             resultModel.Should().BeOfType<PaginatedViewModel<UserAdminListingServiceModel>>();
 
             var parsedResultModel = resultModel as PaginatedViewModel<UserAdminListingServiceModel>;
@@ -128,7 +130,9 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
 
             //Assert
             result.Should().BeOfType<ViewResult>();
-            var resultModel = (result as ViewResult).Model;
+            var viewResult = result as ViewResult;
+            viewResult.ViewName.Should().Be(null);
+            var resultModel = viewResult.Model;
 
             resultModel.Should().BeOfType<UserAdminDetailsViewModel>();
             var parsedResultModel = resultModel as UserAdminDetailsViewModel;

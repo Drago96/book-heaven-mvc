@@ -66,7 +66,9 @@ namespace BookHeaven.Tests.Web.Areas.Publisher.Controllers
 
             //Assert
             result.Should().BeOfType<ViewResult>();
-            var resultModel = (result as ViewResult).Model;
+            var viewResult = result as ViewResult;
+            viewResult.ViewName.Should().Be(null);
+            var resultModel = viewResult.Model;
             resultModel.Should().BeOfType<BookCreateViewModel>();
             (resultModel as BookCreateViewModel).AllCategories.ShouldBeEquivalentTo(expectedCategories, options => options.WithStrictOrdering());
             (resultModel as BookCreateViewModel).Categories.Count().Should().Be(0);
