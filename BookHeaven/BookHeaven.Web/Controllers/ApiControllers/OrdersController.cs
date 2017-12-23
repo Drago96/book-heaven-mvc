@@ -16,9 +16,9 @@ namespace BookHeaven.Web.Controllers.ApiControllers
             this.orders = orders;
         }
 
-        [HttpGet("{year}")]
+        [HttpGet]
         [Authorize(Roles = RoleConstants.Publisher)]
-        public async Task<IActionResult> GetSalesForYear(int year)
+        public async Task<IActionResult> GetSalesForYear([FromQuery]int year)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 

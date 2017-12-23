@@ -466,7 +466,7 @@ var PublisherSalesModule = (function (module) {
 
         function changeYearSales(el) {
             var year = $(el).val()
-            $.get('/api/orders/' + year).then(function (data) {
+            $.get('/api/orders?year=' + year).then(function (data) {
                 var months = [];
                 var sales = [];
                 for (var i = 0; i < data.length; i++) {
