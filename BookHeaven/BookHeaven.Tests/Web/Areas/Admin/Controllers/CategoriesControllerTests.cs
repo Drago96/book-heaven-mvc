@@ -23,16 +23,22 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
         private const int TestCategoryIdTwo = 2;
         private const string TestCategoryNameTwo = "TestNameTwo";
 
+        private readonly CategoriesController sut;
+        private readonly Mock<ICategoryService> categoriesMock;
+
         public CategoriesControllerTests()
         {
             AutoMapperInitializer.Initialize();
+
+            this.categoriesMock = new Mock<ICategoryService>();
+            this.sut = new CategoriesController(this.categoriesMock.Object);
         }
 
         [Fact]
         public void CategoriesControllerShouldExtendAdminBaseController()
         {
             //Arrange
-            var controller = typeof(CategoriesController);
+            var controller = this.sut.GetType();
             var baseController = typeof(AdminBaseController);
 
             //Assert
@@ -58,28 +64,24 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
                     }
                 };
 
-            var categoryService = new Mock<ICategoryService>();
-            categoryService.Setup(c => c.AllAsync<CategoryAdminListingServiceModel>()).ReturnsAsync(categoriesToReturn);
-            var controller = new CategoriesController(categoryService.Object);
+            this.categoriesMock.Setup(c => c.AllAsync<CategoryAdminListingServiceModel>()).ReturnsAsync(categoriesToReturn);
 
             //Act
-            var result = await controller.All();
+            var result = await this.sut.All();
 
             //Assert
-            result.Should().BeOfType<ViewResult>();
-            var viewResult = result as ViewResult;
+            var viewResult = result.Should().BeOfType<ViewResult>().Subject;
             viewResult.ViewName.Should().Be(null);
-            var model = viewResult.Model;
-            model.Should().BeOfType<List<CategoryAdminListingServiceModel>>();
-            var modelResult = model as List<CategoryAdminListingServiceModel>;
-            modelResult.ShouldBeEquivalentTo(categoriesToReturn, options => options.WithStrictOrdering());
+            var model = viewResult.Model.Should().BeOfType<List<CategoryAdminListingServiceModel>>().Subject;
+            model.ShouldBeEquivalentTo(categoriesToReturn, options => options.WithStrictOrdering());
+            this.categoriesMock.Verify(c => c.AllAsync<CategoryAdminListingServiceModel>(), Times.Once);
         }
 
         [Fact]
         public void DeleteShouldContainCorrectAttributes()
         {
             //Arrange
-            var deleteAction = typeof(CategoriesController).GetMethod(nameof(CategoriesController.Delete));
+            var deleteAction = this.sut.GetType().GetMethod(nameof(CategoriesController.Delete));
 
             //Act
             var httpPostAttribute = deleteAction.GetCustomAttributes(true)
@@ -99,15 +101,14 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
         public async Task DeleteShouldReturnBadRequestIfCategoryDoesntExist()
         {
             //Arrange
-            var categoryService = new Mock<ICategoryService>();
-            categoryService.Setup(c => c.ExistsAsync(It.IsAny<int>())).ReturnsAsync(false);
-            var categoryController = new CategoriesController(categoryService.Object);
+            this.categoriesMock.Setup(c => c.ExistsAsync(It.IsAny<int>())).ReturnsAsync(false);
 
             //Act
-            var result = await categoryController.Delete(int.MaxValue);
+            var result = await this.sut.Delete(int.MaxValue);
 
             //Assert
             result.Should().BeOfType<BadRequestResult>();
+            this.categoriesMock.Verify(c => c.DeleteAsync(It.IsAny<int>()), Times.Never);
         }
 
         [Fact]
@@ -118,9 +119,8 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
             int deletedCategory = 0;
             string successMessage = null;
 
-            var categoryService = new Mock<ICategoryService>();
-            categoryService.Setup(c => c.ExistsAsync(It.IsAny<int>())).ReturnsAsync(true);
-            categoryService.Setup(c => c.DeleteAsync(It.IsAny<int>()))
+            this.categoriesMock.Setup(c => c.ExistsAsync(It.IsAny<int>())).ReturnsAsync(true);
+            this.categoriesMock.Setup(c => c.DeleteAsync(It.IsAny<int>()))
                 .Callback((int categoryId) =>
                 {
                     deletedCategory = categoryId;
@@ -131,18 +131,18 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
             tempData
                 .SetupSet(t => t[DataKeyConstants.SuccessMessage] = It.IsAny<string>())
                 .Callback((string key, object message) => successMessage = message as string);
-
-            var categoryController = new CategoriesController(categoryService.Object);
-            categoryController.TempData = tempData.Object;
+            this.sut.TempData = tempData.Object;
 
             //Act
-            var result = await categoryController.Delete(categoryToDelete);
+            var result = await this.sut.Delete(categoryToDelete);
 
             //Assert
             deletedCategory.Should().Be(categoryToDelete);
             successMessage.Should().Be(CategorySuccessConstants.CategoryDeletedMessage);
-            result.GetType().ShouldBeEquivalentTo(typeof(RedirectToActionResult));
-            (result as RedirectToActionResult).ActionName.ShouldBeEquivalentTo(nameof(CategoriesController.All));
+            var redirectResult = result.Should().BeOfType<RedirectToActionResult>().Subject;
+            redirectResult.ActionName.ShouldBeEquivalentTo(nameof(CategoriesController.All));
+            this.categoriesMock.Verify(c => c.ExistsAsync(It.IsAny<int>()), Times.Once);
+            this.categoriesMock.Verify(c => c.DeleteAsync(It.IsAny<int>()), Times.Once);
         }
     }
 }

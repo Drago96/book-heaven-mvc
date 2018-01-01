@@ -8,11 +8,18 @@ namespace BookHeaven.Tests.Web.Controllers.ApiControllers
 {
     public class BaseApiControllerTests
     {
+        private readonly BaseApiController sut;
+
+        public BaseApiControllerTests()
+        {
+            this.sut = new BaseApiController();
+        }
+
         [Fact]
         public void ControllerShouldHaveCorrectRouteTag()
         {
             //Arrange
-            var controller = typeof(BaseApiController);
+            var controller = this.sut.GetType();
 
             //Act
             var routeAttribute = controller.GetCustomAttributes(true)

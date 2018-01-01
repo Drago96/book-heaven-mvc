@@ -16,16 +16,24 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
 {
     public class UsersControllerTests
     {
+        private readonly UsersController sut;
+        private readonly Mock<IUserService> usersMock;
+        private readonly Mock<IMapper> mapperMock;
+
         public UsersControllerTests()
         {
             AutoMapperInitializer.Initialize();
+
+            this.usersMock = new Mock<IUserService>();
+            this.mapperMock = new Mock<IMapper>();
+            this.sut = new UsersController(this.usersMock.Object, this.mapperMock.Object, null, null, null, null);
         }
 
         [Fact]
         public void UsersControllerShouldExtendAdminBaseController()
         {
             //Arrange
-            var controller = typeof(UsersController);
+            var controller = this.sut.GetType();
             var baseController = typeof(AdminBaseController);
 
             //Assert
@@ -42,48 +50,38 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
             const int expectedUsersCount = 333;
             List<UserAdminListingServiceModel> expectedUsers = this.GetExpectedUsers();
 
-            var usersServiceMock = new Mock<IUserService>();
-            usersServiceMock.Setup(u =>
+            this.usersMock.Setup(u =>
                     u.AllPaginatedAsync<UserAdminListingServiceModel>(expectedSearchTerm, expectedPage, expectedPageSize))
                 .ReturnsAsync(expectedUsers);
-
-            usersServiceMock.Setup(u => u.CountBySearchTermAsync(expectedSearchTerm))
+            this.usersMock.Setup(u => u.CountBySearchTermAsync(expectedSearchTerm))
                 .ReturnsAsync(expectedUsersCount);
 
-            var controller = new UsersController(usersServiceMock.Object, null, null, null, null, null);
-
             //Act
-            var result = await controller.All(expectedSearchTerm, expectedPage);
+            var result = await this.sut.All(expectedSearchTerm, expectedPage);
 
             //Assert
-            result.Should().BeOfType<ViewResult>();
-            var viewResult = result as ViewResult;
+            var viewResult = result.Should().BeOfType<ViewResult>().Subject;
             viewResult.ViewName.Should().Be(null);
-            var resultModel = viewResult.Model;
-            resultModel.Should().BeOfType<PaginatedViewModel<UserAdminListingServiceModel>>();
+            var resultModel = viewResult.Model.Should().BeOfType<PaginatedViewModel<UserAdminListingServiceModel>>().Subject;
 
-            var parsedResultModel = resultModel as PaginatedViewModel<UserAdminListingServiceModel>;
-            parsedResultModel.Items.ShouldBeEquivalentTo(expectedUsers, options => options.WithStrictOrdering());
-            parsedResultModel.TotalItems.Should().Be(expectedUsersCount);
-            parsedResultModel.SearchTerm.Should().Be(expectedSearchTerm);
-            parsedResultModel.CurrentPage.Should().Be(expectedPage);
-            parsedResultModel.PageSize.Should().Be(expectedPageSize);
-            parsedResultModel.SearchTerm.Should().Be(expectedSearchTerm);
-            parsedResultModel.PageSize.Should().Be(expectedPageSize);
+            resultModel.Items.ShouldBeEquivalentTo(expectedUsers, options => options.WithStrictOrdering());
+            resultModel.TotalItems.Should().Be(expectedUsersCount);
+            resultModel.SearchTerm.Should().Be(expectedSearchTerm);
+            resultModel.CurrentPage.Should().Be(expectedPage);
+            resultModel.PageSize.Should().Be(expectedPageSize);
+            resultModel.SearchTerm.Should().Be(expectedSearchTerm);
+            resultModel.PageSize.Should().Be(expectedPageSize);
         }
 
         [Fact]
         public async Task DetailsShouldReturnNotFoundIfUserIsNull()
         {
             //Arrange
-            var userServiceMock = new Mock<IUserService>();
-            userServiceMock.Setup(u => u.ByIdAsync<UserAdminDetailsServiceModel>(It.IsAny<string>()))
+            this.usersMock.Setup(u => u.ByIdAsync<UserAdminDetailsServiceModel>(It.IsAny<string>()))
                 .ReturnsAsync((UserAdminDetailsServiceModel)null);
 
-            var controller = new UsersController(userServiceMock.Object, null, null, null, null, null);
-
             //Act
-            var result = await controller.Details("");
+            var result = await this.sut.Details("");
 
             //Assert
             result.Should().BeOfType<NotFoundResult>();
@@ -105,13 +103,10 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
             };
             var expectedRoles = new List<string> { "TestRole1", "TestRole2" };
 
-            var userServiceMock = new Mock<IUserService>();
-            userServiceMock.Setup(u => u.ByIdAsync<UserAdminDetailsServiceModel>(userId))
+            this.usersMock.Setup(u => u.ByIdAsync<UserAdminDetailsServiceModel>(userId))
                 .ReturnsAsync(expectedUser);
-            userServiceMock.Setup(u => u.GetRolesByIdAsync(userId)).ReturnsAsync(expectedRoles);
-
-            var mapperMock = new Mock<IMapper>();
-            mapperMock.Setup(m => m.Map<UserAdminDetailsServiceModel, UserAdminDetailsViewModel>(expectedUser))
+            this.usersMock.Setup(u => u.GetRolesByIdAsync(userId)).ReturnsAsync(expectedRoles);
+            this.mapperMock.Setup(m => m.Map<UserAdminDetailsServiceModel, UserAdminDetailsViewModel>(expectedUser))
                 .Returns(new UserAdminDetailsViewModel
                 {
                     Email = expectedUser.Email,
@@ -123,26 +118,21 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
                     TotalPurchases = expectedUser.TotalPurchases
                 });
 
-            var controller = new UsersController(userServiceMock.Object, mapperMock.Object, null, null, null, null);
-
             //Act
-            var result = await controller.Details(userId);
+            var result = await this.sut.Details(userId);
 
             //Assert
-            result.Should().BeOfType<ViewResult>();
-            var viewResult = result as ViewResult;
+            var viewResult = result.Should().BeOfType<ViewResult>().Subject;
             viewResult.ViewName.Should().Be(null);
-            var resultModel = viewResult.Model;
+            var resultModel = viewResult.Model.Should().BeOfType<UserAdminDetailsViewModel>().Subject;
 
-            resultModel.Should().BeOfType<UserAdminDetailsViewModel>();
-            var parsedResultModel = resultModel as UserAdminDetailsViewModel;
-            parsedResultModel.ProfilePicture.Should().Be(expectedUser.ProfilePicture);
-            parsedResultModel.Email.Should().Be(expectedUser.Email);
-            parsedResultModel.FirstName.Should().Be(expectedUser.FirstName);
-            parsedResultModel.LastName.Should().Be(expectedUser.LastName);
-            parsedResultModel.MoneySpent.Should().Be(expectedUser.MoneySpent);
-            parsedResultModel.TotalPurchases.Should().Be(expectedUser.TotalPurchases);
-            parsedResultModel.Roles.ShouldBeEquivalentTo(expectedRoles, options => options.WithStrictOrdering());
+            resultModel.ProfilePicture.Should().Be(expectedUser.ProfilePicture);
+            resultModel.Email.Should().Be(expectedUser.Email);
+            resultModel.FirstName.Should().Be(expectedUser.FirstName);
+            resultModel.LastName.Should().Be(expectedUser.LastName);
+            resultModel.MoneySpent.Should().Be(expectedUser.MoneySpent);
+            resultModel.TotalPurchases.Should().Be(expectedUser.TotalPurchases);
+            resultModel.Roles.ShouldBeEquivalentTo(expectedRoles, options => options.WithStrictOrdering());
         }
 
         private List<UserAdminListingServiceModel> GetExpectedUsers()

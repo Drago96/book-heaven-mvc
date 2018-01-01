@@ -24,21 +24,25 @@ namespace BookHeaven.Tests.Services
         private const string TestRoleTwoName = "TestRole2";
         private const string TestRoleThreeName = "TestRole3";
 
+        private readonly BookHeavenDbContext databaseMock;
+        private readonly UserService sut;
+
         public UserServiceTests()
         {
             AutoMapperInitializer.Initialize();
+
+            this.databaseMock = BookHeavenDbContextInMemory.New();
+            this.sut = new UserService(this.databaseMock, null, null);
         }
 
         [Fact]
         public async Task ExistsAsyncShouldReturnTrueIfUserExists()
         {
             //Arrange
-            var db = BookHeavenDbContextInMemory.New();
-            this.FillDatabase(db);
-            var service = new UserService(db, null, null);
+            this.FillDatabase();
 
             //Act
-            var exists = await service.ExistsAsync(TestUserOneId);
+            var exists = await this.sut.ExistsAsync(TestUserOneId);
 
             //Assert
             exists.Should().BeTrue();
@@ -48,12 +52,10 @@ namespace BookHeaven.Tests.Services
         public async Task ExistsAsyncShouldReturnFalseIfUserDoesntExist()
         {
             //Arrange
-            var db = BookHeavenDbContextInMemory.New();
-            this.FillDatabase(db);
-            var service = new UserService(db, null, null);
+            this.FillDatabase();
 
             //Act
-            var exists = await service.ExistsAsync(Guid.NewGuid().ToString());
+            var exists = await this.sut.ExistsAsync(Guid.NewGuid().ToString());
 
             //Assert
             exists.Should().BeFalse();
@@ -65,21 +67,19 @@ namespace BookHeaven.Tests.Services
             //Arrange
             const int expectedRolesCount = 2;
 
-            var db = BookHeavenDbContextInMemory.New();
-            this.FillDatabase(db);
-            var service = new UserService(db, null, null);
+            this.FillDatabase();
 
             //Act
-            var userRoles = await service.GetRolesByIdAsync(TestUserOneId);
+            var userRoles = await this.sut.GetRolesByIdAsync(TestUserOneId);
 
             //Assert
             userRoles.Count().ShouldBeEquivalentTo(expectedRolesCount);
-            userRoles.Should().Contain(TestRoleOneName, TestRoleThreeName);
+            userRoles.Should().BeEquivalentTo(TestRoleOneName, TestRoleThreeName);
         }
 
-        private void FillDatabase(BookHeavenDbContext db)
+        private void FillDatabase()
         {
-            db.Users.AddRange(new List<User>
+            this.databaseMock.Users.AddRange(new List<User>
             {
                 new User
                 {
@@ -91,7 +91,7 @@ namespace BookHeaven.Tests.Services
                 }
             });
 
-            db.Roles.AddRange(new List<IdentityRole>
+            this.databaseMock.Roles.AddRange(new List<IdentityRole>
             {
                 new IdentityRole
                 {
@@ -110,7 +110,7 @@ namespace BookHeaven.Tests.Services
                 }
             });
 
-            db.UserRoles.AddRange(new List<IdentityUserRole<string>>
+            this.databaseMock.UserRoles.AddRange(new List<IdentityUserRole<string>>
             {
                 new IdentityUserRole<string>
                 {
@@ -124,7 +124,7 @@ namespace BookHeaven.Tests.Services
                 }
             });
 
-            db.SaveChanges();
+            this.databaseMock.SaveChanges();
         }
     }
 }

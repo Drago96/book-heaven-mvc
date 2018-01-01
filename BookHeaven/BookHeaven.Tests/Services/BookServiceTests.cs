@@ -1,6 +1,5 @@
 ﻿using BookHeaven.Data;
 using BookHeaven.Data.Models;
-using BookHeaven.Services.Contracts;
 using BookHeaven.Services.Implementations;
 using BookHeaven.Services.UtilityServices.Contracts;
 using BookHeaven.Tests.Mocks;
@@ -17,37 +16,42 @@ namespace BookHeaven.Tests.Services
 {
     public class BookServiceTests
     {
+        private readonly BookHeavenDbContext databaseMock;
+        private readonly Mock<IFileService> fileServicMock;
+        private readonly BookService sut;
+
         public BookServiceTests()
         {
             AutoMapperInitializer.Initialize();
+
+            this.databaseMock = BookHeavenDbContextInMemory.New();
+            this.fileServicMock = new Mock<IFileService>();
+            this.sut = new BookService(this.databaseMock, this.fileServicMock.Object);
         }
 
         [Fact]
         public async Task CountBySearchTermAsyncShouldReturnCountOfAllWhenSearchTermIsEmpty()
         {
             //Arrange
-            var db = BookHeavenDbContextInMemory.New();
-            this.FillDatabase(db);
-            var service = new BookService(db, null);
+            this.FillDatabase();
 
             //Act
-            var count = await service.CountBySearchTermAsync("");
+            var count = await this.sut.CountBySearchTermAsync("");
 
             //Assert
-            count.Should().Be(db.Books.Count());
+            count.Should().Be(this.databaseMock.Books.Count());
         }
 
         [Fact]
         public async Task CountBySearchTermAsyncShouldReturnCorrectCountWhenSearchTermIsNotEmpty()
         {
+            //Arrange
             const string searchTerm = "Drama";
             const int resultsCount = 1;
-
-            //Arrange
-            var service = this.GetSimpleBookService();
+            this.FillDatabase();
 
             //Act
-            var count = await service.CountBySearchTermAsync(searchTerm);
+            var count = await this.sut.CountBySearchTermAsync(searchTerm);
 
             //Assert
             count.Should().Be(resultsCount);
@@ -58,14 +62,12 @@ namespace BookHeaven.Tests.Services
         {
             //Arrange
             const int bookSearchId = 1;
-
-            var service = this.GetSimpleBookService();
+            this.FillDatabase();
 
             //Act
-            var book = await service.ByIdAsync<BookTestModel>(bookSearchId);
+            var book = await this.sut.ByIdAsync<BookTestModel>(bookSearchId);
 
             //Assert
-            book.Should().BeOfType<BookTestModel>();
             book.Should().NotBeNull();
             book.Id.Should().Be(bookSearchId);
         }
@@ -74,10 +76,10 @@ namespace BookHeaven.Tests.Services
         public async Task ByIdAsyncShouldReturnNullWhenDoesntExist()
         {
             //Arrange
-            var service = this.GetSimpleBookService();
+            this.FillDatabase();
 
             //Act
-            var book = await service.ByIdAsync<BookTestModel>(int.MaxValue);
+            var book = await this.sut.ByIdAsync<BookTestModel>(int.MaxValue);
 
             //Assert
             book.Should().BeNull();
@@ -95,37 +97,25 @@ namespace BookHeaven.Tests.Services
             const string listingPictureLink = "RandomListingLink";
             const string userId = "RandomId";
 
-            var db = BookHeavenDbContextInMemory.New();
-
-            var fileServiceMock = new Mock<IFileService>();
-            var service = new BookService(db, fileServiceMock.Object);
-
             //Act
-            var result = await service.CreateAsync(bookTitle, bookPrice, bookDescription, categoryIds,
+            var result = await this.sut.CreateAsync(bookTitle, bookPrice, bookDescription, categoryIds,
                 pictureLink, listingPictureLink, userId);
 
             //Assert
-            var book = db.Books.Find(result);
+            var book = this.databaseMock.Books.Find(result);
 
             book.Should().NotBe(null);
             book.Price.Should().Be(bookPrice);
             book.Description.Should().Be(bookDescription);
-            book.Categories.Select(c => c.CategoryId).ShouldBeEquivalentTo(categoryIds);
-            book.BookPicture.ShouldBeEquivalentTo(pictureLink);
+            book.Categories.Select(c => c.CategoryId).ShouldBeEquivalentTo(categoryIds, options => options.WithStrictOrdering());
+            book.BookPicture.Should().Be(pictureLink);
             book.BookListingPicture.Should().Be(listingPictureLink);
             book.PublisherId.Should().Be(userId);
         }
 
-        private IBookService GetSimpleBookService()
+        private void FillDatabase()
         {
-            var db = BookHeavenDbContextInMemory.New();
-            this.FillDatabase(db);
-            return new BookService(db, null);
-        }
-
-        private void FillDatabase(BookHeavenDbContext db)
-        {
-            db.Books.AddRange(new List<Book>
+            this.databaseMock.Books.AddRange(new List<Book>
             {
                 new Book
                 {
@@ -153,7 +143,7 @@ namespace BookHeaven.Tests.Services
                 }
             });
 
-            db.SaveChanges();
+            this.databaseMock.SaveChanges();
         }
     }
 }

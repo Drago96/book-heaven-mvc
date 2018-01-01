@@ -10,11 +10,18 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
 {
     public class AdminBaseControllerTests
     {
+        private readonly AdminBaseController sut;
+
+        public AdminBaseControllerTests()
+        {
+            this.sut = new AdminBaseController();
+        }
+
         [Fact]
         public void AdminBaseControllerShouldBeInAreaForAdmin()
         {
             //Arrange
-            var controller = typeof(AdminBaseController);
+            var controller = this.sut.GetType();
 
             //Act
             var areaAttribute = controller.GetCustomAttributes(true)
@@ -29,7 +36,7 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
         public void AdminBaseControllerShouldBeAuthorizedForAdminOnly()
         {
             //Arrange
-            var controller = typeof(AdminBaseController);
+            var controller = this.sut.GetType();
 
             //Act
             var authorizeAttribute = controller.GetCustomAttributes(true)

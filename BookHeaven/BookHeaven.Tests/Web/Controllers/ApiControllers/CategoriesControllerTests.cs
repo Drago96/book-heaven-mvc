@@ -16,11 +16,20 @@ namespace BookHeaven.Tests.Web.Controllers.ApiControllers
 {
     public class CategoriesControllerTests
     {
+        private readonly CategoriesController sut;
+        private readonly Mock<ICategoryService> categoriesMock;
+
+        public CategoriesControllerTests()
+        {
+            this.categoriesMock = new Mock<ICategoryService>();
+            this.sut = new CategoriesController(this.categoriesMock.Object);
+        }
+
         [Fact]
         public void CategoriesControllerShouldExtendAdminBaseController()
         {
             //Arrange
-            var controller = typeof(CategoriesController);
+            var controller = this.sut.GetType();
             var baseController = typeof(BaseApiController);
 
             //Assert
@@ -31,7 +40,7 @@ namespace BookHeaven.Tests.Web.Controllers.ApiControllers
         public void EditShouldContainAllNecessaryAttributes()
         {
             //Arrange
-            var editAction = typeof(CategoriesController).GetMethod(nameof(CategoriesController.Edit));
+            var editAction = this.sut.GetType().GetMethod(nameof(CategoriesController.Edit));
 
             //Act
             var httpPutAttribute = editAction.GetCustomAttributes(true)
@@ -64,38 +73,32 @@ namespace BookHeaven.Tests.Web.Controllers.ApiControllers
         public async Task EditShouldReturnBadRequestIfCategoryDoesntExist()
         {
             //Arrange
-            var categoryServiceMock = new Mock<ICategoryService>();
-            categoryServiceMock.Setup(c => c.ExistsAsync(It.IsAny<int>())).ReturnsAsync(false);
-
-            var controller = new CategoriesController(categoryServiceMock.Object);
+            this.categoriesMock.Setup(c => c.ExistsAsync(It.IsAny<int>())).ReturnsAsync(false);
 
             //Act
-            var result = await controller.Edit(1, null);
+            var result = await this.sut.Edit(1, null);
 
             //Assert
-            result.Should().BeOfType<BadRequestObjectResult>();
-            (result as BadRequestObjectResult).Value.Should().Be(CategoryErrorConstants.CategoryDoesNotExist);
+            var viewResult = result.Should().BeOfType<BadRequestObjectResult>().Subject;
+            viewResult.Value.Should().Be(CategoryErrorConstants.CategoryDoesNotExist);
         }
 
         [Fact]
         public async Task EditShouldReturnBadRequestIfCategoryAlreadyExists()
         {
             //Arrange
-            var categoryServiceMock = new Mock<ICategoryService>();
-            categoryServiceMock.Setup(c => c.ExistsAsync(It.IsAny<int>())).ReturnsAsync(true);
-            categoryServiceMock.Setup(c => c.AlreadyExistsAsync(It.IsAny<int>(), It.IsAny<string>())).ReturnsAsync(true);
-
-            var controller = new CategoriesController(categoryServiceMock.Object);
+            this.categoriesMock.Setup(c => c.ExistsAsync(It.IsAny<int>())).ReturnsAsync(true);
+            this.categoriesMock.Setup(c => c.AlreadyExistsAsync(It.IsAny<int>(), It.IsAny<string>())).ReturnsAsync(true);
 
             //Act
-            var result = await controller.Edit(1, new CategoryBasicInfoViewModel
+            var result = await this.sut.Edit(1, new CategoryBasicInfoViewModel
             {
                 Name = ""
             });
 
             //Assert
-            result.Should().BeOfType<BadRequestObjectResult>();
-            (result as BadRequestObjectResult).Value.Should().Be(CategoryErrorConstants.CategoryAlreadyExists);
+            var viewResult = result.Should().BeOfType<BadRequestObjectResult>().Subject;
+            viewResult.Value.Should().Be(CategoryErrorConstants.CategoryAlreadyExists);
         }
 
         [Fact]
@@ -106,20 +109,17 @@ namespace BookHeaven.Tests.Web.Controllers.ApiControllers
             const int categoryId = 1;
             string categoryToEdit = null;
 
-            var categoryServiceMock = new Mock<ICategoryService>();
-            categoryServiceMock.Setup(c => c.ExistsAsync(It.IsAny<int>())).ReturnsAsync(true);
-            categoryServiceMock.Setup(c => c.AlreadyExistsAsync(It.IsAny<int>(), It.IsAny<string>())).ReturnsAsync(false);
-            categoryServiceMock.Setup(c => c.EditAsync(categoryId, newCategoryName))
+            this.categoriesMock.Setup(c => c.ExistsAsync(It.IsAny<int>())).ReturnsAsync(true);
+            this.categoriesMock.Setup(c => c.AlreadyExistsAsync(It.IsAny<int>(), It.IsAny<string>())).ReturnsAsync(false);
+            this.categoriesMock.Setup(c => c.EditAsync(categoryId, newCategoryName))
                 .Callback((int id, string categoryName) =>
                 {
                     categoryToEdit = categoryName;
                 })
                 .Returns(Task.CompletedTask);
 
-            var controller = new CategoriesController(categoryServiceMock.Object);
-
             //Act
-            var result = await controller.Edit(categoryId, new CategoryBasicInfoViewModel
+            var result = await this.sut.Edit(categoryId, new CategoryBasicInfoViewModel
             {
                 Name = newCategoryName
             });

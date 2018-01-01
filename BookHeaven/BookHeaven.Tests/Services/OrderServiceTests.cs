@@ -18,22 +18,25 @@ namespace BookHeaven.Tests.Services
         private const string TestUserTwoId = "RandomUserId2";
         private const int OrdersPerUser = 100;
 
+        private readonly BookHeavenDbContext databaseMock;
+        private readonly OrderService sut;
+
         public OrderServiceTests()
         {
             AutoMapperInitializer.Initialize();
+
+            this.databaseMock = BookHeavenDbContextInMemory.New();
+            this.sut = new OrderService(this.databaseMock);
         }
 
         [Fact]
         public async Task ByUserIdAsyncShouldReturnOrdersOnlyForGivenUser()
         {
             //Arrange
-            var db = BookHeavenDbContextInMemory.New();
-            this.FillDbData(db);
-
-            var service = new OrderService(db);
+            this.FillDatabase();
 
             //Act
-            var orders = await service.ByUserIdAsync<OrderTestModel>(TestUserOneId, int.MaxValue);
+            var orders = await this.sut.ByUserIdAsync<OrderTestModel>(TestUserOneId, int.MaxValue);
 
             //Assert
             orders.Count().Should().Be(OrdersPerUser);
@@ -46,13 +49,10 @@ namespace BookHeaven.Tests.Services
             const int ordersToTake = OrdersPerUser - OrdersPerUser / 2;
 
             //Arrange
-            var db = BookHeavenDbContextInMemory.New();
-            this.FillDbData(db);
-
-            var service = new OrderService(db);
+            this.FillDatabase();
 
             //Act
-            var orders = await service.ByUserIdAsync<OrderTestModel>(TestUserOneId, ordersToTake);
+            var orders = await this.sut.ByUserIdAsync<OrderTestModel>(TestUserOneId, ordersToTake);
 
             //Assert
             orders.Count().Should().Be(ordersToTake);
@@ -62,21 +62,18 @@ namespace BookHeaven.Tests.Services
         public async Task SalesForMonthShouldReturnResultsForEveryMonth()
         {
             //Arrange
-            var db = BookHeavenDbContextInMemory.New();
-            this.FillDbData(db);
-
-            var service = new OrderService(db);
+            this.FillDatabase();
 
             //Act
-            var salesForYear = await service.SalesForYear(int.MaxValue, TestUserOneId);
+            var salesForYear = await this.sut.SalesForYear(int.MaxValue, TestUserOneId);
 
             //Assert
             salesForYear.Count().ShouldBeEquivalentTo(12);
         }
 
-        private void FillDbData(BookHeavenDbContext db)
+        private void FillDatabase()
         {
-            db.Users.AddRange(new List<User>()
+            this.databaseMock.Users.AddRange(new List<User>()
             {
                 new User
                 {
@@ -96,7 +93,7 @@ namespace BookHeaven.Tests.Services
                     Date = DateTime.MaxValue,
                     UserId = TestUserOneId
                 };
-                db.Orders.Add(order);
+                this.databaseMock.Orders.Add(order);
             }
             for (int i = OrdersPerUser + 1; i <= OrdersPerUser * 2; i++)
             {
@@ -106,10 +103,10 @@ namespace BookHeaven.Tests.Services
                     Date = DateTime.MaxValue,
                     UserId = TestUserTwoId
                 };
-                db.Orders.Add(order);
+                this.databaseMock.Orders.Add(order);
             }
 
-            db.SaveChanges();
+            this.databaseMock.SaveChanges();
         }
     }
 }

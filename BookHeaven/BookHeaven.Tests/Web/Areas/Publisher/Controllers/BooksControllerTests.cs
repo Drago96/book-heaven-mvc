@@ -15,16 +15,22 @@ namespace BookHeaven.Tests.Web.Areas.Publisher.Controllers
 {
     public class BooksControllerTests
     {
+        private readonly BooksController sut;
+        private readonly Mock<ICategoryService> categoriesMock;
+
         public BooksControllerTests()
         {
             AutoMapperInitializer.Initialize();
+
+            this.categoriesMock = new Mock<ICategoryService>();
+            this.sut = new BooksController(this.categoriesMock.Object, null, null, null, null, null);
         }
 
         [Fact]
         public void CategoriesControllerShouldExtendAdminBaseController()
         {
             //Arrange
-            var controller = typeof(BooksController);
+            var controller = this.sut.GetType();
             var baseController = typeof(PublisherBaseController);
 
             //Assert
@@ -55,23 +61,18 @@ namespace BookHeaven.Tests.Web.Areas.Publisher.Controllers
                 Value = c.Id.ToString()
             });
 
-            var categoriesMock = new Mock<ICategoryService>();
-            categoriesMock.Setup(c => c.AllAsync<CategoryInfoServiceModel>())
+            this.categoriesMock.Setup(c => c.AllAsync<CategoryInfoServiceModel>())
                 .ReturnsAsync(categoriesToReturn);
 
-            var controller = new BooksController(categoriesMock.Object, null, null, null, null, null);
-
             //Act
-            var result = await controller.Create();
+            var result = await this.sut.Create();
 
             //Assert
-            result.Should().BeOfType<ViewResult>();
-            var viewResult = result as ViewResult;
+            var viewResult = result.Should().BeOfType<ViewResult>().Subject;
             viewResult.ViewName.Should().Be(null);
-            var resultModel = viewResult.Model;
-            resultModel.Should().BeOfType<BookCreateViewModel>();
-            (resultModel as BookCreateViewModel).AllCategories.ShouldBeEquivalentTo(expectedCategories, options => options.WithStrictOrdering());
-            (resultModel as BookCreateViewModel).Categories.Count().Should().Be(0);
+            var resultModel = viewResult.Model.Should().BeOfType<BookCreateViewModel>().Subject;
+            resultModel.AllCategories.ShouldBeEquivalentTo(expectedCategories, options => options.WithStrictOrdering());
+            resultModel.Categories.Count().Should().Be(0);
         }
     }
 }
