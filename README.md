@@ -3,5 +3,10 @@
 
 A simple book store built, using ASP.NET Core.
 
-Website hosted at https://bookheavenweb.azurewebsites.net/.
+To gain access to all website functionality use the following credentials:
+
+Username: administrator@gmail.com
+Password: Administrator123
+
+Website hosted at https://bookheavenweb.azurewebsites.net/, however the web app is currently stopped.
 
