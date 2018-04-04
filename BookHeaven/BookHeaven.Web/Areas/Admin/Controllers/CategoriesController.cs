@@ -21,7 +21,7 @@ namespace BookHeaven.Web.Areas.Admin.Controllers
             => View(await this.categories.AllAsync<CategoryAdminListingServiceModel>());
 
         [HttpPost]
-        [ServiceFilter(typeof(ClearCategoryCache))]
+        [ServiceFilter(typeof(RefreshCategoryCache))]
         public async Task<IActionResult> Delete(int id)
         {
             var exists = await this.categories.ExistsAsync(id);

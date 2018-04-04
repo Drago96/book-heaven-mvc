@@ -94,7 +94,7 @@ namespace BookHeaven.Tests.Web.Areas.Admin.Controllers
             //Assert
             httpPostAttribute.Should().NotBe(null);
             serviceFilterAttribute.Should().NotBe(null);
-            serviceFilterAttribute.ServiceType.ShouldBeEquivalentTo(typeof(ClearCategoryCache));
+            serviceFilterAttribute.ServiceType.ShouldBeEquivalentTo(typeof(RefreshCategoryCache));
         }
 
         [Fact]

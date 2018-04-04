@@ -54,7 +54,7 @@ namespace BookHeaven.Web
             services.AddRouting(options => options.LowercaseUrls = true);
             services.ConfigureCustomServices();
             services.AddSingleton<IShoppingCartManager, ShoppingCartManager>();
-            services.AddScoped<ClearCategoryCache>();
+            services.AddScoped<RefreshCategoryCache>();
             services.AddAutoMapper();
             services.AddSession(options =>
             {

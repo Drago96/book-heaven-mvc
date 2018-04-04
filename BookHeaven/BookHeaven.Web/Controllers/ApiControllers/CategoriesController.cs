@@ -20,7 +20,7 @@ namespace BookHeaven.Web.Controllers.ApiControllers
 
         [HttpPut("{id}")]
         [Authorize(Roles = RoleConstants.Admin)]
-        [ServiceFilter(typeof(ClearCategoryCache))]
+        [ServiceFilter(typeof(RefreshCategoryCache))]
         [ValidateApiModelState]
         public async Task<IActionResult> Edit([FromRoute]int id, [FromBody]CategoryBasicInfoViewModel model)
         {
@@ -45,7 +45,7 @@ namespace BookHeaven.Web.Controllers.ApiControllers
 
         [HttpPost]
         [Authorize(Roles = RoleConstants.Admin)]
-        [ServiceFilter(typeof(ClearCategoryCache))]
+        [ServiceFilter(typeof(RefreshCategoryCache))]
         [ValidateApiModelState]
         public async Task<IActionResult> Create([FromBody] CategoryBasicInfoViewModel model)
         {

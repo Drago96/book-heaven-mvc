@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace BookHeaven.Web.Infrastructure.Filters
 {
-    public class ClearCategoryCache : ActionFilterAttribute
+    public class RefreshCategoryCache : ActionFilterAttribute
     {
         private readonly ICategoryService categories;
         private readonly IMemoryCache cache;
 
-        public ClearCategoryCache(ICategoryService categories, IMemoryCache cache)
+        public RefreshCategoryCache(ICategoryService categories, IMemoryCache cache)
         {
             this.categories = categories;
             this.cache = cache;
