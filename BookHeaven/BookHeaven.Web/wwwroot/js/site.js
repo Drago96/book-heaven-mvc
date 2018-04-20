@@ -12,7 +12,7 @@ function getFormData(form) {
     var unindexed_array = $(form).serializeArray();
     var indexed_array = {};
 
-    $.map(unindexed_array, function (n, i) {
+    $.map(unindexed_array, function (n) {
         indexed_array[n['name']] = n['value'];
     });
 
@@ -23,44 +23,45 @@ $(".fade").fadeTo(2000, 500).slideUp(500, function () {
     $(".fade").slideUp(500);
 });
 
-var AdminHomePageModule = (function (module) {
-    module.Initialize = function (locations, visits) {
-        new Chart(document.querySelector('canvas.visits-chart'), {
-            type: 'doughnut',
-            data: {
-                labels: locations,
-                datasets: [
-                    {
-                        label: "Most visits",
-                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                        data: visits
+var AdminHomePageModule = (function(module) {
+    module.Initialize = function(locations, visits) {
+        new Chart(document.querySelector('canvas.visits-chart'),
+            {
+                type: 'doughnut',
+                data: {
+                    labels: locations,
+                    datasets: [
+                        {
+                            label: "Most visits",
+                            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                            data: visits
+                        }
+                    ]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Most site visits by country',
+                        fontSize: 30
                     }
-                ]
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: 'Most site visits by country',
-                    fontSize: 30
                 }
-            }
-        });
+            });
     }
 
     return module;
-}({}))
+}({}));
 
-var AdminUsersListModule = (function (module) {
-    module.Initialize = function () {
+var AdminUsersListModule = (function(module) {
+    module.Initialize = function() {
         $('.ui.search')
             .search({
                 apiSettings: {
                     url: '/api/users?searchTerm={query}',
                     onResponse: function(response) {
-                        var result = []
+                        var result = [];
                         for (var key in response) {
-                            if (key != undefined && key != 'contains') {
-                                result.push(response[key])
+                            if (key !== undefined && key !== 'contains') {
+                                result.push(response[key]);
                             }
                         }
                         return {
@@ -70,18 +71,18 @@ var AdminUsersListModule = (function (module) {
                 },
                 fields: {
                     title: 'name',
-                    description: 'email',
+                    description: 'email'
                 },
                 minCharacters: 3,
-                onSelect: function (result) {
-                    $('#search-field').val(result.name)
+                onSelect: function(result) {
+                    $('#search-field').val(result.name);
                     $('#search-form').submit();
-                },
+                }
             });
     }
 
     return module;
-}({}))
+}({}));
 
 var AllCategoriesModule = (function (module) {
     module.Initialize = function () {
@@ -94,7 +95,7 @@ var AllCategoriesModule = (function (module) {
         $('#categories-filter').keyup(function () {
             var text = $(this).val();
             $('div .category-item').each(function () {
-                var category = $(this).find('.category-label').text()
+                var category = $(this).find('.category-label').text();
                 if (category.indexOf(text) === -1) {
                     $(this).hide();
                 } else {
@@ -120,12 +121,12 @@ var AllCategoriesModule = (function (module) {
                     text: 'Create',
                     btnClass: 'btn-success',
                     action: function () {
-                        createCategory(this)
+                        createCategory(this);
                         return false;
                     }
                 },
                 cancel: function () {
-                },
+                }
             },
             onContentReady: function () {
                 var jc = this;
@@ -143,26 +144,26 @@ var AllCategoriesModule = (function (module) {
                 type: 'Post',
                 data: JSON.stringify(getFormData('.category-create-form')),
                 success: function () {
-                    dialog.close()
+                    dialog.close();
                     $.alert({
                         title: 'Category created successfully!',
                         content: '',
                         buttons: {
                             ok: {
                                 action: function () {
-                                    this.close()
-                                    window.location.replace("/admin/categories/all")
+                                    this.close();
+                                    window.location.replace("/admin/categories/all");
                                 }
                             }
                         }
                     });
                 },
                 error: function (response) {
-                    var responseText
+                    var responseText;
                     if (response.responseJSON) {
-                        responseText = response.responseJSON['Name']
+                        responseText = response.responseJSON['Name'];
                     } else {
-                        responseText = response.responseText
+                        responseText = response.responseText;
                     }
 
                     $('#category-error').text(responseText);
@@ -174,8 +175,8 @@ var AllCategoriesModule = (function (module) {
 
     function modifyEditButtons() {
         $('.edit-icon').each(function () {
-            var categoryName = $(this).attr('category-name')
-            var categoryId = $(this).attr('category-id')
+            var categoryName = $(this).attr('category-name');
+            var categoryId = $(this).attr('category-id');
             $(this).confirm({
                 title: 'Edit category',
                 content: '' +
@@ -191,12 +192,12 @@ var AllCategoriesModule = (function (module) {
                         text: 'Edit',
                         btnClass: 'btn-warning',
                         action: function () {
-                            updateCategory(categoryId, this)
+                            updateCategory(categoryId, this);
                             return false;
                         }
                     },
                     cancel: function () {
-                    },
+                    }
                 },
                 onContentReady: function () {
                     var jc = this;
@@ -215,26 +216,26 @@ var AllCategoriesModule = (function (module) {
                 type: 'PUT',
                 data: JSON.stringify(getFormData('.category-edit-form')),
                 success: function () {
-                    dialog.close()
+                    dialog.close();
                     $.alert({
                         title: 'Category edited successfully!',
                         content: '',
                         buttons: {
                             ok: {
                                 action: function () {
-                                    this.close()
-                                    window.location.replace("/admin/categories/all")
+                                    this.close();
+                                    window.location.replace("/admin/categories/all");
                                 }
                             }
                         }
                     });
                 },
                 error: function (response) {
-                    var responseText
+                    var responseText;
                     if (response.responseJSON) {
-                        responseText = response.responseJSON['Name']
+                        responseText = response.responseJSON['Name'];
                     } else {
-                        responseText = response.responseText
+                        responseText = response.responseText;
                     }
 
                     $('#category-error').text(responseText);
@@ -247,31 +248,31 @@ var AllCategoriesModule = (function (module) {
     return module;
 }({}));
 
-var BookDetailsModule = (function (module) {
-    module.InitalizeModule = function(bookId,isAuthenticated) {
-        $('.arrow-up').click(function () {
+var BookDetailsModule = (function(module) {
+    module.InitalizeModule = function(bookId, isAuthenticated) {
+        $('.arrow-up').click(function() {
             if (!isAuthenticated) {
-                showYouMustLoginDialog()
+                showYouMustLoginDialog();
             } else {
-                vote(1)
+                vote(1);
             }
-        })
-        $('.arrow-down').click(function () {
+        });
+        $('.arrow-down').click(function() {
             if (!isAuthenticated) {
-                showYouMustLoginDialog()
+                showYouMustLoginDialog();
             } else {
-                vote(-1)
+                vote(-1);
             }
-        })
+        });
 
         function showYouMustLoginDialog() {
             $.alert({
                 title: 'You need to login first!',
-                content:'',
+                content: '',
                 buttons: {
                     ok: {
-                        action: function () {
-                            this.close()
+                        action: function() {
+                            this.close();
                         }
                     }
                 }
@@ -285,65 +286,64 @@ var BookDetailsModule = (function (module) {
                 accepts: 'applicaiton/json',
                 type: 'Post',
                 data: JSON.stringify({ vote: value }),
-                success: function () {
-                    updateControl(value)
+                success: function() {
+                    updateControl(value);
                 },
-                error: function () {
+                error: function() {
                     $.alert({
                         title: 'There was an error processing your vote!',
                         content: 'Please try again later.',
                         buttons: {
                             ok: {
-                                action: function () {
-                                    this.close()
+                                action: function() {
+                                    this.close();
                                 }
                             }
                         }
                     });
                 }
-            })
+            });
         }
 
         function updateControl(value) {
-            if (value == -1) {
+            if (value === -1) {
                 var rating = $("#rating").attr('val');
-                $('.arrow-down').toggleClass('downvote')
+                $('.arrow-down').toggleClass('downvote');
                 if ($('.arrow-down').hasClass('downvote')) {
                     rating--;
                 }
-                $('.arrow-up').removeClass('upvote')
+                $('.arrow-up').removeClass('upvote');
                 $("#rating").text(rating);
-            }
-            else if (value == 1) {
+            } else if (value === 1) {
                 var rating = $("#rating").attr('val');
-                $('.arrow-up').toggleClass('upvote')
+                $('.arrow-up').toggleClass('upvote');
                 if ($('.arrow-up').hasClass('upvote')) {
                     rating++;
                 }
-                $('.arrow-down').removeClass('downvote')
+                $('.arrow-down').removeClass('downvote');
                 $("#rating").text(rating);
             }
         }
     }
 
     return module;
-}({}))
+}({}));
 
-var DeleteItemDialogs = (function(module) {
-    module.InitializeDialogs = function(selector, itemName) {
-        $(selector).each(function() {
+var DeleteItemDialogs = (function (module) {
+    module.InitializeDialogs = function (selector, itemName) {
+        $(selector).each(function () {
             var self = this;
             $(this).confirm({
                 title: 'Delete this ' + itemName,
                 content: 'Are you sure want to delete this ' + itemName + '?',
                 buttons: {
                     yes: {
-                        action: function() {
-                            $(self).parents('form:first').submit()
+                        action: function () {
+                            $(self).parents('form:first').submit();
                         }
                     },
                     no: {
-                        action: function() {
+                        action: function () {
                         }
                     }
                 },
@@ -356,7 +356,7 @@ var DeleteItemDialogs = (function(module) {
     return module;
 }({}));
 
-var PublishBookModule = (function (module) {
+var PublishBookModule = (function(module) {
     var moduleBookFieldName;
     var moduleBookPictureUrl;
     var moduleBookPictureWidth;
@@ -365,7 +365,7 @@ var PublishBookModule = (function (module) {
     var moduleBookPictureErrorMessage;
     var moduleSupportedImageTypes;
 
-    module.initializeModule = function (bookFieldName,
+    module.initializeModule = function(bookFieldName,
         bookPictureUrl,
         bookPictureWidth,
         bookPictureHeight,
@@ -384,12 +384,12 @@ var PublishBookModule = (function (module) {
     }
 
     function addPageFunctionality() {
-        $(document).ready(function () {
-            $('#picture-select').click(function () {
+        $(document).ready(function() {
+            $('#picture-select').click(function() {
                 $('#book-picture-input').trigger('click');
             });
 
-            $("#book-picture-input").change(function () {
+            $("#book-picture-input").change(function() {
                 changeBookPicture(this);
             });
 
@@ -414,14 +414,14 @@ var PublishBookModule = (function (module) {
 
             function setNewBookPicture(file) {
                 var reader = new FileReader();
-                reader.onload = function (e) {
+                reader.onload = function(e) {
                     var base64Image = e.target.result;
                     resizeBase64Img(base64Image,
                         moduleBookPictureWidth,
-                        moduleBookPictureHeight).then(function (result) {
-                            $('#book-picture').attr('src', result[0].src);
-                            $('#book-picture-validation').text('');
-                        });
+                        moduleBookPictureHeight).then(function(result) {
+                        $('#book-picture').attr('src', result[0].src);
+                        $('#book-picture-validation').text('');
+                    });
                 }
                 reader.readAsDataURL(file);
             }
@@ -441,7 +441,7 @@ var PublishBookModule = (function (module) {
                 canvas.height = height;
                 var context = canvas.getContext("2d");
                 var deferred = $.Deferred();
-                $("<img/>").attr("src", base64).load(function () {
+                $("<img/>").attr("src", base64).load(function() {
                     context.scale(width / this.width, height / this.height);
                     context.drawImage(this, 0, 0);
                     deferred.resolve($("<img/>").attr("src", canvas.toDataURL()));
@@ -452,21 +452,21 @@ var PublishBookModule = (function (module) {
     }
 
     return module;
-}({}))
+}({}));
 
-var PublisherSalesModule = (function (module) {
+var PublisherSalesModule = (function(module) {
     module.Initialize = function() {
-        var yearSelector = $('#year-select')
+        var yearSelector = $('#year-select');
 
-        changeYearSales(yearSelector)
+        changeYearSales(yearSelector);
 
-        $(yearSelector).change(function () {
-            changeYearSales(this)
-        })
+        $(yearSelector).change(function() {
+            changeYearSales(this);
+        });
 
         function changeYearSales(el) {
-            var year = $(el).val()
-            $.get('/api/orders?year=' + year).then(function (data) {
+            var year = $(el).val();
+            $.get('/api/orders?year=' + year).then(function(data) {
                 var months = [];
                 var sales = [];
                 for (var i = 0; i < data.length; i++) {
@@ -474,67 +474,72 @@ var PublisherSalesModule = (function (module) {
                     sales.push(data[i].sales);
                 }
                 initChart(months, sales);
-            })
+            });
         }
 
         function initChart(months, sales) {
             $('#bar-chart').replaceWith('<canvas id="bar-chart" width="500" height="300"></canvas>');
             var ctx = document.getElementById("bar-chart").getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: months,
-                    datasets: [{
-                        label: '# of Sales',
-                        data: sales,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)',
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255,99,132,1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)',
-                            'rgba(255,99,132,1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
+            new Chart(ctx,
+                {
+                    type: 'bar',
+                    data: {
+                        labels: months,
+                        datasets: [
+                            {
+                                label: '# of Sales',
+                                data: sales,
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)',
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255,99,132,1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)',
+                                    'rgba(255,99,132,1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1
                             }
-                        }]
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [
+                                {
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            ]
+                        }
                     }
-                }
-            });
+                });
         }
     }
 
     return module;
-}({}))
+}({}));
 
-var UserFormModule = (function(module) {
+var UserFormModule = (function (module) {
     var moduleProfilePictureFieldName;
     var moduleProfilePictureUrl;
     var moduleProfilePictureWidth;
@@ -543,7 +548,7 @@ var UserFormModule = (function(module) {
     var moduleProfilePictureErrorMessage;
     var moduleSupportedImageTypes;
 
-    module.initializeModule = function(profilePictureFieldName,
+    module.initializeModule = function (profilePictureFieldName,
         profilePictureUrl,
         profilePictureWidth,
         profilePictureHeight,
@@ -556,18 +561,18 @@ var UserFormModule = (function(module) {
         moduleProfilePictureHeight = profilePictureHeight;
         moduleProfilePictureMaxLength = profilePictureMaxLength;
         moduleProfilePictureErrorMessage = profilePictureErrorMessage;
-        moduleSupportedImageTypes = supportedImageTypes
+        moduleSupportedImageTypes = supportedImageTypes;
 
         addPageFunctionality();
     }
 
     function addPageFunctionality() {
-        $(document).ready(function() {
-            $('#profile-picture').click(function() {
+        $(document).ready(function () {
+            $('#profile-picture').click(function () {
                 $('#profile-picture-input').trigger('click');
             });
 
-            $('#profile-picture-input').change(function() {
+            $('#profile-picture-input').change(function () {
                 changeProfilePicture(this);
             });
 
@@ -592,14 +597,14 @@ var UserFormModule = (function(module) {
 
             function setNewProfilePicture(file) {
                 var reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     var base64Image = e.target.result;
                     resizeBase64Img(base64Image,
                         moduleProfilePictureWidth,
-                        moduleProfilePictureHeight).then(function(result) {
-                        $('#profile-picture').attr('src', result[0].src);
-                        $('#profile-picture-validation').text('');
-                    });
+                        moduleProfilePictureHeight).then(function (result) {
+                            $('#profile-picture').attr('src', result[0].src);
+                            $('#profile-picture-validation').text('');
+                        });
                 }
                 reader.readAsDataURL(file);
             }
@@ -619,7 +624,7 @@ var UserFormModule = (function(module) {
                 canvas.height = height;
                 var context = canvas.getContext("2d");
                 var deferred = $.Deferred();
-                $("<img/>").attr("src", base64).load(function() {
+                $("<img/>").attr("src", base64).load(function () {
                     context.scale(width / this.width, height / this.height);
                     context.drawImage(this, 0, 0);
                     deferred.resolve($("<img/>").attr("src", canvas.toDataURL()));
